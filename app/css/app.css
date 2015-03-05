@@ -1,0 +1,115 @@
+#body{
+    overflow: hidden;
+}
+
+.menu{
+    position: absolute;
+}
+
+#Impressum{
+    overflow: auto;
+}
+#impressumLink{
+    position: absolute;
+    right: 20px;
+    top: 20px;
+}
+
+#impressuCloseBbutton{
+    margin-top: 20px;
+    margin-right: 20px;
+    position: absolute;
+    right: 20px;
+}
+
+#leftMenu{
+    background-color: #EEEEEE;
+    z-index: 1;
+    width: 150px;
+}
+#leftMenuContent{
+
+}
+#rightMenuContent{
+    display: none;
+}
+
+.checkbox-first{
+}
+.checkbox-second{
+    margin-left: 15px;
+}
+.streetlifeimage{
+    height: 200px;
+    width: 400px;
+}
+
+#rightMenu{
+    z-index: 2;
+    width: 400px;
+    right: 0px;
+    overflow: auto;
+}
+
+.leftMenu-fadeOut{
+    margin-left: 0px;
+    transition:all ease-out 0.2s;
+}
+.leftMenu-fadeIn{
+    margin-left: -140px;
+    transition:all ease-in 0.2s;
+}
+
+.rightMenu-fadeOut{
+    background: rgba(238, 238, 238, 0.9);
+    margin-right: 0px;
+    transition:all ease-out 0.2s;
+}
+.rightMenu-fadeIn{
+    width: 10px;
+    background: rgba(238, 238, 238, 1);
+    margin-right: -390px;
+    transition:all ease-in 0.2s;
+}
+
+#map{
+    position: absolute;
+}
+
+#dropdownMenuSubcribe, #dropdownMenuSubcribeList{
+    width: 100%;
+    text-align: left;
+}
+#guidanceMenu{
+    display: none;
+    position: absolute;
+    padding: 10px;
+    height: 200px;
+    width: 400px;
+    background-color: #EEEEEE;
+    box-shadow: 10px 10px 5px #888888;
+    border: solid 1px;
+}
+
+#guidanceSendButton{
+    right: 10px;
+    position: absolute;
+}
+
+#guidanceButtonDiv{
+    left: 40%;
+    margin-top: 10px;
+    margin: 20px;
+    margin-left: 0px;
+    margin-right: 0px;
+    position: absolute;
+}
+
+#rightMenuHeadline{
+    font-size: 40px;
+    margin: 20px;
+    margin-top: 0px;
+    margin-left: 0px;
+    margin-right: 0px;
+    text-align: center;
+}
