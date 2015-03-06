@@ -21,7 +21,13 @@ RightMenu.prototype.fillRightMenu = function(mapObject) {
             }
         }
 
-        rightMenuScope.chartObject = createChart(mapObject);
+        for (i = 0;i<mapObject.elements.length;i++){
+            {
+                if (mapObject.elements[i].chart) {
+                    rightMenuScope.chartObject = createChart(mapObject.elements[i].chart);
+                }
+            }
+        }
     });
 };
 

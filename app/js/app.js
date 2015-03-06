@@ -40,8 +40,6 @@ streetlife.controller('bodyController', function($scope, $timeout) {
     config = data;
   }).fail(function(data) {
     console.log( "error: " + data.status);
-  }).always(function() {
-    console.log( "complete reading json file" );
   });
   $.ajaxSetup({
     async: true
@@ -49,7 +47,27 @@ streetlife.controller('bodyController', function($scope, $timeout) {
 
   return config;
 
-}).factory('streetlifeSocket', function($websocket, streetlifeconfig) {
+}).factory('streetlifeSchema', function() {
+  return {
+    getSchema: function(name){
+      var returnvalue;
+      $.ajaxSetup({
+        async: false
+      });
+      $.getJSON( "json/" + name, function(data) {
+        returnvalue = data;
+      }).fail(function(data) {
+        console.log( "error: " + data.status);
+      });
+      $.ajaxSetup({
+        async: true
+      });
+
+      return returnvalue;
+    }
+  };
+
+}).factory('streetlifeSocket', function($websocket, streetlifeconfig, streetlifeSchema) {
   // Open a WebSocket connection
   var ws = $websocket(streetlifeconfig.socket.url);
 
@@ -59,7 +77,18 @@ streetlife.controller('bodyController', function($scope, $timeout) {
   ws.onMessage(function(event) {
     var res;
     try {
+
       res = JSON.parse(event.data);
+      var validator = new ZSchema();
+      var schema = "schema.json";
+
+      var schemaMapObject = streetlifeSchema.getSchema(schema);
+      var valid = validator.validate(res, schemaMapObject);
+      if (!valid) {
+        console.log("requested json File is not valid with schema " + schema);
+        console.log(validator.getLastErrors());
+        return null;
+      }
     } catch(e) {
       res = {'username': 'anonymous', 'message': event.data};
     }

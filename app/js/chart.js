@@ -3,16 +3,8 @@
  */
 
 
-var createChart = function(mapObject){
-    console.log(mapObject);
-
-    var chart;
-    for (i = 0;i<mapObject.elements.length;i++){
-        if (mapObject.elements[i].chart){
-            var chart = mapObject.elements[i].chart;
-            break;
-        }
-    }
+var createChart = function(chartElement){
+    var chart = chartElement;
 
     if (chart == null) return null;
 
