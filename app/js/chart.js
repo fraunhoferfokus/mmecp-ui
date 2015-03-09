@@ -1,5 +1,6 @@
 /**
  * Created by lwi on 03.03.2015.
+ * create Chartelement of chartElement coming from backend
  */
 
 
