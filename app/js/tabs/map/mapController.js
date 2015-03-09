@@ -43,7 +43,7 @@ streetlife.controller('mapController', function($scope, $timeout, streetlifeSock
     $scope.leftMenuScope = {};
 
     $scope.rightMenu = new RightMenu($scope.rightMenuScope, runInApply);
-    $scope.streetlifeMap = new StreetlifeMap($scope.map, $scope.config, $scope.rightMenu);
+    $scope.streetlifeMap = new OLMap($scope.map, $scope.config, $scope.rightMenu);
     $scope.leftMenu = new LeftMenu($scope.leftMenuScope, $scope.map.olMap);
 
     console.dir(streetlifeSocket);

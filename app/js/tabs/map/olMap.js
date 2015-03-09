@@ -2,7 +2,7 @@
  * Created by lwi on 05.03.2015.
  */
 
-function StreetlifeMap(mapScope, config, rightMenuClass){
+function OLMap(mapScope, config, rightMenuClass){
     scope = mapScope;
 
     scope.layerGoogle = new OpenLayers.Layer.Google("google");
@@ -95,7 +95,7 @@ function StreetlifeMap(mapScope, config, rightMenuClass){
     setCenter(config.default.city);
 };
 
-StreetlifeMap.prototype.addParkingLayer = function(streetlifeSocket){
+OLMap.prototype.addParkingLayer = function(streetlifeSocket){
     var newObserver = {
         notify : function(){
             var mo = streetlifeSocket.getLastRecievedMapObject();
