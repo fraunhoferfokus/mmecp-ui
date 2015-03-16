@@ -25,18 +25,18 @@ module.exports = function(grunt) {
 				}
 			}
 		},
-		qunit: {
-			files: ['test/**/*.html']
-		},
 		jshint: {
-			files: ['Gruntfile.js', 'src/**/*.js', 'test/**/*.js'],
+			files: ['app/js/**/*.js', 'app/js/*.js'],
 			options: {
-				// options here to override JSHint defaults
+				node: true,
+				browser: true,
+				jquery: true,
+				loopfunc: true,
 				globals: {
-					jQuery: true,
 					console: true,
 					module: true,
-					document: true
+					angular: true,
+					streetlife: true
 				}
 			}
 		},
@@ -46,14 +46,16 @@ module.exports = function(grunt) {
 		}
 	});
 
-	grunt.loadNpmTasks('grunt-contrib-uglify');
 	grunt.loadNpmTasks('grunt-contrib-jshint');
+	/*
+	grunt.loadNpmTasks('grunt-contrib-uglify');
 	grunt.loadNpmTasks('grunt-contrib-qunit');
 	grunt.loadNpmTasks('grunt-contrib-watch');
 	grunt.loadNpmTasks('grunt-contrib-concat');
+	*/
 
-	grunt.registerTask('test', ['jshint', 'qunit']);
-
-	grunt.registerTask('default', ['jshint', 'qunit', 'concat', 'uglify']);
+	grunt.registerTask('dev', ['jshint']);
+	grunt.registerTask('prod', ['test', 'concat', 'uglify']);
+	grunt.registerTask('default', ['dev']);
 
 };
