@@ -1,3 +1,8 @@
-/node_modules
-npm-debug.log
+# --- ignore IDE specific files
 /.idea
+*.iml
+
+# --- exclude frontend dependencies
+/node_modules
+/app/bower_components
+*.log
