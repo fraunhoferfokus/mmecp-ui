@@ -4,7 +4,7 @@
 Date: 11.02.2015
 by: Lars Willrich (lwi) 
 */
-streetlife.controller('mapController', function($scope, $timeout, streetlifeSocket, streetlifeconfig) {
+streetlife.controller('mapController', function($scope, $timeout, streetlifeSocket, streetlifeconfig, exampleService) {
   angular.extend($scope, {
 
       }
@@ -34,6 +34,7 @@ streetlife.controller('mapController', function($scope, $timeout, streetlifeSock
   };
 
   var init = function() {
+
     $scope.contentHight = ($( window  ).height() - $("#tabs").height() - $("#header").height()) + "px";
 
     $scope.config = streetlifeconfig;
