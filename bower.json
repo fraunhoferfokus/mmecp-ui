@@ -1,6 +1,6 @@
 {
-  "name": "Streetlife_Panl-UI",
-  "description": "Implamantation of Streetlife FrontEnd",
+  "name": "Streetlife-MMECP-UI",
+  "description": "Implamantation of Streetlife Mobility and Emmission Control Panel UI with AngularJS",
   "version": "0.0.1",
   "license": "MIT",
   "private": true,
