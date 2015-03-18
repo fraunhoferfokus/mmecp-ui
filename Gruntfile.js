@@ -10,10 +10,14 @@ module.exports = function(grunt) {
 			options: {
 				separator: ';'
 			},
-			dist: {
+			js: {
 				src: ['src/**/*.js'],
 				dest: 'dist/<%= pkg.name %>.js'
-			}
+			},
+            css: {
+                src: ['src/**/*.js'],
+                dest: 'dist/<%= pkg.name %>.js'
+            }
 		},
 		uglify: {
 			options: {
@@ -40,6 +44,17 @@ module.exports = function(grunt) {
 				}
 			}
 		},
+        injector: {
+            options: {
+                destFile: 'app/index.html'
+            },
+            dev: {
+                src: ['bower.json', 'app/js/*.js', 'app/css/*.css']
+            },
+            prod: {
+                src: ['bower.json', 'app/js/*.js', 'app/js/**/*.js', 'app/css/*.css', 'app/css/**/*.css']
+            }
+        },
 		watch: {
 			files: ['<%= jshint.files %>'],
 			tasks: ['jshint', 'qunit']
@@ -47,6 +62,7 @@ module.exports = function(grunt) {
 	});
 
 	grunt.loadNpmTasks('grunt-contrib-jshint');
+    grunt.loadNpmTasks('grunt-injector');
 	/*
 	grunt.loadNpmTasks('grunt-contrib-uglify');
 	grunt.loadNpmTasks('grunt-contrib-qunit');
@@ -54,8 +70,8 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-concat');
 	*/
 
-	grunt.registerTask('dev', ['jshint']);
+    grunt.registerTask('blubb', ['injector:prod']);
+	grunt.registerTask('dev', ['jshint', 'injector:dev']);
 	grunt.registerTask('prod', ['test', 'concat', 'uglify']);
 	grunt.registerTask('default', ['dev']);
-
 };
