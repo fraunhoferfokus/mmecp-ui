@@ -48,7 +48,7 @@ angular.module('app.dashboard.map', ['app.socket', 'app.config'])
     }])
 
     .controller('filterController', ['$scope', 'mapService', function($scope, mapService){
-        new LeftMenu();
+        //new LeftMenu();
     }])
 
     .controller('informationController', ['$scope', 'mapService', function($scope, mapService){
@@ -74,14 +74,7 @@ angular.module('app.dashboard.map', ['app.socket', 'app.config'])
         //******************
 
 
-        $scope.mapObjectElements = [{
-            label: "test",
-            value: "123"
-        },{
-            label: "asdasd",
-            value: "1233"
-        }];
-        new RightMenu();
+        //new RightMenu();
 
 
     }])
@@ -91,39 +84,5 @@ angular.module('app.dashboard.map', ['app.socket', 'app.config'])
             restrict: 'E',
             template: ' <div style="width:100%; height:100%" id="map"></div> ',
             controller: 'mapController'
-        }
-    }).directive('header', function() {
-        return {
-            restrict: 'E',
-            scope: false,
-            templateUrl: 'html/Header.html'
-        }
-    }).directive('content', function() {
-        return {
-            restrict: 'E',
-            templateUrl: 'html/Content.html'
-        }
-    }).directive('impressum', function() {
-        return {
-            restrict: 'E',
-            templateUrl: 'html/Impressum.html'
-        }
-    }).directive('leftMenu', function() {
-        return {
-            restrict: 'E',
-            scope: false,
-            templateUrl: 'html/LeftMenu.html'
-        }
-    }).directive('guidanceMenu', function() {
-        return {
-            restrict: 'E',
-            scope: false,
-            templateUrl: 'html/GuidanceMenu.html'
-        }
-    }).directive('rightMenu', function() {
-        return {
-            restrict: 'E',
-            scope: false,
-            templateUrl: 'html/RightMenu.html'
         }
     });
