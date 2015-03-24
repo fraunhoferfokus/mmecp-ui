@@ -29,14 +29,14 @@ With `npm install` your node.js dependencies like bower & grunt will be installe
 executed automatically after that to load all necessary frontend libraries.
 
 With Grunt the javascript and stylesheet files and also your own files under `public/*` will be injected in the
-index.html. Therefore the dev-Task was registered and can be executed with `grunt` or `grunt dev`. Two more tasks are:
+index.html. Therefore the dev-task was registered and can be executed with `grunt` or `grunt dev`. Two more tasks are:
 
 * `grunt test`
 
-Checks your own javascript files with jshint and starts a watchdog which registers any change in this files. With
-`grunt jshint` won't be executed.
+  Checks your own javascript files with jshint and starts a watchdog which registers any change in this files. With
+  `grunt jshint` won't be executed.
 
 * `grunt prod`
 
-This task is for production mode and concatenates, minimizes (also uglify) and injects all javascript
-and stylesheet files.
+  This task is for production mode and concatenates, minimizes (also uglify) and injects all javascript
+  and stylesheet files.
