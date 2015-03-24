@@ -6,33 +6,7 @@ function OLMap(config, mapService){
     this.layerGoogle = new OpenLayers.Layer.Google("google");
     this.layerOSM = new OpenLayers.Layer.OSM("OSM");
     this.activeLayer = this.layerOSM;
-
-    var setCenter = function(city) {
-        if (this.olMap == null) return;
-        if (config == null) return;
-
-        var lon, lat, zoom;
-        if (city == config.coordinate.ROV.name) {
-            lon = config.coordinate.ROV.lon;
-            lat = config.coordinate.ROV.lat;
-            zoom = config.coordinate.ROV.zoom;
-        }else if (city == config.coordinate.BER.name) {
-            lon = config.coordinate.BER.lon;
-            lat = config.coordinate.BER.lat;
-            zoom = config.coordinate.ROV.zoom;
-        }else if (city == config.coordinate.TAM.name) {
-            lon = config.coordinate.TAM.lon;
-            lat = config.coordinate.TAM.lat;
-            zoom = config.coordinate.ROV.zoom;
-        }
-
-        this.olMap.setCenter(new OpenLayers.LonLat(lon,lat) // Center of the map
-                .transform(
-                new OpenLayers.Projection("EPSG:4326"), // transform from WGS 1984
-                new OpenLayers.Projection("EPSG:900913") // to Spherical Mercator Projection
-            ), zoom // Zoom level
-        );
-    };
+    this.config = config;
 
     var setSelected = function(feature, select){
         if (feature == null) return;
@@ -94,7 +68,34 @@ function OLMap(config, mapService){
     });
 
     this.olMap.addLayer(this.layerOSM);
-    setCenter(config.default.city);
+    this.setCenter(this.config.default.city);
+};
+
+OLMap.prototype.setCenter = function(city) {
+    if (this.olMap == null) return;
+    if (this.config == null) return;
+
+    var lon, lat, zoom;
+    if (city == this.config.coordinate.ROV.name) {
+        lon = this.config.coordinate.ROV.lon;
+        lat = this.config.coordinate.ROV.lat;
+        zoom = this.config.coordinate.ROV.zoom;
+    }else if (city == this.config.coordinate.BER.name) {
+        lon = this.config.coordinate.BER.lon;
+        lat = this.config.coordinate.BER.lat;
+        zoom = this.config.coordinate.ROV.zoom;
+    }else if (city == this.config.coordinate.TAM.name) {
+        lon = this.config.coordinate.TAM.lon;
+        lat = this.config.coordinate.TAM.lat;
+        zoom = this.config.coordinate.ROV.zoom;
+    }
+
+    this.olMap.setCenter(new OpenLayers.LonLat(lon,lat) // Center of the map
+            .transform(
+            new OpenLayers.Projection("EPSG:4326"), // transform from WGS 1984
+            new OpenLayers.Projection("EPSG:900913") // to Spherical Mercator Projection
+        ), zoom // Zoom level
+    );
 };
 
 OLMap.prototype.addParkingLayer = function(streetlifeSocket){

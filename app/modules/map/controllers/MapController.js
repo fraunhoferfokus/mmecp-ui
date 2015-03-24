@@ -9,7 +9,7 @@ angular.module('app.dashboard.map', ['app.socket', 'app.config'])
 
     })
 
-    .controller('mapController', ['$scope', 'mapService', 'configService', function($scope, mapService, configService){
+    .controller('mapController', ['$scope', 'mapService', 'configService', 'socketService', function($scope, mapService, configService, socketService){
         var map = new OLMap(configService, mapService);
 
         //Events:
@@ -65,7 +65,7 @@ angular.module('app.dashboard.map', ['app.socket', 'app.config'])
 
         var openInformationPanel = function(){
             //Show the information Panel with information out of the mapObject
-            //usually called from map Panel
+            //usually called by clicking on polygon
         };
         var closeInformationPanel = function(){
             //hide the information Panel
