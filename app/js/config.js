@@ -18,4 +18,19 @@ angular.module('app.config',[
                 controller:'dashboardController'
             })
 
+    }).factory('configService', function(){
+        var config;
+        $.ajaxSetup({
+            async: false
+        });
+        $.getJSON( "config/map.json", function(data) {
+            config = data;
+        }).fail(function(data) {
+            console.log( "error: " + data.status);
+        });
+        $.ajaxSetup({
+            async: true
+        });
+
+        return config;
     });

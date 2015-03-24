@@ -7,7 +7,10 @@ var streetlifeDependencies=[
     'ngAnimate',
     'mm.foundation',
     'app.config',
-    'app.dashboard'
+    'app.dashboard',
+    'app.dashboard.map',
+    'app.socket',
+    'app.config'
 ]
 
 var app = angular.module('app', streetlifeDependencies)

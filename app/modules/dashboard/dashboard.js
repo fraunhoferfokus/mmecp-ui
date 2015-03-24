@@ -3,5 +3,6 @@
  */
 
 angular.module('app.dashboard',[
-    'app.dashboard.controllers'
+    'app.dashboard.controllers',
+    'app.dashboard.map'
 ])

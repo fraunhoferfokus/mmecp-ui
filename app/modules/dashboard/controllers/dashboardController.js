@@ -39,6 +39,8 @@ angular.module('app.dashboard.controllers',[
                     $scope.varSwitchBetweenDiagrammsAndMapInfo=false;
                 }
             }
+
+            $scope.$emit('updateMap', null);
         }
         $scope.showHideKPIs=function(){
 
@@ -52,6 +54,8 @@ angular.module('app.dashboard.controllers',[
                 $scope.contentShowHide='medium-12';
                 $scope.kipsShowHide='medium-0'
             }
+
+            $scope.$emit('updateMap', null);
         }
 
 
@@ -66,7 +70,7 @@ angular.module('app.dashboard.controllers',[
                 $scope.varSwitchBetweenDiagrammsAndMapInfo = true;
                 $scope.varOverlayMapInfo=!$scope.varOverlayMapInfo;
             }
-
+            $scope.$emit('updateMap', null);
         }
 
     }])

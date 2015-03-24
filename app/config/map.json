@@ -1,0 +1,30 @@
+{
+  "coordinate": {
+    "ROV": {
+      "name": "ROVERETO",
+      "lon": 11.034870147704801,
+      "lat": 45.8898599771584,
+      "zoom": 15
+    },
+    "BER": {
+      "name": "BERLIN",
+      "lon": 13.385937438965227,
+      "lat": 52.513685522784805,
+      "zoom": 12
+    },
+    "TAM": {
+      "name": "TAMPERE",
+      "lon": 23.761501312254776,
+      "lat": 61.49565304058324,
+      "zoom": 14
+    }
+  },
+  "default": {
+    "city": "ROVERETO"
+  },
+  "socket":
+  {
+    "url": "ws://193.175.133.251/api-websocket",
+    "_url": "ws://localhost:8080/api-websocket/panelui"
+  }
+}
