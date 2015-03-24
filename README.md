@@ -11,17 +11,17 @@ Implementation of STREETLIFE Mobility and Emission Control Panel UI with Angular
 
 ## Installation ##
 
-* git
-* node.js (https://nodejs.org/ - Install button on start page)
+*   git
+*   node.js (https://nodejs.org/ - Install button on start page)
 
 ## Setup ##
 
-* clone this repository
-* execute following commands in your project home directory
-  * npm install
-  * grunt
-  * npm start
-* MMECP is available at localhost:8000
+*   clone this repository
+*   execute following commands in your project home directory
+    *   npm install
+    *   grunt
+    *   npm start
+*   MMECP is available at localhost:8000
 
 ## 4 Dev's ##
 
@@ -31,12 +31,12 @@ executed automatically after that to load all necessary frontend libraries.
 With Grunt the javascript and stylesheet files and also your own files under `public/*` will be injected in the
 index.html. Therefore the dev-task was registered and can be executed with `grunt` or `grunt dev`. Two more tasks are:
 
-* `grunt test`
+*   `grunt test`
 
-  Checks your own javascript files with jshint and starts a watchdog which registers any change in this files. With
-  `grunt jshint` won't be executed.
+    Checks your own javascript files with jshint and starts a watchdog which registers any change in this files. With
+`grunt jshint` won't be executed.
 
-* `grunt prod`
+*   `grunt prod`
 
-  This task is for production mode and concatenates, minimizes (also uglify) and injects all javascript
-  and stylesheet files.
+    This task is for production mode and concatenates, minimizes (also uglify) and injects all javascript
+and stylesheet files.
