@@ -52,8 +52,11 @@
 }
 /*off-canvas-menu*/
 
+.filterActive{
+    background-color: green;
+}
 .left-off-canvas-menu,.right-off-canvas-menu{
-    background: #FFFFFF;
+    background: #008CBA;
 }
 .left-off-canvas-menu > .off-canvas-menu-title{
     background-color: #43ac6a;
@@ -123,7 +126,7 @@
     position: absolute;
     right: 0;
     top: 300px;
-    z-index: 2;
+    z-index: 1000;
 }
 /*content*/
 

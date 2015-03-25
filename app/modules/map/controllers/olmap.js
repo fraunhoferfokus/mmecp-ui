@@ -2,7 +2,8 @@
  * Created by lwi on 19.03.2015.
  */
 
-function OLMap(config, mapService){
+function OLMap(config){
+
     this.layerGoogle = new OpenLayers.Layer.Google("google");
     this.layerOSM = new OpenLayers.Layer.OSM("OSM");
     this.activeLayer = this.layerOSM;
@@ -23,6 +24,7 @@ function OLMap(config, mapService){
     };
 
     var selectedfeature;
+    var olMap;
     this.olMap = new OpenLayers.Map('map', {
         projection: new OpenLayers.Projection("EPSG:4326"),
         displayProjection: new OpenLayers.Projection("EPSG:4326"),
@@ -33,7 +35,7 @@ function OLMap(config, mapService){
                     selectedfeature.layer.redraw();
                 }
                 //rightMenuClass.closeRightPanel();
-                mapService.hideInformation();
+                //mapService.hideInformation();
             },
             featureover: function(e) {
                 e.feature.style.strokeWidth = 2;
@@ -49,7 +51,7 @@ function OLMap(config, mapService){
                 if (selectedfeature == e.feature){
                     setSelected(selectedfeature, false);
                     //rightMenuClass.closeRightPanel();
-                    mapService.hideInformation();
+                    //mapService.hideInformation();
                     selectedfeature = null;
                 }else{
                     if (selectedfeature !== null){
@@ -58,8 +60,8 @@ function OLMap(config, mapService){
                     selectedfeature = e.feature;
                     setSelected(e.feature, true);
                     //rightMenuClass.openRightPanel();
-                    var mapObject = this.olMap.getLayersByName(e.feature.layer.name)[0].getFeatureById(e.feature.id).mapObject;
-                    mapService.showInformation(mapObject);
+                    var mapObject = olMap.getLayersByName(e.feature.layer.name)[0].getFeatureById(e.feature.id).mapObject;
+                    //mapService.showInformation(mapObject);
                     //rightMenuClass.fillRightMenu();
                 }
                 e.feature.layer.redraw();
@@ -67,9 +69,14 @@ function OLMap(config, mapService){
         }
     });
 
+    olMap = this.olMap;
+
     this.olMap.addLayer(this.layerOSM);
     this.setCenter(this.config.default.city);
-}
+
+    this.vector = this.getParkingLayer();
+    this.olMap.addLayer(this.vector);
+};
 
 OLMap.prototype.setCenter = function(city) {
     if (this.olMap === null) return;
@@ -98,14 +105,86 @@ OLMap.prototype.setCenter = function(city) {
     );
 };
 
-OLMap.prototype.addParkingLayer = function(streetlifeSocket){
-    var newObserver = {
-        notify : function(){
-            var mo = streetlifeSocket.getLastRecievedMapObject();
-            addObjects(mo);
+OLMap.prototype.getmapAreaofMapObject = function(mapObject){
+    for (var i = 0;i<mapObject.elements.length;i++){
+        if (mapObject.elements[i].maparea != null){
+            return mapObject.elements[i].maparea;
         }
+    }
+    return null;
+}
+
+OLMap.prototype.addObjects = function (mapObjectList){
+
+    if (this.vector == null) return;
+    for (i = 0;i<mapObjectList.length; i++){
+        var mapArea = this.getmapAreaofMapObject(mapObjectList[i]);
+        var fid = mapObjectList[i].objectID + ":" +
+            mapObjectList[i].objectType + ":" +
+            mapObjectList[i].objectSubtype;
+        var feature = this.createPolygonFeature(mapArea, fid);
+        feature.mapObject = mapObjectList[i];
+        this.vector.addFeatures([feature]);
+    }
+}
+
+OLMap.prototype.getParkingLayer = function(){
+    vector = new OpenLayers.Layer.Vector("parkingLayer");
+    return vector;
+};
+
+OLMap.prototype.createPolygonFeature = function(area, id){
+
+    var pointList = [],
+        polygonGeometry,
+        polygonFeature,
+        vector = new OpenLayers.Layer.Vector('polygonLayerVector');
+
+    var coords = area.area.coordinates[0];
+    for (var i=0; i<coords.length; i++) {
+
+        var point = new OpenLayers.Geometry.Point(coords[i][0], coords[i][1]);
+        pointList.push(point);
+    }
+
+    var linearRing = new OpenLayers.Geometry.LinearRing(pointList).transform(
+        new OpenLayers.Projection("EPSG:4326"),
+        new OpenLayers.Projection("EPSG:900913"));
+
+    var polygon = new OpenLayers.Geometry.Polygon([linearRing]);
+
+
+    var style=  {
+        fillColor: "rgba(" + area.color.red + ", " + area.color.green + ", " + area.color.blue + ", " + area.color.alpha + ")",
+        strokeColor: "rgba(" + area.color.red + ", " + area.color.green + ", " + area.color.blue + ", " + area.color.alpha + ")",
+        strokeWidth: 1
     };
 
-    this.olMap.addLayer(getParkingLayer());
-    streetlifeSocket.addObserver(newObserver);
-};
+    var newVector = new OpenLayers.Feature.Vector(polygon, null, style);
+
+    newVector.fid = id;
+    newVector.defaultStyle = {
+        fillColor : {
+            string : "rgba(" + area.color.red + ", " + area.color.green + ", " + area.color.blue + ", " + area.color.alpha + ")",
+            red : area.color.red,
+            green : area.color.green,
+            blue : area.color.blue,
+            alpha : area.color.alpha
+        },
+        strokeColor : {
+            string : "rgba(" + area.color.red + ", " + area.color.green + ", " + area.color.blue + ", " + area.color.alpha + ")",
+            red : area.color.red,
+            green : area.color.green,
+            blue : area.color.blue,
+            alpha : area.color.alpha
+        },
+        select: {
+            strokeColor: "rgba(0, 0, 0, 1)",
+            fillColor: "rgba(" + area.color.red + ", " + area.color.green + ", " + area.color.blue + ", " + 0.9 + ")",
+            strokeWidth: 2
+        },
+        strokeWidth: 1
+    };
+
+    return newVector;
+}
