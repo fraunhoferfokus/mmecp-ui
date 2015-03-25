@@ -4,7 +4,13 @@
 
 angular.module('app.dashboard.map', ['app.socket', 'app.config'])
 
-    .service('mapService', function(socketService, configService){
+    .service('mapService', function(socketService){
+        this.requestnewMapObjects = function(requestString){
+            socketService.send(requestString);
+        };
+    })
+
+    .controller('mapController', ['$scope', 'mapService', 'configService', 'socketService', function($scope, mapService, configService, socketService){
         this.map = new OLMap(configService);
         var map = this.map;
 
@@ -16,16 +22,8 @@ angular.module('app.dashboard.map', ['app.socket', 'app.config'])
         };
         socketService.addObserver(newObserver);
 
-    })
-
-    .controller('mapController', ['$scope', 'mapService', 'socketService', function($scope, mapService, socketService){
-
         //Events:
-        //addLayer, removeLayer, switchLayer
         //******************
-        $scope.$on('addLayer', function(event, args){
-            addLayer(args);
-        });
         $scope.$on('removeMapObjects', function(event, args){
             removeMapObjects(args.layer, args.subType);
         });
@@ -39,12 +37,8 @@ angular.module('app.dashboard.map', ['app.socket', 'app.config'])
         var updateMap = function(){
             mapService.map.updateSize();
         };
-        var addLayer = function(newLayer){
-            //add new Layer
-            //usually called from filter Panel
-        };
         var removeMapObjects = function(layer, subType){
-            var layer = mapService.map.olMap.getLayersByName(layer)[0];
+            var layer = map.olMap.getLayersByName(layer)[0];
             var featuresToRemove = [];
             for (i = 0;i<layer.features.length;i++){
                 if (layer.features[i].mapObject.objectSubtype == subType){
@@ -61,9 +55,7 @@ angular.module('app.dashboard.map', ['app.socket', 'app.config'])
 
     }])
 
-    .controller('filterController', ['$scope', 'mapService', 'socketService', function($scope, mapService, socketService){
-        //new LeftMenu();
-
+    .controller('filterController', ['$scope', 'mapService', function($scope, mapService){
 
         //Testvalues
         $scope.filters = [
@@ -131,7 +123,8 @@ angular.module('app.dashboard.map', ['app.socket', 'app.config'])
         $scope.callFilter = function(filterOption){
 
             if (!filterOption.requested){
-                socketService.send(filterOption.requestString);
+                mapService.requestnewMapObjects(filterOption.requestString);
+                console.log("request: " + filterOption.requestString);
             }else {
                 $scope.$emit('removeMapObjects',
                     {
@@ -169,11 +162,6 @@ angular.module('app.dashboard.map', ['app.socket', 'app.config'])
             //usually called from map Panel
         };
         //******************
-
-
-        //new RightMenu();
-
-
     }])
 
     .directive('olMap', function(){
