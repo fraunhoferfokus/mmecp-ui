@@ -67,7 +67,10 @@ module.exports = function(grunt) {
         },
         injector: {
             options: {
-                destFile: 'app/index.html'
+                destFile: 'app/index.html',
+	            ignorePath: 'app/',
+	            relative: true,
+	            addRootSlash: false
             },
             prod: {
                 src: ['<%= bower_concat.all.dest %>', '<%= bower_concat.all.cssDest %>', '<%= concat.js.dest %>', '<%= concat.css.dest %>']
