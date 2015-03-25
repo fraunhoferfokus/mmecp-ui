@@ -5,7 +5,6 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "preinstall": "npm i -g grunt-cli",
     "postinstall": "./node_modules/.bin/bower install",
     "prestart": "npm install",
     "start": "http-server -a 0.0.0.0 -p 8000"

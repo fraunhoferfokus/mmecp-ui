@@ -40,3 +40,7 @@ index.html. Therefore the dev-task was registered and can be executed with `grun
 
     This task is for production mode and concatenates, minimizes (also uglify) and injects all javascript
 and stylesheet files.
+
+If you don't have grunt installed globally, then you have to use following command: `./node_modules/.bin/grunt` (Unix)
+or `node_modules\.bin\grunt` (Windows)
+To install grunt globally, type: `npm install -g grunt`
