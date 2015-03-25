@@ -1,6 +1,7 @@
 {
-  "name": "StreetLife_mockup",
-  "version": "0.0.0",
+  "name": "Streetlife-MMECP-UI",
+  "description": "Implementation of STREETLIFE Mobility and Emission Control Panel UI with AngularJS",
+  "version": "0.0.1",
   "license": "MIT",
   "ignore": [
     "**/.*",
