@@ -9,7 +9,7 @@ function OLMap(config, mapService){
     this.config = config;
 
     var setSelected = function(feature, select){
-        if (feature == null) return;
+        if (feature === null) return;
 
         if (select){
             feature.style.strokeWidth = feature.defaultStyle.select.strokeWidth;
@@ -28,7 +28,7 @@ function OLMap(config, mapService){
         displayProjection: new OpenLayers.Projection("EPSG:4326"),
         eventListeners: {
             nofeatureclick: function(e){
-                if (selectedfeature != null){
+                if (selectedfeature !== null){
                     setSelected(selectedfeature, false);
                     selectedfeature.layer.redraw();
                 }
@@ -52,7 +52,7 @@ function OLMap(config, mapService){
                     mapService.hideInformation();
                     selectedfeature = null;
                 }else{
-                    if (selectedfeature != null){
+                    if (selectedfeature !== null){
                         setSelected(selectedfeature, false);
                     }
                     selectedfeature = e.feature;
@@ -69,11 +69,11 @@ function OLMap(config, mapService){
 
     this.olMap.addLayer(this.layerOSM);
     this.setCenter(this.config.default.city);
-};
+}
 
 OLMap.prototype.setCenter = function(city) {
-    if (this.olMap == null) return;
-    if (this.config == null) return;
+    if (this.olMap === null) return;
+    if (this.config === null) return;
 
     var lon, lat, zoom;
     if (city == this.config.coordinate.ROV.name) {

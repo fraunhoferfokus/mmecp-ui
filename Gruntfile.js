@@ -4,10 +4,15 @@
 
 module.exports = function(grunt) {
 
+	var js_src = ['app/js/**/*.js', 'app/js/*.js', 'app/modules/**/*.js', 'app/modules/*.js'];
+	var css_src = ['app/css/**/*.css', 'app/css/*.css'];
+	var js_dest = 'app/dest/js/';
+	var css_dest = 'app/dest/css/';
+
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
         jshint: {
-            files: ['app/js/**/*.js', 'app/js/*.js'],
+            files: js_src,
             options: {
                 node: true,
                 browser: true,
@@ -23,29 +28,27 @@ module.exports = function(grunt) {
         },
 		concat: {
 			options: {
-				separator: ';'
+				stripBanners: true
 			},
 			js: {
-				src: ['app/js/**/*.js', 'app/js/*.js'],
-				dest: 'app/js/<%= pkg.name %>.js'
+				src: js_src,
+				dest: js_dest + '<%= pkg.name %>.js'
 			},
             css: {
-                src: ['app/css/**/*.css', 'app/css/*.css'],
-                dest: 'app/css/<%= pkg.name %>.css'
+                src: css_src,
+                dest: css_dest + '<%= pkg.name %>.css'
             }
 		},
         bower_concat: {
             all: {
-                dest: 'app/js/dependencies.js',
-                cssDest: 'app/css/dependencies.css',
-                mainFiles: {
-                    'openlayers3': ['app/bower_components/openlayers3/build/ol.js', 'app/bower_components/openlayers3/build/ol.css']
-                }
+                dest: js_dest + 'dependencies.js',
+                cssDest: css_dest + 'dependencies.css'
             }
         },
 		uglify: {
 			options: {
-				banner: ''
+				banner: '',
+				mangle: false
 			},
 			all: {
 				files: {
@@ -70,12 +73,20 @@ module.exports = function(grunt) {
                 src: ['<%= bower_concat.all.dest %>', '<%= bower_concat.all.cssDest %>', '<%= concat.js.dest %>', '<%= concat.css.dest %>']
             },
             dev: {
-                src: ['bower.json', 'app/js/**/*.js', 'app/js/*.js', 'app/css/**/*.css', 'app/css/*.css']
+                src: ['bower.json', '<%= concat.js.src %>', '<%= concat.css.src %>']
             }
         },
         clean: {
-            js: ['<%= concat.js.dest %>', '<%= concat.css.dest %>', '<%= bower_concat.all.dest %>', '<%= bower_concat.all.cssDest %>']
+            all: ['<%= concat.js.dest %>', '<%= concat.css.dest %>', '<%= bower_concat.all.dest %>', '<%= bower_concat.all.cssDest %>']
         },
+		copy: {
+			foundation_icons: {
+				expand: true,
+				cwd: 'app/bower_components/foundation-icon-fonts/',
+				src: ['*.woff', '*.ttf'],
+				dest: css_dest
+			}
+		},
 		watch: {
 			files: ['<%= jshint.files %>'],
 			tasks: ['jshint']
@@ -90,9 +101,10 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-cssmin');
     grunt.loadNpmTasks('grunt-contrib-clean');
+	grunt.loadNpmTasks('grunt-contrib-copy');
 
     grunt.registerTask('test', ['jshint', 'watch']);
 	grunt.registerTask('dev', ['jshint', 'injector:dev']);
-	grunt.registerTask('prod', ['clean', 'concat', 'bower_concat', 'uglify', 'cssmin', 'injector:prod']);
+	grunt.registerTask('prod', ['clean', 'concat', 'bower_concat', 'uglify', 'cssmin', 'injector:prod', 'copy']);
 	grunt.registerTask('default', ['dev']);
 };

@@ -16,7 +16,7 @@ angular.module('app.config',[
                 url: "/",
                 templateUrl: "modules/dashboard/partials/dashboard.html",
                 controller:'dashboardController'
-            })
+            });
 
     }).factory('configService', function(){
         var config;

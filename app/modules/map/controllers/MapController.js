@@ -84,5 +84,5 @@ angular.module('app.dashboard.map', ['app.socket', 'app.config'])
             restrict: 'E',
             template: ' <div style="width:100%; height:100%" id="map"></div> ',
             controller: 'mapController'
-        }
+        };
     });

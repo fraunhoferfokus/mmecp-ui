@@ -12,11 +12,11 @@ var streetlifeDependencies=[
     'app.dashboard.map',
     'app.socket',
     'app.config'
-]
+];
 
 var app = angular.module('app', streetlifeDependencies)
     .run ( function ( $rootScope, $log ) {
-    $log.log ("run app")
+    $log.log ("run app");
 });
 
 angular.element(document).ready(function() {
