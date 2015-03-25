@@ -22,12 +22,13 @@ angular.module('app.socket', ['ngWebSocket', 'app.config'])
 
                 //var schemaMapObject = streetlifeSchema.getSchema(schema);
                 //var valid = validator.validate(res, schemaMapObject);
-                if (!valid) {
+                /*if (!valid) {
                     console.log("requested json File is not valid with schema " + schema);
                     console.log(validator.getLastErrors());
                     return null;
-                }
+                }*/
             } catch(e) {
+                console.log("Error in onMessage in SocketService");
                 res = {'username': 'anonymous', 'message': event.data};
             }
             mapObjects.push(res);

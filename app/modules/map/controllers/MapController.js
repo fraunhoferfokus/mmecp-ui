@@ -4,22 +4,21 @@
 
 angular.module('app.dashboard.map', ['app.socket', 'app.config'])
 
-    .service('mapService', function(socketService){
-        this.mapObjects = [];
-        console.log("run mapservice");
+    .service('mapService', function(socketService, configService){
+        this.map = new OLMap(configService);
+        var map = this.map;
+
         var newObserver = {
             notify : function(){
                 var mo = socketService.getLastRecievedMapObject();
-                //addObjects(mo);
-                console.dir(mo);
+                map.addObjects(mo);
             }
         };
         socketService.addObserver(newObserver);
 
     })
 
-    .controller('mapController', ['$scope', 'mapService', 'configService', 'socketService', function($scope, mapService, configService, socketService){
-        var map = new OLMap(configService, mapService);
+    .controller('mapController', ['$scope', 'mapService', 'socketService', function($scope, mapService, socketService){
 
         //Events:
         //addLayer, removeLayer, switchLayer
@@ -27,8 +26,8 @@ angular.module('app.dashboard.map', ['app.socket', 'app.config'])
         $scope.$on('addLayer', function(event, args){
             addLayer(args);
         });
-        $scope.$on('removeLayer', function(event, args){
-            addLayer(args);
+        $scope.$on('removeMapObjects', function(event, args){
+            removeMapObjects(args.layer, args.subType);
         });
         $scope.$on('switchLayer', function(event, args){
             switchLayer(args);
@@ -38,15 +37,21 @@ angular.module('app.dashboard.map', ['app.socket', 'app.config'])
         });
 
         var updateMap = function(){
-            map.olMap.updateSize();
+            mapService.map.updateSize();
         };
         var addLayer = function(newLayer){
             //add new Layer
             //usually called from filter Panel
         };
-        var removeLayer = function(layer){
-            //add new Layer
-            //usually called from filter Panel
+        var removeMapObjects = function(layer, subType){
+            var layer = mapService.map.olMap.getLayersByName(layer)[0];
+            var featuresToRemove = [];
+            for (i = 0;i<layer.features.length;i++){
+                if (layer.features[i].mapObject.objectSubtype == subType){
+                    featuresToRemove.push(layer.features[i]);
+                }
+            }
+            layer.removeFeatures(featuresToRemove);
         };
         var switchLayer = function(){
             //toggle the OpenStreet and Google Layer
@@ -65,22 +70,78 @@ angular.module('app.dashboard.map', ['app.socket', 'app.config'])
             {
                 title: "park and ride",
                 options:{
-                    1: "macrozone",
-                    2: "microzone"
+                    0: {
+                        value: "ParkingAreas",
+                        id: "parkandride:ParkingAreas",
+                        requestString: "getObjectsOfType:ParkingAreas",
+                        subType: "macro",
+                        requested: false
+                    },
+                    1: {
+                        value: "ParkingStationsFree",
+                        id: "parkandride:ParkingStationsFree",
+                        requestString: "getObjectsOfType:ParkingStationsFree",
+                        subType: "forfree",
+                        requested: false
+                    },
+                    2: {
+                        value: "ParkingStationsFee",
+                        id: "parkandride:ParkingStationsFee",
+                        requestString: "getObjectsOfType:ParkingStationsFee",
+                        subType: "fee",
+                        requested: false
+                    },
+                    3: {
+                        value: "ParkingStationsClock",
+                        id: "parkandride:ParkingStationsClock",
+                        requestString: "getObjectsOfType:ParkingStationsClock",
+                        subType: "cardblock",
+                        requested: false
+                    }
                 }
             },
             {
                 title: "Berlin Event",
                 options:{
-                    1: "events",
-                    2: "streetwork"
+                    0: {
+                        value: "events",
+                        id: "BerlinEvent:events",
+                        requestString: "xxx:xxx",
+                        subType: "-",
+                        requested: false
+                    },
+                    1: {
+                        value: "streetwork",
+                        id: "BerlinEvent:streetwork",
+                        subType: "-",
+                        requestString: "xxx:xxx",
+                        requested: false
+                    },
+                    2: {
+                        value: "...",
+                        id: "BerlinEvent:...",
+                        requestString: "xxx:xxx",
+                        subType: "-",
+                        requested: false
+                    }
                 }
             }
         ];
 
-        $scope.callFilter = function(title, option){
-            console.log("call filter: " + title + " -> " + option);
-            socketService.send("getObjectsOfType:ParkingAreas");
+        $scope.callFilter = function(filterOption){
+
+            if (!filterOption.requested){
+                socketService.send(filterOption.requestString);
+            }else {
+                $scope.$emit('removeMapObjects',
+                    {
+                        layer: "parkingLayer",
+                        subType: filterOption.subType
+                    }
+                );
+            }
+
+            filterOption.requested = !filterOption.requested;
 
             //because jsquery close the aside panel, we have to stop the event propagation!
             window.event.stopPropagation();
@@ -134,7 +195,7 @@ angular.module('app.dashboard.map', ['app.socket', 'app.config'])
             restrict: 'E',
             template: '<li><label>{{filter.title}}</label></li>' +
             '<li ng-repeat="option in filter.options">' +
-            '<a ng-click="callFilter(filter.title, option)">{{option}}</a>' +
+            '<a ng-class="{filterActive: option.requested}" id="{{option.id}}" ng-click="callFilter(option)">{{option.value}}</a>' +
             '</li>',
             controller: 'filterController'
         }

@@ -52,6 +52,9 @@
 }
 /*off-canvas-menu*/
 
+.filterActive{
+    background-color: green;
+}
 .left-off-canvas-menu,.right-off-canvas-menu{
     background: #008CBA;
 }
