@@ -4,8 +4,17 @@
 
 angular.module('app.dashboard.map', ['app.socket', 'app.config'])
 
-    .service('mapService', function(){
+    .service('mapService', function(socketService){
         this.mapObjects = [];
+        console.log("run mapservice");
+        var newObserver = {
+            notify : function(){
+                var mo = socketService.getLastRecievedMapObject();
+                //addObjects(mo);
+                console.dir(mo);
+            }
+        };
+        socketService.addObserver(newObserver);
 
     })
 
@@ -47,8 +56,35 @@ angular.module('app.dashboard.map', ['app.socket', 'app.config'])
 
     }])
 
-    .controller('filterController', ['$scope', 'mapService', function($scope, mapService){
+    .controller('filterController', ['$scope', 'mapService', 'socketService', function($scope, mapService, socketService){
         //new LeftMenu();
+
+
+        //Testvalues
+        $scope.filters = [
+            {
+                title: "park and ride",
+                options:{
+                    1: "macrozone",
+                    2: "microzone"
+                }
+            },
+            {
+                title: "Berlin Event",
+                options:{
+                    1: "events",
+                    2: "streetwork"
+                }
+            }
+        ];
+
+        $scope.callFilter = function(title, option){
+            console.log("call filter: " + title + " -> " + option);
+            socketService.send("getObjectsOfType:ParkingAreas");
+
+            //because jsquery close the aside panel, we have to stop the event propagation!
+            window.event.stopPropagation();
+        };
     }])
 
     .controller('informationController', ['$scope', 'mapService', function($scope, mapService){
@@ -84,5 +120,22 @@ angular.module('app.dashboard.map', ['app.socket', 'app.config'])
             restrict: 'E',
             template: ' <div style="width:100%; height:100%" id="map"></div> ',
             controller: 'mapController'
+        }
+    }).directive('filter', function(){
+        return{
+            restrict: 'E',
+            template: '<ul class="off-canvas-list">' +
+            '<filterentry ng-repeat="filter in filters"></filterentry>' +
+            '</ul>',
+            controller: 'filterController'
+        }
+    }).directive('filterentry', function(){
+        return{
+            restrict: 'E',
+            template: '<li><label>{{filter.title}}</label></li>' +
+            '<li ng-repeat="option in filter.options">' +
+            '<a ng-click="callFilter(filter.title, option)">{{option}}</a>' +
+            '</li>',
+            controller: 'filterController'
         }
     });
