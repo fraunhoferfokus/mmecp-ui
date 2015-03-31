@@ -8,10 +8,28 @@ angular.module('app.dashboard.map', ['app.socket', 'app.config', 'app.dashboard.
         this.requestnewMapObjects = function(requestString){
             socketService.send(requestString);
         };
+
+        /*this.openMapObjectInformationPanelFuntion;
+        var openMapObjectInformationPanelFuntion= this.openMapObjectInformationPanelFuntion;
+        this.closeMapObjectInformationPanelFuntion;
+        var closeMapObjectInformationPanelFuntion= this.closeMapObjectInformationPanelFuntion;
+        this.setOpenMapObjectInformationPanelFunction = function(fnk){
+            openMapObjectInformationPanelFuntion = fnk;
+        };
+        this.setCloseMapObjectInformationPanelFunction = function(fnk){
+            closeMapObjectInformationPanelFuntion = fnk;
+        };
+        this.openMapObjectInformationPanel = function(){
+            openMapObjectInformationPanelFuntion();
+        };
+
+        this.closeMapObjectInformationPanel = function(){
+            closeMapObjectInformationPanelFuntion();
+        };*/
     })
 
     .controller('mapController', ['$scope', 'mapService', 'configService', 'socketService', function($scope, mapService, configService, socketService){
-        this.map = new OLMap(configService);
+        this.map = new OLMap(configService, mapService);
         var map = this.map;
 
         var newObserver = {
@@ -147,13 +165,13 @@ angular.module('app.dashboard.map', ['app.socket', 'app.config', 'app.dashboard.
         //******************
         $scope.headline = "Modal Split";
 
-        $scope.$on('openInformationPanel', function(event, args){
+        /*$scope.$on('openInformationPanel', function(event, args){
             openInformationPanel(args);
         });
 
         $scope.$on('closeInformationPanel', function(event, args){
             closeInformationPanel();
-        });
+        });*/
 
         var openInformationPanel = function(){
             //Show the information Panel with information out of the mapObject

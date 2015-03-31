@@ -5,10 +5,10 @@
     </div>
     <div class="row full-width">
         <!-- Content(Map & Diagrams) -->
-        <div class="medium-11 columns" ng-class="contentShowHide" style=" padding-left: 0px; padding-right: 0px;">
+        <div class="medium-11 columns" ng-class="contentCSS" style=" padding-left: 0px; padding-right: 0px;">
             <div class="row full-width" style="margin-left: 0px; margin-right: 0px;">
                 <!-- Left Sidebar & Map-->
-                <div ng-class="mapShowHide" class="medium-7 columns" style="margin-bottom: 10px;padding-right: 0;">
+                <div ng-class="mapCSS" class="medium-7 columns" style="margin-bottom: 10px;padding-right: 0;">
                      <!-- Left Sidebar -->
                      <div class="off-canvas-wrap">
                          <div class="inner-wrap">
@@ -16,7 +16,7 @@
                                  <section class="left-small">
                                      <a class="left-off-canvas-toggle menu-icon"><span></span></a>
                                  </section>
-                                 <section ng-switch on="ShowHideMapIcon" class="middle tab-bar-section tab-bar-section-map" style="padding-right: 0px;">
+                                 <section ng-switch on="showBigMap" class="middle tab-bar-section tab-bar-section-map" style="padding-right: 0px;">
                                      <h1 class="title left">Map</h1>
                                      <a  ng-switch-when="true" class="right" ng-click="showHideMap()" style="padding-top: 5px"><i class="fi-arrows-in large" style="font-size: 24px;"></i></a>
                                      <a  ng-switch-when="false" class="right" ng-click="showHideMap()" style="padding-top: 5px"><i class="fi-arrows-out large" style="font-size: 24px;"></i></a>
@@ -31,7 +31,7 @@
                             <section class="main-section" style="padding-top: 10px;height: 485px;">
                                 <div class="small-12 columns" style="height: 485px;padding: 0px">
                                     <ol-map alt="Map" style="height: 485px"></ol-map>
-                                    <div class="overlayMapInfo" ng-show="varOverlayMapInfo">
+                                    <div class="overlayMapInfo" ng-show="showOverlayMapInfo">
                                         <map-Object-Information  align="Horizontal"></map-Object-Information>
                                     </div>
                                 </div>
@@ -41,7 +41,7 @@
                     </div>
                 </div>
                 <!-- switch between Diagramms and Map Info-->
-                    <div class="medium-5 columns" ng-class="diagramsShowHide" ng-switch on="varSwitchBetweenDiagrammsAndMapInfo">
+                    <div class="medium-5 columns" ng-class="diagramCSS" ng-switch on="showDiagrams">
                         <!-- Right Sidebar & Diagrams-->
                         <div ng-switch-when="true">
                             <div class="off-canvas-wrap ">
@@ -67,32 +67,32 @@
                                     <section class="main-section" style="padding-top: 10px;max-height: 494px;overflow-y: scroll;">
                                         <div class="medium-12 columns">
                                             <div class="row">
-                                                <div class="columns" ng-class="diagram">
+                                                <div class="columns" ng-class="singleDiagramCSS">
                                                     <div class="panel callout">
                                                         <img src="img/diagram.png" alt="diagram">
                                                     </div>
                                                 </div>
-                                                <div class=" columns" ng-class="diagram">
+                                                <div class=" columns" ng-class="singleDiagramCSS">
                                                     <div class="panel callout">
                                                         <img src="img/diagram.png" alt="diagram">
                                                     </div>
                                                 </div>
-                                                <div class="columns"  ng-class="diagram">
+                                                <div class="columns"  ng-class="singleDiagramCSS">
                                                     <div class="panel callout">
                                                         <img src="img/diagram.png" alt="diagram">
                                                     </div>
                                                 </div>
-                                                <div class="columns"  ng-class="diagram">
+                                                <div class="columns"  ng-class="singleDiagramCSS">
                                                     <div class="panel callout">
                                                         <img src="img/diagram.png" alt="diagram">
                                                     </div>
                                                 </div>
-                                                <div class="columns"  ng-class="diagram">
+                                                <div class="columns"  ng-class="singleDiagramCSS">
                                                     <div class="panel callout">
                                                         <img src="img/diagram.png" alt="diagram">
                                                     </div>
                                                 </div>
-                                                <div class="columns"  ng-class="diagram">
+                                                <div class="columns"  ng-class="singleDiagramCSS">
                                                     <div class="panel callout">
                                                         <img src="img/diagram.png" alt="diagram">
                                                     </div>
@@ -113,7 +113,7 @@
             </div>
         </div>
         <!-- Kpis-->
-        <div class="medium-1 columns" ng-class="kipsShowHide" style="padding: 5px;">
+        <div class="medium-1 columns" ng-class="kipsCSS" style="padding: 5px;">
             <div class="row full-width" style="margin-top: 50px">
                 <div class="medium-12 columns" style="background-color: #ff8f00;height: 80px;margin-bottom: 5px">
                     <a>

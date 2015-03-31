@@ -2,7 +2,7 @@
  * Created by lwi on 19.03.2015.
  */
 
-function OLMap(config){
+function OLMap(config, mapService){
 
     this.layerGoogle = new OpenLayers.Layer.Google("google");
     this.layerOSM = new OpenLayers.Layer.OSM("OSM");
@@ -10,7 +10,7 @@ function OLMap(config){
     this.config = config;
 
     var setSelected = function(feature, select){
-        if (feature === undefined) return;
+        if (feature === null) return;
 
         if (select){
             feature.style.strokeWidth = feature.defaultStyle.select.strokeWidth;
@@ -35,6 +35,8 @@ function OLMap(config){
                     selectedfeature.layer.redraw();
                 }
                 //rightMenuClass.closeRightPanel();
+                //scope.$emit('closeMapObjectInformationPanel', null);
+                //mapService.closeMapObjectInformationPanel();
                 //mapService.hideInformation();
             },
             featureover: function(e) {
@@ -51,16 +53,20 @@ function OLMap(config){
                 if (selectedfeature == e.feature){
                     setSelected(selectedfeature, false);
                     //rightMenuClass.closeRightPanel();
+                    //scope.$emit('closeMapObjectInformationPanel', null);
+                    //mapService.closeMapObjectInformationPanel();
                     //mapService.hideInformation();
                     selectedfeature = null;
                 }else{
-                    if (selectedfeature !== null){
+                    if (selectedfeature !== undefined){
                         setSelected(selectedfeature, false);
                     }
                     selectedfeature = e.feature;
                     setSelected(e.feature, true);
                     //rightMenuClass.openRightPanel();
                     var mapObject = olMap.getLayersByName(e.feature.layer.name)[0].getFeatureById(e.feature.id).mapObject;
+                    //scope.$emit('openMapObjectInformationPanel', null);
+                    //mapService.openMapObjectInformationPanel();
                     //mapService.showInformation(mapObject);
                     //rightMenuClass.fillRightMenu();
                 }

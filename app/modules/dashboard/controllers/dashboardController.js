@@ -6,37 +6,34 @@ angular.module('app.dashboard.controllers',[
 
     .controller('dashboardController', ['$scope','$log', function($scope,$log) {
 
-        $scope.varShowHideMap=false;
-        $scope.mapShowHide='medium-7';
-        $scope.diagramsShowHide='medium-5';
+        $scope.showBigMap=false;
+        $scope.mapCSS='medium-7';
+        $scope.diagramCSS='medium-5';
 
-        $scope.varShowHideKPIs=false;
-        $scope.contentShowHide='medium-11';
-        $scope.kipsShowHide='medium-1';
+        $scope.showKPIs=true;
+        $scope.contentCSS='medium-11';
+        $scope.kipsCSS='medium-1';
 
-        $scope.diagram='medium-6';
-        $scope.ShowHideMapIcon=false;
+        $scope.singleDiagramCSS='medium-6';
         $scope.showHideMap=function(){
 
-            $scope.varShowHideMap = !$scope.varShowHideMap;
-            $scope.ShowHideMapIcon = !$scope.ShowHideMapIcon;
-            $log.log ($scope.varShowHideMap);
+            $scope.showBigMap = !$scope.showBigMap;
 
-            if($scope.varShowHideMap===true){
-                $scope.mapShowHide='medium-12';
-                $scope.diagramsShowHide='medium-12 diagramMarginBottom';
-                $scope.diagram='medium-3';
-                if(($scope.varOverlayMapInfo===false)&&( $scope.varSwitchBetweenDiagrammsAndMapInfo===false)){
-                    $scope.varOverlayMapInfo=true;
-                    $scope.varSwitchBetweenDiagrammsAndMapInfo=true;
+            if($scope.showBigMap===true){
+                $scope.mapCSS='medium-12';
+                $scope.diagramCSS='medium-12 diagramMarginBottom';
+                $scope.singleDiagramCSS='medium-3';
+                if(($scope.showOverlayMapInfo===false)&&( $scope.showDiagrams===false)){
+                    $scope.showOverlayMapInfo=true;
+                    $scope.showDiagrams=true;
                 }
             }else{
-                $scope.mapShowHide='medium-7';
-                $scope.diagramsShowHide='medium-5';
-                $scope.diagram='medium-6';
-                if($scope.varOverlayMapInfo===true){
-                    $scope.varOverlayMapInfo=false;
-                    $scope.varSwitchBetweenDiagrammsAndMapInfo=false;
+                $scope.mapCSS='medium-7';
+                $scope.diagramCSS='medium-5';
+                $scope.singleDiagramCSS='medium-6';
+                if($scope.showOverlayMapInfo===true){
+                    $scope.showOverlayMapInfo=false;
+                    $scope.showDiagrams=false;
                 }
             }
 
@@ -44,31 +41,49 @@ angular.module('app.dashboard.controllers',[
         };
         $scope.showHideKPIs=function(){
 
-            $scope.varShowHideKPIs = !$scope.varShowHideKPIs;
-            $log.log ($scope.varShowHideKPIs);
+            $scope.showKPIs = !$scope.showKPIs;
+            $log.log ($scope.showKPIs);
 
-            if($scope.varShowHideKPIs===false){
-                $scope.contentShowHide='medium-11';
-                $scope.kipsShowHide='medium-1';
+            if($scope.showKPIs===true){
+                $scope.contentCSS='medium-11';
+                $scope.kipsCSS='medium-1';
             }else{
-                $scope.contentShowHide='medium-12';
-                $scope.kipsShowHide='medium-0';
+                $scope.contentCSS='medium-12';
+                $scope.kipsCSS='medium-0';
             }
 
             $scope.$emit('updateMap', null);
         };
 
+        var mapObjectInformationPanelisOpen = function(){
+            if ($scope.showDiagrams === false || $scope.showOverlayMapInfo === true){
+                return true;
+            }else{
+                return false;
+            }
+        };
+        $scope.$on('openMapObjectInformationPanel', function(event, args){
+            if (mapObjectInformationPanelisOpen()) $scope.switchBetweenDiagrammsAndMapInfo();
 
-        $scope.varSwitchBetweenDiagrammsAndMapInfo=true;
-        $scope.varOverlayMapInfo=false;
+        });
+        $scope.$on('closeMapObjectInformationPanel', function(event, args){
+            if (!mapObjectInformationPanelisOpen()) $scope.switchBetweenDiagrammsAndMapInfo();
+        });
+
+        $scope.showDiagrams=true;
+        $scope.showOverlayMapInfo=false;
         $scope.switchBetweenDiagrammsAndMapInfo=function(){
 
-            if($scope.varShowHideMap===false){
-                $scope.varSwitchBetweenDiagrammsAndMapInfo = !$scope.varSwitchBetweenDiagrammsAndMapInfo;
-                $scope.varOverlayMapInfo=false;
+            if($scope.showBigMap===false){
+                $scope.showDiagrams = !$scope.showDiagrams;
+                $scope.showOverlayMapInfo=false;
             }else{
-                $scope.varSwitchBetweenDiagrammsAndMapInfo = true;
-                $scope.varOverlayMapInfo=!$scope.varOverlayMapInfo;
+                $scope.showDiagrams = true;
+                $scope.showOverlayMapInfo=!$scope.showOverlayMapInfo;
+            }
+
+            if ($scope.showDiagrams === false || $scope.showOverlayMapInfo === true){
+            }else{
             }
             $scope.$emit('updateMap', null);
         };
