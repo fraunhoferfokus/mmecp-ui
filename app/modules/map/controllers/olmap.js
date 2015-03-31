@@ -10,7 +10,7 @@ function OLMap(config){
     this.config = config;
 
     var setSelected = function(feature, select){
-        if (feature === null) return;
+        if (feature === undefined) return;
 
         if (select){
             feature.style.strokeWidth = feature.defaultStyle.select.strokeWidth;
@@ -30,7 +30,7 @@ function OLMap(config){
         displayProjection: new OpenLayers.Projection("EPSG:4326"),
         eventListeners: {
             nofeatureclick: function(e){
-                if (selectedfeature !== null){
+                if (selectedfeature !== undefined){
                     setSelected(selectedfeature, false);
                     selectedfeature.layer.redraw();
                 }
@@ -54,7 +54,7 @@ function OLMap(config){
                     //mapService.hideInformation();
                     selectedfeature = null;
                 }else{
-                    if (selectedfeature !== null){
+                    if (selectedfeature !== undefined){
                         setSelected(selectedfeature, false);
                     }
                     selectedfeature = e.feature;
@@ -76,7 +76,7 @@ function OLMap(config){
 
     this.vector = this.getParkingLayer();
     this.olMap.addLayer(this.vector);
-};
+}
 
 OLMap.prototype.setCenter = function(city) {
     if (this.olMap === null) return;
@@ -107,16 +107,16 @@ OLMap.prototype.setCenter = function(city) {
 
 OLMap.prototype.getmapAreaofMapObject = function(mapObject){
     for (var i = 0;i<mapObject.elements.length;i++){
-        if (mapObject.elements[i].maparea != null){
+        if (mapObject.elements[i].maparea !== undefined){
             return mapObject.elements[i].maparea;
         }
     }
     return null;
-}
+};
 
 OLMap.prototype.addObjects = function (mapObjectList){
 
-    if (this.vector == null) return;
+    if (this.vector === undefined) return;
     for (i = 0;i<mapObjectList.length; i++){
         var mapArea = this.getmapAreaofMapObject(mapObjectList[i]);
         var fid = mapObjectList[i].objectID + ":" +
@@ -126,7 +126,7 @@ OLMap.prototype.addObjects = function (mapObjectList){
         feature.mapObject = mapObjectList[i];
         this.vector.addFeatures([feature]);
     }
-}
+};
 
 OLMap.prototype.getParkingLayer = function(){
     vector = new OpenLayers.Layer.Vector("parkingLayer");
@@ -187,4 +187,4 @@ OLMap.prototype.createPolygonFeature = function(area, id){
     };
 
     return newVector;
-}
+};

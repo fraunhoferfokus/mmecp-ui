@@ -35,17 +35,17 @@ angular.module('app.dashboard.map', ['app.socket', 'app.config'])
         });
 
         var updateMap = function(){
-            mapService.map.updateSize();
+            map.olMap.updateSize();
         };
         var removeMapObjects = function(layer, subType){
-            var layer = map.olMap.getLayersByName(layer)[0];
+            var ollayer = map.olMap.getLayersByName(layer)[0];
             var featuresToRemove = [];
-            for (i = 0;i<layer.features.length;i++){
-                if (layer.features[i].mapObject.objectSubtype == subType){
-                    featuresToRemove.push(layer.features[i]);
+            for (i = 0;i<ollayer.features.length;i++){
+                if (ollayer.features[i].mapObject.objectSubtype == subType){
+                    featuresToRemove.push(ollayer.features[i]);
                 }
             }
-            layer.removeFeatures(featuresToRemove);
+            ollayer.removeFeatures(featuresToRemove);
         };
         var switchLayer = function(){
             //toggle the OpenStreet and Google Layer
@@ -169,7 +169,7 @@ angular.module('app.dashboard.map', ['app.socket', 'app.config'])
             restrict: 'E',
             template: ' <div style="width:100%; height:100%" id="map"></div> ',
             controller: 'mapController'
-        }
+        };
     }).directive('filter', function(){
         return{
             restrict: 'E',
@@ -177,7 +177,7 @@ angular.module('app.dashboard.map', ['app.socket', 'app.config'])
             '<filterentry ng-repeat="filter in filters"></filterentry>' +
             '</ul>',
             controller: 'filterController'
-        }
+        };
     }).directive('filterentry', function(){
         return{
             restrict: 'E',
@@ -186,5 +186,5 @@ angular.module('app.dashboard.map', ['app.socket', 'app.config'])
             '<a ng-class="{filterActive: option.requested}" id="{{option.id}}" ng-click="callFilter(option)">{{option.value}}</a>' +
             '</li>',
             controller: 'filterController'
-        }
+        };
     });
