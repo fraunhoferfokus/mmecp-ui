@@ -2,7 +2,7 @@
  * Created by lwi on 19.03.2015.
  */
 
-angular.module('app.dashboard.map', ['app.socket', 'app.config'])
+angular.module('app.dashboard.map', ['app.socket', 'app.config', 'app.dashboard.map.directives'])
 
     .service('mapService', function(socketService){
         this.requestnewMapObjects = function(requestString){
@@ -141,10 +141,12 @@ angular.module('app.dashboard.map', ['app.socket', 'app.config'])
         };
     }])
 
-    .controller('informationController', ['$scope', 'mapService', function($scope, mapService){
+    .controller('mapObjectInformationController', ['$scope', 'mapService', function($scope, mapService){
         //Events:
         //openInformationPanel, closeInformationPanel
         //******************
+        $scope.headline = "Modal Split";
+
         $scope.$on('openInformationPanel', function(event, args){
             openInformationPanel(args);
         });
@@ -162,29 +164,4 @@ angular.module('app.dashboard.map', ['app.socket', 'app.config'])
             //usually called from map Panel
         };
         //******************
-    }])
-
-    .directive('olMap', function(){
-        return {
-            restrict: 'E',
-            template: ' <div style="width:100%; height:100%" id="map"></div> ',
-            controller: 'mapController'
-        };
-    }).directive('filter', function(){
-        return{
-            restrict: 'E',
-            template: '<ul class="off-canvas-list">' +
-            '<filterentry ng-repeat="filter in filters"></filterentry>' +
-            '</ul>',
-            controller: 'filterController'
-        };
-    }).directive('filterentry', function(){
-        return{
-            restrict: 'E',
-            template: '<li><label>{{filter.title}}</label></li>' +
-            '<li ng-repeat="option in filter.options">' +
-            '<a ng-class="{filterActive: option.requested}" id="{{option.id}}" ng-click="callFilter(option)">{{option.value}}</a>' +
-            '</li>',
-            controller: 'filterController'
-        };
-    });
+    }]);

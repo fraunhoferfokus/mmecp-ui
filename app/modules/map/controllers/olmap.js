@@ -23,14 +23,14 @@ function OLMap(config){
         }
     };
 
-    var selectedfeature;
+    var selectedfeature = null;
     var olMap;
     this.olMap = new OpenLayers.Map('map', {
         projection: new OpenLayers.Projection("EPSG:4326"),
         displayProjection: new OpenLayers.Projection("EPSG:4326"),
         eventListeners: {
             nofeatureclick: function(e){
-                if (selectedfeature !== undefined){
+                if (selectedfeature !== null){
                     setSelected(selectedfeature, false);
                     selectedfeature.layer.redraw();
                 }
@@ -54,7 +54,7 @@ function OLMap(config){
                     //mapService.hideInformation();
                     selectedfeature = null;
                 }else{
-                    if (selectedfeature !== undefined){
+                    if (selectedfeature !== null){
                         setSelected(selectedfeature, false);
                     }
                     selectedfeature = e.feature;
