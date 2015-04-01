@@ -4,7 +4,7 @@
 angular.module('app.dashboard.controllers',[
 ])
 
-    .controller('dashboardController', ['$scope','$log', function($scope,$log) {
+    .controller('dashboardController', ['$scope','$log', '$rootScope', function($scope,$log, $rootScope) {
 
         $scope.showBigMap=false;
         $scope.mapCSS='medium-7';
@@ -38,6 +38,7 @@ angular.module('app.dashboard.controllers',[
             }
 
             $scope.$emit('updateMap', null);
+            $rootScope.$broadcast('updateMapObject', null);
         };
         $scope.showHideKPIs=function(){
 
@@ -51,8 +52,6 @@ angular.module('app.dashboard.controllers',[
                 $scope.contentCSS='medium-12';
                 $scope.kipsCSS='medium-0';
             }
-
-            $scope.$emit('updateMap', null);
         };
 
         var mapObjectInformationPanelisOpen = function(){
@@ -92,11 +91,6 @@ angular.module('app.dashboard.controllers',[
                 $scope.showDiagrams = true;
                 $scope.showOverlayMapInfo=!$scope.showOverlayMapInfo;
             }
-
-            if ($scope.showDiagrams === false || $scope.showOverlayMapInfo === true){
-            }else{
-            }
-            $scope.$emit('updateMap', null);
         };
 
     }])

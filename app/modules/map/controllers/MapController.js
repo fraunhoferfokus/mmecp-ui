@@ -8,12 +8,13 @@ angular.module('app.dashboard.map', ['app.socket', 'app.config', 'app.dashboard.
         this.requestnewMapObjects = function(requestString){
             socketService.send(requestString);
         };
+        this.mapObjectForInformationPanel = "";
     })
 
     .controller('mapController', ['$scope', 'mapService', 'configService', 'socketService', '$rootScope', function($scope, mapService, configService, socketService, $rootScope){
-        this.map = new OLMap(configService, function(broadcastmessage, object){
-            $rootScope.$broadcast(broadcastmessage, object);
-        });
+        this.map = new OLMap(configService, function(broadcastmessage){
+            $rootScope.$broadcast(broadcastmessage, null);
+        }, mapService);
         var map = this.map;
 
         var newObserver = {
@@ -150,16 +151,16 @@ angular.module('app.dashboard.map', ['app.socket', 'app.config', 'app.dashboard.
 
         $scope.$on('updateMapObject', function(event, mapObject){
             $scope.$apply(function(){
-                updateMapObject(mapObject);
+                updateMapObject();
             });
         });
 
-        var updateMapObject = function(mapObject){
+        var updateMapObject = function(){
+            var mapObject = mapService.mapObjectForInformationPanel;
             $scope.elements = [];
             for (i = 0; i < mapObject.elements.length; i++) {
 
                 if (mapObject.elements[i].attribute) {
-                    console.log(mapObject.elements[i].attribute.label + ", " + mapObject.elements[i].attribute.value);
                     $scope.elements.push(mapObject.elements[i].attribute);
                 }
             }
