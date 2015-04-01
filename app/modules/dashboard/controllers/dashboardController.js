@@ -62,12 +62,23 @@ angular.module('app.dashboard.controllers',[
                 return false;
             }
         };
+
         $scope.$on('openMapObjectInformationPanel', function(event, args){
-            if (mapObjectInformationPanelisOpen()) $scope.switchBetweenDiagrammsAndMapInfo();
+            //if closed, then open!
+            if (!mapObjectInformationPanelisOpen()){
+                $scope.$apply(function(){
+                    $scope.switchBetweenDiagrammsAndMapInfo();
+                });
+            }
 
         });
         $scope.$on('closeMapObjectInformationPanel', function(event, args){
-            if (!mapObjectInformationPanelisOpen()) $scope.switchBetweenDiagrammsAndMapInfo();
+            //if opened, then close!
+            if (mapObjectInformationPanelisOpen()){
+                $scope.$apply(function(){
+                    $scope.switchBetweenDiagrammsAndMapInfo();
+                });
+            }
         });
 
         $scope.showDiagrams=true;

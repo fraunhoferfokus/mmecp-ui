@@ -2,7 +2,7 @@
  * Created by lwi on 19.03.2015.
  */
 
-function OLMap(config, mapService){
+function OLMap(config, $rootScope){
 
     this.layerGoogle = new OpenLayers.Layer.Google("google");
     this.layerOSM = new OpenLayers.Layer.OSM("OSM");
@@ -35,7 +35,7 @@ function OLMap(config, mapService){
                     selectedfeature.layer.redraw();
                 }
                 //rightMenuClass.closeRightPanel();
-                //scope.$emit('closeMapObjectInformationPanel', null);
+                $rootScope.$broadcast('closeMapObjectInformationPanel', null);
                 //mapService.closeMapObjectInformationPanel();
                 //mapService.hideInformation();
             },
@@ -53,7 +53,7 @@ function OLMap(config, mapService){
                 if (selectedfeature == e.feature){
                     setSelected(selectedfeature, false);
                     //rightMenuClass.closeRightPanel();
-                    //scope.$emit('closeMapObjectInformationPanel', null);
+                    $rootScope.$broadcast('closeMapObjectInformationPanel', null);
                     //mapService.closeMapObjectInformationPanel();
                     //mapService.hideInformation();
                     selectedfeature = null;
@@ -65,7 +65,7 @@ function OLMap(config, mapService){
                     setSelected(e.feature, true);
                     //rightMenuClass.openRightPanel();
                     var mapObject = olMap.getLayersByName(e.feature.layer.name)[0].getFeatureById(e.feature.id).mapObject;
-                    //scope.$emit('openMapObjectInformationPanel', null);
+                    $rootScope.$broadcast('openMapObjectInformationPanel', null);
                     //mapService.openMapObjectInformationPanel();
                     //mapService.showInformation(mapObject);
                     //rightMenuClass.fillRightMenu();

@@ -8,28 +8,10 @@ angular.module('app.dashboard.map', ['app.socket', 'app.config', 'app.dashboard.
         this.requestnewMapObjects = function(requestString){
             socketService.send(requestString);
         };
-
-        /*this.openMapObjectInformationPanelFuntion;
-        var openMapObjectInformationPanelFuntion= this.openMapObjectInformationPanelFuntion;
-        this.closeMapObjectInformationPanelFuntion;
-        var closeMapObjectInformationPanelFuntion= this.closeMapObjectInformationPanelFuntion;
-        this.setOpenMapObjectInformationPanelFunction = function(fnk){
-            openMapObjectInformationPanelFuntion = fnk;
-        };
-        this.setCloseMapObjectInformationPanelFunction = function(fnk){
-            closeMapObjectInformationPanelFuntion = fnk;
-        };
-        this.openMapObjectInformationPanel = function(){
-            openMapObjectInformationPanelFuntion();
-        };
-
-        this.closeMapObjectInformationPanel = function(){
-            closeMapObjectInformationPanelFuntion();
-        };*/
     })
 
-    .controller('mapController', ['$scope', 'mapService', 'configService', 'socketService', function($scope, mapService, configService, socketService){
-        this.map = new OLMap(configService, mapService);
+    .controller('mapController', ['$scope', 'mapService', 'configService', 'socketService', '$rootScope', function($scope, mapService, configService, socketService, $rootScope){
+        this.map = new OLMap(configService, $rootScope);
         var map = this.map;
 
         var newObserver = {
