@@ -8,7 +8,7 @@ angular.module('app.dashboard.map', ['app.socket', 'app.config', 'app.dashboard.
         this.requestnewMapObjects = function(requestString){
             socketService.send(requestString);
         };
-        this.mapObjectForInformationPanel = "";
+        this.mapObjectForInformationPanel = undefined;
     })
 
     .controller('mapController', ['$scope', 'mapService', 'configService', 'socketService', '$rootScope', function($scope, mapService, configService, socketService, $rootScope){
@@ -144,20 +144,25 @@ angular.module('app.dashboard.map', ['app.socket', 'app.config', 'app.dashboard.
         };
     }])
 
-    .controller('mapObjectInformationController', ['$scope', 'mapService', function($scope, mapService){
+    .controller('mapObjectInformationController', ['$scope', 'mapService', '$timeout', function($scope, mapService, $timeout){
 
         $scope.headline = "Modal Split";
         $scope.elements = [];
 
         $scope.$on('updateMapObject', function(event, mapObject){
-            $scope.$apply(function(){
+            if(!$scope.$$phase) {
+                $scope.$apply(function(){
+                    updateMapObject();
+                });
+            }else{
                 updateMapObject();
-            });
+            }
         });
 
         var updateMapObject = function(){
             var mapObject = mapService.mapObjectForInformationPanel;
             $scope.elements = [];
+            if (mapObject === undefined) return;
             for (i = 0; i < mapObject.elements.length; i++) {
 
                 if (mapObject.elements[i].attribute) {
@@ -165,4 +170,6 @@ angular.module('app.dashboard.map', ['app.socket', 'app.config', 'app.dashboard.
                 }
             }
         };
+
+        updateMapObject();
     }]);
