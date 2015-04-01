@@ -1,4 +1,9 @@
 <div>
-    <p>Horizontal..</p>
     <p>{{headline}}</p>
+    <div class="elemententry" ng-repeat="element in elements">
+        <dl class="dl-horizontal" >
+            <dt>{{element.label}}</dt>
+            <dd>{{element.value}}</dd>
+        </dl>
+    </div>
 </div>

@@ -2,7 +2,7 @@
  * Created by lwi on 19.03.2015.
  */
 
-function OLMap(config, $rootScope){
+function OLMap(config, rootboadcastEvent){
 
     this.layerGoogle = new OpenLayers.Layer.Google("google");
     this.layerOSM = new OpenLayers.Layer.OSM("OSM");
@@ -35,7 +35,7 @@ function OLMap(config, $rootScope){
                     selectedfeature.layer.redraw();
                 }
                 //rightMenuClass.closeRightPanel();
-                $rootScope.$broadcast('closeMapObjectInformationPanel', null);
+                rootboadcastEvent('closeMapObjectInformationPanel', null);
                 //mapService.closeMapObjectInformationPanel();
                 //mapService.hideInformation();
             },
@@ -52,10 +52,7 @@ function OLMap(config, $rootScope){
             featureclick: function(e) {
                 if (selectedfeature == e.feature){
                     setSelected(selectedfeature, false);
-                    //rightMenuClass.closeRightPanel();
-                    $rootScope.$broadcast('closeMapObjectInformationPanel', null);
-                    //mapService.closeMapObjectInformationPanel();
-                    //mapService.hideInformation();
+                    rootboadcastEvent('closeMapObjectInformationPanel', null);
                     selectedfeature = null;
                 }else{
                     if (selectedfeature !== undefined){
@@ -63,12 +60,9 @@ function OLMap(config, $rootScope){
                     }
                     selectedfeature = e.feature;
                     setSelected(e.feature, true);
-                    //rightMenuClass.openRightPanel();
                     var mapObject = olMap.getLayersByName(e.feature.layer.name)[0].getFeatureById(e.feature.id).mapObject;
-                    $rootScope.$broadcast('openMapObjectInformationPanel', null);
-                    //mapService.openMapObjectInformationPanel();
-                    //mapService.showInformation(mapObject);
-                    //rightMenuClass.fillRightMenu();
+                    rootboadcastEvent('openMapObjectInformationPanel', null);
+                    rootboadcastEvent('updateMapObject', mapObject);
                 }
                 e.feature.layer.redraw();
             }

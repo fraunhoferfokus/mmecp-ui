@@ -11,7 +11,9 @@ angular.module('app.dashboard.map', ['app.socket', 'app.config', 'app.dashboard.
     })
 
     .controller('mapController', ['$scope', 'mapService', 'configService', 'socketService', '$rootScope', function($scope, mapService, configService, socketService, $rootScope){
-        this.map = new OLMap(configService, $rootScope);
+        this.map = new OLMap(configService, function(broadcastmessage, object){
+            $rootScope.$broadcast(broadcastmessage, object);
+        });
         var map = this.map;
 
         var newObserver = {
@@ -142,26 +144,24 @@ angular.module('app.dashboard.map', ['app.socket', 'app.config', 'app.dashboard.
     }])
 
     .controller('mapObjectInformationController', ['$scope', 'mapService', function($scope, mapService){
-        //Events:
-        //openInformationPanel, closeInformationPanel
-        //******************
-        $scope.headline = "Modal Split";
 
-        /*$scope.$on('openInformationPanel', function(event, args){
-            openInformationPanel(args);
+        $scope.headline = "Modal Split";
+        $scope.elements = [];
+
+        $scope.$on('updateMapObject', function(event, mapObject){
+            $scope.$apply(function(){
+                updateMapObject(mapObject);
+            });
         });
 
-        $scope.$on('closeInformationPanel', function(event, args){
-            closeInformationPanel();
-        });*/
+        var updateMapObject = function(mapObject){
+            $scope.elements = [];
+            for (i = 0; i < mapObject.elements.length; i++) {
 
-        var openInformationPanel = function(){
-            //Show the information Panel with information out of the mapObject
-            //usually called by clicking on polygon
+                if (mapObject.elements[i].attribute) {
+                    console.log(mapObject.elements[i].attribute.label + ", " + mapObject.elements[i].attribute.value);
+                    $scope.elements.push(mapObject.elements[i].attribute);
+                }
+            }
         };
-        var closeInformationPanel = function(){
-            //hide the information Panel
-            //usually called from map Panel
-        };
-        //******************
     }]);
