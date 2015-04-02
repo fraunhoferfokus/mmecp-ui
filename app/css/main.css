@@ -129,5 +129,49 @@
     z-index: 1000;
 }
 /*content*/
+.map-diagramm-content{
+    padding-left: 0px;
+    padding-right: 0px;
+}
+.map-diagramm-content > .row {
+    margin-left: 0px;
+    margin-right: 0px;
+}
+.map-content{
+    margin-bottom: 10px;
+    padding-right: 0px;
+}
+.tab-bar-section-map{
+    padding-right: 0px;
+}
+.tab-bar-section-map > a{
+    padding-top: 5px;
+}
+.btn-showHideMap{
+    padding-top: 5px;
+}
+.btn-showHideMap > i{
+    font-size: 24px;
+}
+.main-section{
+    padding-top: 10px;
+    height: 485px;
+}
 
-
+.overlayMapInfo-section > .small-12{
+    height: 485px;
+    padding: 0px;
+}
+.ol-map{
+    height: 485px;
+}
+.map-object-info{
+    margin-top: 55px;
+    height: 486px;
+    overflow-y: scroll;"
+}
+.diagrams-section{
+    padding-top: 10px;
+    max-height: 494px;
+    overflow-y: scroll;
+}
