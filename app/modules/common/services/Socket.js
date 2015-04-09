@@ -2,20 +2,28 @@
  * Created by lwi on 19.03.2015.
  */
 
-angular.module('app.socket', ['ngWebSocket', 'app.config'])
+angular.module('app.socket', ['ngWebsocket', 'app.config'])
 
     .factory('socketService', function($websocket, configService){
     // Open a WebSocket connection
-        var ws = $websocket(configService.socket.url);
+        var ws = $websocket.$new({
+            url: configService.socket.url,
+            reconnect: true,
+            reconnectInterval: 1000 // it will reconnect after 0.5 seconds
+        });
 
         var mapObjects = [];
         var subject = [];
 
-        ws.onMessage(function(event) {
-            var res;
+        ws.$on('$open', function () {
+            console.log('connection open');
+        });
+        ws.$on('$message', function(event) {
+            var res = event;
+
             try {
 
-                res = JSON.parse(event.data);
+                //res = JSON.parse(event);
                 //TODO: validate
                 //var validator = new ZSchema();
                 var schema = "schema.json";
@@ -23,27 +31,24 @@ angular.module('app.socket', ['ngWebSocket', 'app.config'])
                 //var schemaMapObject = streetlifeSchema.getSchema(schema);
                 //var valid = validator.validate(res, schemaMapObject);
                 /*if (!valid) {
-                    console.log("requested json File is not valid with schema " + schema);
-                    console.log(validator.getLastErrors());
-                    return null;
-                }*/
+                 console.log("requested json File is not valid with schema " + schema);
+                 console.log(validator.getLastErrors());
+                 return null;
+                 }*/
             } catch(e) {
                 console.log("Error in onMessage in SocketService");
-                res = {'username': 'anonymous', 'message': event.data};
+                res = {'username': 'anonymous', 'message': event};
             }
             mapObjects.push(res);
             for (var i = 0;i<subject.length;i++){
                 subject[i].notify();
             }
         });
-        ws.onError(function(event) {
-            console.log('connection Error', event);
+        ws.$on('$error', function() {
+            console.log('connection Error');
         });
-        ws.onClose(function(event) {
-            console.log('connection closed', event);
-        });
-        ws.onOpen(function() {
-            console.log('connection open');
+        ws.$on('$close', function() {
+            console.log('connection closed');
         });
 
         var lastCommandSends = [];
@@ -61,15 +66,15 @@ angular.module('app.socket', ['ngWebSocket', 'app.config'])
             },
             mapObjects: mapObjects,
             status: function() {
-                return ws.readyState;
+                return ws.$ready();
             },
             send: function(message) {
                 if (angular.isString(message)) {
                     this.lastCommandSends.push(message);
-                    ws.send(message);
+                    ws.$emit(message);
                 }
                 else if (angular.isObject(message)) {
-                    ws.send(JSON.stringify(message));
+                    ws.$emit(JSON.stringify(message));
                 }
             }
         };

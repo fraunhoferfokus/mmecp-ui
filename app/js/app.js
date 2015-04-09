@@ -6,7 +6,7 @@ var streetlifeDependencies=[
     'ui.router',
     'ngAnimate',
     'mm.foundation',
-    'ngWebSocket',
+    'ngWebsocket',
     'app.config',
     'app.dashboard',
     'app.dashboard.map',
