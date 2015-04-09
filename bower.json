@@ -18,8 +18,7 @@
     "angular": "~1.3.14",
     "foundation": "~5.5.1",
     "ui-router": "~0.2.13",
-    "foundation-icon-fonts": "*",
-    "ng-websocket": "~0.2.1"
+    "foundation-icon-fonts": "*"
   },
   "resolutions": {
     "angular": "~1.3.14"
