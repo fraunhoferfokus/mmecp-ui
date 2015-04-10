@@ -14,7 +14,7 @@ angular.module('app.dashboard.controllers',[
         $scope.contentCSS='medium-11';
         $scope.kipsCSS='medium-1';
 
-        $scope.singleDiagramCSS='medium-6';
+        $scope.singleDiagramCSS='medium-10';
         $scope.showHideMap=function(){
 
             $scope.showBigMap = !$scope.showBigMap;
@@ -30,7 +30,7 @@ angular.module('app.dashboard.controllers',[
             }else{
                 $scope.mapCSS='medium-7';
                 $scope.diagramCSS='medium-5';
-                $scope.singleDiagramCSS='medium-6';
+                $scope.singleDiagramCSS='medium-10';
                 if($scope.showOverlayMapInfo===true){
                     $scope.showOverlayMapInfo=false;
                     $scope.showDiagrams=false;
