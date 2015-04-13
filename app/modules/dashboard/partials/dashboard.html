@@ -1,133 +1,160 @@
-    <div class="row full-width" style="padding-right: 10px">
-        <div class="medium-12">
-            <a class="right" ng-click="showHideKPIs()">KPIs</a>
-        </div>
+<div class="row full-width" style="padding-right: 10px">
+    <div class="medium-12">
+        <a class="right" ng-click="showHideKPIs()">KPIs</a>
     </div>
-    <div class="row full-width">
-        <!-- Content(Map & Diagrams) -->
-        <div class="medium-11 columns" ng-class="contentCSS" style=" padding-left: 0px; padding-right: 0px;">
-            <div class="row full-width" style="margin-left: 0px; margin-right: 0px;">
-                <!-- Left Sidebar & Map-->
-                <div ng-class="mapCSS" class="medium-7 columns" style="margin-bottom: 10px;padding-right: 0;">
-                     <!-- Left Sidebar -->
-                     <div class="off-canvas-wrap">
-                         <div class="inner-wrap">
-                             <nav class="tab-bar">
-                                 <section class="left-small">
-                                     <a class="left-off-canvas-toggle menu-icon"><span></span></a>
-                                 </section>
-                                 <section ng-switch on="showBigMap" class="middle tab-bar-section tab-bar-section-map" style="padding-right: 0px;">
-                                     <h1 class="title left">Map</h1>
-                                     <a  ng-switch-when="true" class="right" ng-click="showHideMap()" style="padding-top: 5px"><i class="fi-arrows-in large" style="font-size: 24px;"></i></a>
-                                     <a  ng-switch-when="false" class="right" ng-click="showHideMap()" style="padding-top: 5px"><i class="fi-arrows-out large" style="font-size: 24px;"></i></a>
-                                 </section>
-                             </nav>
-                             <!-- Filter -->
-                             <aside class="left-off-canvas-menu">
-                                 <filter></filter>
-                             </aside>
-                             <!-- Map -->
-                            <section class="main-section" style="padding-top: 10px;height: 485px;">
-                                <div class="small-12 columns" style="height: 485px;padding: 0px">
-                                    <ol-map alt="Map" style="height: 485px"></ol-map>
-                                    <div class="overlayMapInfo" ng-show="showOverlayMapInfo">
-                                        <map-Object-Information  align="Horizontal"></map-Object-Information>
+</div>
+<div class="row full-width">
+    <!-- Content(Map & Diagrams) -->
+    <div class="medium-11 columns map-diagramm-content" ng-class="contentCSS">
+        <div class="row full-width">
+            <!-- Left Sidebar & Map-->
+            <div ng-class="mapCSS" class="medium-7 columns map-content ">
+                <!-- Left Sidebar -->
+                <div class="off-canvas-wrap">
+                    <div class="inner-wrap">
+                        <nav class="tab-bar">
+                            <section class="left-small">
+                                <a class="left-off-canvas-toggle menu-icon"><span></span></a>
+                            </section>
+                            <section ng-switch on="showBigMap" class="middle tab-bar-section tab-bar-section-map">
+                                <h1 class="title left">Map</h1>
+                                <a  ng-switch-when="true" class="right btn-showHideMap" ng-click="showHideMap()"><i class="fi-arrows-in large"></i></a>
+                                <a  ng-switch-when="false" class="right btn-showHideMap" ng-click="showHideMap()"><i class="fi-arrows-out large"></i></a>
+                            </section>
+                        </nav>
+                        <!-- Filter -->
+                        <aside class="left-off-canvas-menu">
+                            <filter></filter>
+                        </aside>
+                        <!-- Map -->
+                        <section class="main-section overlayMapInfo-section">
+                            <div class="small-12 columns">
+                                <ol-map alt="Map ol-map"></ol-map>
+                                <div class="overlayMapInfo" ng-show="showOverlayMapInfo">
+                                    <map-Object-Information  align="Horizontal"></map-Object-Information>
+                                </div>
+                            </div>
+                        </section>
+                        <a class="exit-off-canvas"></a>
+                    </div>
+                </div>
+            </div>
+            <!-- switch between Diagramms and Map Info-->
+            <div class="medium-5 columns" ng-class="diagramCSS" ng-switch on="showDiagrams">
+                <!-- Right Sidebar & Diagrams-->
+                <div ng-switch-when="true">
+                    <div class="off-canvas-wrap ">
+                        <div class="inner-wrap">
+                            <nav class="tab-bar">
+                                <section class="middle tab-bar-section">
+                                    <h1 class="title right">Diagrams</h1>
+                                </section>
+
+                                <section class="right-small">
+                                    <a class="right-off-canvas-toggle menu-icon" ><span></span></a>
+                                </section>
+                            </nav>
+                            <aside class="right-off-canvas-menu">
+                                <div class="off-canvas-menu-title off-canvas-list">
+                                    <a href="#"></a>
+                                    <p><i class="fi-heart large" style="font-size: 24px"></i><span>Filter</span></p>
+                                </div>
+                                <div class="off-canvas-menu-content">
+                                    <p><label>content</label></p>
+                                </div>
+                            </aside>
+                            <section class="main-section diagrams-section">
+                                <div class="medium-12 columns">
+                                    <div class="row">
+                                        <div class="columns" ng-class="singleDiagramCSS">
+                                            <div class="panel callout">
+                                                <img src="img/diagram.png" alt="diagram">
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </section>
-                             <a class="exit-off-canvas"></a>
+                            <a class="exit-off-canvas"></a>
                         </div>
                     </div>
                 </div>
-                <!-- switch between Diagramms and Map Info-->
-                    <div class="medium-5 columns" ng-class="diagramCSS" ng-switch on="showDiagrams">
-                        <!-- Right Sidebar & Diagrams-->
-                        <div ng-switch-when="true">
-                            <div class="off-canvas-wrap ">
-                                <div class="inner-wrap">
-                                    <nav class="tab-bar">
-                                        <section class="middle tab-bar-section">
-                                            <h1 class="title right">Diagrams</h1>
-                                        </section>
-
-                                        <section class="right-small">
-                                            <a class="right-off-canvas-toggle menu-icon" ><span></span></a>
-                                        </section>
-                                    </nav>
-                                    <aside class="right-off-canvas-menu">
-                                        <div class="off-canvas-menu-title off-canvas-list">
-                                            <a href="#"></a>
-                                            <p><i class="fi-heart large" style="font-size: 24px"></i><span>Filter</span></p>
-                                        </div>
-                                        <div class="off-canvas-menu-content">
-                                            <p><label>content</label></p>
-                                        </div>
-                                    </aside>
-                                    <section class="main-section" style="padding-top: 10px;max-height: 494px;overflow-y: scroll;">
-                                        <div class="medium-12 columns">
-                                            <div class="row">
-                                                <div class="columns" ng-class="singleDiagramCSS">
-                                                    <div class="panel callout">
-                                                        <img src="img/diagram.png" alt="diagram">
-                                                    </div>
-                                                </div>
-                                                <div class=" columns" ng-class="singleDiagramCSS">
-                                                    <div class="panel callout">
-                                                        <img src="img/diagram.png" alt="diagram">
-                                                    </div>
-                                                </div>
-                                                <div class="columns"  ng-class="singleDiagramCSS">
-                                                    <div class="panel callout">
-                                                        <img src="img/diagram.png" alt="diagram">
-                                                    </div>
-                                                </div>
-                                                <div class="columns"  ng-class="singleDiagramCSS">
-                                                    <div class="panel callout">
-                                                        <img src="img/diagram.png" alt="diagram">
-                                                    </div>
-                                                </div>
-                                                <div class="columns"  ng-class="singleDiagramCSS">
-                                                    <div class="panel callout">
-                                                        <img src="img/diagram.png" alt="diagram">
-                                                    </div>
-                                                </div>
-                                                <div class="columns"  ng-class="singleDiagramCSS">
-                                                    <div class="panel callout">
-                                                        <img src="img/diagram.png" alt="diagram">
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                    </section>
-                                    <a class="exit-off-canvas"></a>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Map Info -->
-                        <div ng-switch-when="false"class="panel callout" style="margin-top: 55px;height: 486px;overflow-y: scroll;">
-                            <map-Object-Information align="Vertical"></map-Object-Information>
-                        </div>
-                    </div>
-            </div>
-        </div>
-        <!-- Kpis-->
-        <div class="medium-1 columns" ng-class="kipsCSS" style="padding: 5px;">
-            <div class="row full-width" style="margin-top: 50px">
-                <div class="medium-12 columns" style="background-color: #ff8f00;height: 80px;margin-bottom: 5px">
-                    <a>
-                        <img src="img/KipsIcon/p&r.png"/>
-                        <p style="margin-left: 10px;;color: white;  margin-left: -1px;color: white;font-size: 0.8rem;">Park & Ride</p>
-                    </a>
+                <!-- Map Obeject Info -->
+                <div ng-switch-when="false" class="panel callout map-object-info" ng-style="addStyleToInfoPanel()" resize>
+                    <map-Object-Information align="Vertical"></map-Object-Information>
                 </div>
-                <div class="medium-12 columns" style="background-color: #ffffff;height: 85px;margin-bottom: 5px">
-                    <a>
-                        <img src="img/KipsIcon/p&r_clicked.png"/>
-                        <p style="margin-left: 10px;color: white;  margin-left: -1px;color:#ff8f00 ;font-size: 0.8rem;">Park & Ride</p>
-                    </a>
-                </div>
-
             </div>
         </div>
     </div>
+    <!-- Kpis-->
+    <div class="medium-1 columns" ng-class="kipsCSS" style="padding: 5px;">
+        <div class="row full-width" style="margin-top: 50px">
+            <!--<div class="medium-12 columns" style="background-color: #ff8f00;height: 80px;margin-bottom: 5px">
+                <a>
+                    <img src="img/KipsIcon/p&r.png"/>
+                    <p style="margin-left: 10px;;color: white;  margin-left: -1px;color: white;font-size: 0.8rem;">Park & Ride</p>
+                </a>
+            </div>-->
+            <div class="medium-12 columns" style="background-color: #ffffff;height: 85px;margin-bottom: 5px">
+                <a>
+                    <img src="img/KipsIcon/p&r_clicked.png"/>
+                    <p style="margin-left: 10px;color: white;  margin-left: -1px;color:#1c8cba ;font-size: 0.8rem;">Park & Ride</p>
+                </a>
+            </div>
 
+        </div>
+    </div>
+</div>
+
+<!--
+<div class="container">
+    <h3 class="demo-panel-title mbl pbl">Samples</h3>
+    <div class="row demo-samples">
+        <div class="large-4 columns">
+            <div class="todo">
+                <div class="fi-magnifying-glass">
+                    <input class="todo-search-field" type="search" value="" placeholder="Search" />
+                </div>
+                <ul>
+                    <li >
+                        <a class="todo-done">
+                            <span class="filter-element-icon fi-address-book"></span>
+                            <span class="todo-content">
+                                <h4 class="todo-name">
+                                    Meet <strong>Adrian</strong> at <strong>6pm</strong>
+                                </h4>
+                                Times Square
+                            </span>
+                        </a>
+                    </li>
+                    <li>
+                        <div class="todo-icon fui-list"></div>
+                        <div class="todo-content">
+                            <h4 class="todo-name">
+                                Chat with <strong>V.Kudinov</strong>
+                            </h4>
+                            Skype conference an 9 am
+                        </div>
+                    </li>
+                    <li>
+                        <div class="todo-icon fui-eye"></div>
+                        <div class="todo-content">
+                            <h4 class="todo-name">
+                                Watch <strong>Iron Man</strong>
+                            </h4>
+                            1998 Broadway
+                        </div>
+                    </li>
+                    <li>
+                        <div class="todo-icon fui-time"></div>
+                        <div class="todo-content">
+                            <h4 class="todo-name">
+                                Fix bug on a <strong>Website</strong>
+                            </h4>
+                            As soon as possible
+                        </div>
+                    </li>
+                </ul>
+            </div>&lt;!&ndash; /.todo &ndash;&gt;
+        </div>&lt;!&ndash; /.col-xs-4 &ndash;&gt;
+    </div>
+</div>-->

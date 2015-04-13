@@ -4,10 +4,39 @@
 
 angular.module('app.dashboard.map.directives', ['app.socket', 'app.config'])
 
+    .directive('resize', function ($window) {
+    return function (scope, element) {
+        var w = angular.element($window);
+        scope.getWindowDimensions = function () {
+            return { 'h': w.height(), 'w': w.width() };
+        };
+        scope.$watch(scope.getWindowDimensions, function (newValue, oldValue) {
+            scope.windowHeight = newValue.h;
+            scope.windowWidth = newValue.w;
+
+            scope.addStyleToMap = function () {
+                return {
+                    'height': (newValue.h - 150) + 'px',
+                    'width': (newValue.w) + 'px'
+                };
+            };
+            scope.addStyleToInfoPanel = function () {
+                return {
+                    'height': (newValue.h - 150) + 'px'
+                };
+            };
+
+        }, true);
+
+        w.bind('resize', function () {
+            scope.$apply();
+        });
+    }
+})
     .directive('olMap', function(){
     return {
         restrict: 'E',
-        template: ' <div style="width:100%; height:100%" id="map"></div> ',
+        template: ' <div id="map" ng-style="addStyleToMap()"  style="height: 100%" resize></div> ',
         controller: 'mapController'
     };
     }).directive('filter', function(){

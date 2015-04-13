@@ -6,6 +6,8 @@ angular.module('app.dashboard.controllers',[
 
     .controller('dashboardController', ['$scope','$log', '$rootScope', function($scope,$log, $rootScope) {
 
+
+
         $scope.showBigMap=false;
         $scope.mapCSS='medium-7';
         $scope.diagramCSS='medium-5';
@@ -21,7 +23,7 @@ angular.module('app.dashboard.controllers',[
 
             if($scope.showBigMap===true){
                 $scope.mapCSS='medium-12';
-                $scope.diagramCSS='medium-12 diagramMarginBottom';
+                $scope.diagramCSS='medium-12 diagramMarginBottom display-none';
                 $scope.singleDiagramCSS='medium-3';
                 if(($scope.showOverlayMapInfo===false)&&( $scope.showDiagrams===false)){
                     $scope.showOverlayMapInfo=true;

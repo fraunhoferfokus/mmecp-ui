@@ -125,9 +125,110 @@
     opacity: 0.8;
     position: absolute;
     right: 0;
-    top: 300px;
+    top: 70%;
     z-index: 1000;
 }
 /*content*/
+.map-diagramm-content{
+    padding-left: 0px;
+    padding-right: 0px;
+}
+.map-diagramm-content > .row {
+    margin-left: 0px;
+    margin-right: 0px;
+}
+.map-content{
+    margin-bottom: 10px;
+    padding-right: 0px;
+}
+.tab-bar-section-map{
+    padding-right: 0px;
+}
+.tab-bar-section-map > a{
+    padding-top: 5px;
+}
+.btn-showHideMap{
+    padding-top: 5px;
+}
+.btn-showHideMap > i{
+    font-size: 24px;
+}
+.main-section{
+    padding-top: 10px;
+}
+
+.overlayMapInfo-section > .small-12{
+    padding: 0px;
+}
+.ol-map{
+}
+.map-object-info{
+    margin-top: 55px;
+    overflow-y: scroll;"
+}
+.diagrams-section{
+    padding-top: 10px;
+    max-height: 494px;
+    overflow-y: scroll;
+}
+.display-none{
+    display: none;
+}
 
 
+
+
+
+
+
+
+
+
+
+
+.fi-magnifying-glass {
+    position: relative;
+    padding: 19px 25px 20px;
+    color: #34495e;
+    background: #1abc9c;
+    background-size: 16px 16px;
+    border-radius: 6px 6px 0 0;
+}
+.fi-magnifying-glass:before {
+    position: absolute;
+    top: 50%;
+    left: 92%;
+    display: inline-block;
+    margin: -.5em 0 0 -1em;
+    font-size: 16px;
+    line-height: 17px;
+}
+
+input[type="search"],input[type="search"]:focus {
+    background: #1abc9c;
+    border-color: #1abc9c;
+    box-shadow: none;
+}
+
+.landing-page-content:hover:before {
+    color: #fff;
+    background: none repeat scroll 0% 0% #f6921e;
+}
+.filter-element-icon {
+    float: left;
+    padding: 11px 22px 0 0;
+    font-size: 24px;
+}
+
+.todo a::after {
+    background: none repeat scroll 0 0 #fff;
+    border-radius: 50%;
+    content: " ";
+    display: block;
+    height: 20px;
+    margin-top: -10px;
+    position: absolute;
+    right: 22px;
+    top: 50%;
+    width: 20px;
+}
