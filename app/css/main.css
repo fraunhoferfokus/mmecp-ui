@@ -1,4 +1,9 @@
 /*Gird*/
+svg{
+    display: auto;
+    width: auto;
+    height: auto;
+}
 .row.full-width {
     width: 100%;
     max-width: 100%;

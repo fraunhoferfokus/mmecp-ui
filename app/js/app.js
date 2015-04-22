@@ -10,8 +10,11 @@ var streetlifeDependencies=[
     'app.config',
     'app.dashboard',
     'app.dashboard.map',
+    'app.dashboard.statusPanel',
+    'app.dashboard.directives',
     'app.socket',
-    'app.config'
+    'app.config',
+    'nvd3ChartDirectives'
 ];
 
 var app = angular.module('app', streetlifeDependencies)

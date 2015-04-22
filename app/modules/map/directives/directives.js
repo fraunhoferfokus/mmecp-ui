@@ -25,13 +25,12 @@ angular.module('app.dashboard.map.directives', ['app.socket', 'app.config'])
                     'height': (newValue.h - 150) + 'px'
                 };
             };
-
         }, true);
 
         w.bind('resize', function () {
             scope.$apply();
         });
-    }
+    };
 })
     .directive('olMap', function(){
     return {
@@ -60,7 +59,7 @@ angular.module('app.dashboard.map.directives', ['app.socket', 'app.config'])
         return{
             restrict: 'E',
             templateUrl: function(elem, attr){
-                    return 'modules/map/partials/MapObjectInformation'+attr.align+'.html';
+                return 'modules/map/partials/MapObjectInformation'+attr.align+'.html';
             },
             controller: 'mapObjectInformationController'
         };
