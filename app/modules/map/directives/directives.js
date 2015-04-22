@@ -4,7 +4,7 @@
 
 angular.module('app.dashboard.map.directives', ['app.socket', 'app.config'])
 
-    .directive('resize', function ($window) {
+    .directive('resize', ['$window', function ($window) {
     return function (scope, element) {
         var w = angular.element($window);
         scope.getWindowDimensions = function () {
@@ -31,7 +31,7 @@ angular.module('app.dashboard.map.directives', ['app.socket', 'app.config'])
             scope.$apply();
         });
     };
-})
+}])
     .directive('olMap', function(){
     return {
         restrict: 'E',
