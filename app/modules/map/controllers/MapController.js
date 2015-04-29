@@ -34,11 +34,12 @@ angular.module('app.dashboard.map', ['app.socket', 'app.config', 'app.dashboard.
             switchLayer(args);
         });
         $scope.$on('updateMap', function(event, args){
-            updateMap();
+            $scope.updateMap();
         });
 
-        var updateMap = function(){
+        $scope.updateMap = function(){
             map.olMap.updateSize();
+            console.log("updated map");
         };
         var removeMapObjects = function(layer, subType){
             var ollayer = map.olMap.getLayersByName(layer)[0];
@@ -159,20 +160,16 @@ angular.module('app.dashboard.map', ['app.socket', 'app.config', 'app.dashboard.
             }
         });
 
+        $scope.xAxisTickFormatFunction = function(){
+            return function(d){
+                return "sun";
+            };
+        };
+
         $scope.exampleData = [
             {
                 "key": "Series 1",
                 "values": [
-                    [ 0 , 1],
-                    [ 1 , 5],
-                    [ 2 , 15],
-                    [ 3 , 7],
-                    [ 4 , 34],
-                    [ 5 , 3],
-                    [ 6 , 6],
-                    [ 7 , 5],
-                    [ 8 , 8],
-                    [ 9 , 12],
                 ]
             }
         ];
@@ -185,6 +182,23 @@ angular.module('app.dashboard.map', ['app.socket', 'app.config', 'app.dashboard.
 
                 if (mapObject.elements[i].attribute) {
                     $scope.elements.push(mapObject.elements[i].attribute);
+                }else if (mapObject.elements[i].chart){
+                    var chartObject = mapObject.elements[i].chart;
+
+                    var values = [];
+                    for (x = 0; x<chartObject.data.length;x++){
+                        values[x] = [
+                            chartObject.data[x].label,
+                            chartObject.data[x].value
+                        ];
+                    }
+
+                    $scope.exampleData = [
+                        {
+                            "key": chartObject.valuedescription,
+                            "values": values
+                        }
+                    ];
                 }
             }
         };

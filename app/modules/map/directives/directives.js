@@ -15,7 +15,7 @@ angular.module('app.dashboard.map.directives', ['app.socket', 'app.config'])
             scope.windowWidth = newValue.w;
 
             scope.addStyleToMap = function () {
-                console.log("height: " + (newValue.h - 150) + 'px' + " width: " + (newValue.w) + 'px');
+                console.log("addStyleToMap -> height: " + (newValue.h - 150) + 'px' + " width: " + (newValue.w) + 'px');
                 return {
                     'height': (newValue.h - 150) + 'px',
                     'width': (newValue.w) + 'px'
@@ -31,6 +31,8 @@ angular.module('app.dashboard.map.directives', ['app.socket', 'app.config'])
         w.bind('resize', function () {
             scope.$apply();
         });
+        console.log(scope.getWindowDimensions());
+        scope.$emit('updateMap', null);
     };
 }])
     .directive('olMap', function(){

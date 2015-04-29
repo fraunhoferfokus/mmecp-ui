@@ -5,7 +5,7 @@
 angular.module('app.dashboard.statusPanel', ['app.dashboard.map.directives', 'nvd3ChartDirectives'])
 
     .controller('StatusPanelController', ['$scope', function($scope){
-        $scope.exampleData = [
+        $scope.exampleDataStatusPanel = [
             {
                 "key": "Series 1",
                 "values": [
