@@ -33,6 +33,7 @@ function OLMap(config, rootboadcastEvent, mapService){
                 if (selectedfeature !== null){
                     setSelected(selectedfeature, false);
                     selectedfeature.layer.redraw();
+                    selectedfeature = null;
                 }
                 //rightMenuClass.closeRightPanel();
                 rootboadcastEvent('closeMapObjectInformationPanel', null);
@@ -55,7 +56,7 @@ function OLMap(config, rootboadcastEvent, mapService){
                     rootboadcastEvent('closeMapObjectInformationPanel', null);
                     selectedfeature = null;
                 }else{
-                    if (selectedfeature !== undefined){
+                    if (selectedfeature !== null){
                         setSelected(selectedfeature, false);
                     }
                     selectedfeature = e.feature;
