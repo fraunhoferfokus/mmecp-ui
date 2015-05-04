@@ -38,7 +38,7 @@ angular.module('app.dashboard.map.directives', ['app.socket', 'app.config'])
     .directive('olMap', function(){
     return {
         restrict: 'E',
-        template: ' <div id="map" ng-style="addStyleToMap()"  style="height: 100%" resize></div> ',
+        template: ' <div id="map" ng-style="addStyleToMap()"  style="height: 600px" resize></div> ',
         controller: 'mapController'
     };
     }).directive('filter', function(){
@@ -54,7 +54,7 @@ angular.module('app.dashboard.map.directives', ['app.socket', 'app.config'])
             restrict: 'E',
             template: '<li><label>{{filter.title}}</label></li>' +
             '<li ng-repeat="option in filter.options">' +
-            '<a ng-class="{filterActive: option.requested}" id="{{option.id}}" ng-click="callFilter(option)">{{option.value}}</a>' +
+            '<a ng-class="{filterActive: option.requested}" id="{{option.id}}" ng-click="callFilter(option, $event)">{{option.value}}</a>' +
             '</li>',
             controller: 'filterController'
         };

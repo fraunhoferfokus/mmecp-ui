@@ -124,7 +124,7 @@ angular.module('app.dashboard.map', ['app.socket', 'app.config', 'app.dashboard.
             }
         ];
 
-        $scope.callFilter = function(filterOption){
+        $scope.callFilter = function(filterOption, event){
 
             if (!filterOption.requested){
                 mapService.requestnewMapObjects(filterOption.requestString);
@@ -141,7 +141,8 @@ angular.module('app.dashboard.map', ['app.socket', 'app.config', 'app.dashboard.
             filterOption.requested = !filterOption.requested;
 
             //because jsquery close the aside panel, we have to stop the event propagation!
-            window.event.stopPropagation();
+            if (window.event) window.event.stopPropagation();
+            else event.stopPropagation();
         };
     }])
 

@@ -1,9 +1,26 @@
 <div>
     <p>{{headline}}</p>
-    <div class="elemententry" ng-repeat="element in elements">
-        <dl class="dl-horizontal" >
-            <dt>{{element.label}}</dt>
-            <dd>{{element.value}}</dd>
-        </dl>
+    <table id="mapObjectInformationHzTable">
+        <thead>
+        </thead>
+
+        <tbody>
+        <tr class="elemententry" ng-repeat="element in elements">
+            <td>{{element.label}}</td>
+            <td>{{element.value}}</td>
+        </tr>
+        </tbody>
+
+    </table>
+    <div id="mapObjectInformationHzDiagramOnSameLevel">
+        <nvd3-discrete-bar-chart
+                data="exampleData"
+                width="380"
+                height="240"
+                showXAxis="true"
+                margin="{left:30,top:10,bottom:30,right:0}"
+                showYAxis="true">
+            <svg></svg>
+        </nvd3-discrete-bar-chart>
     </div>
 </div>

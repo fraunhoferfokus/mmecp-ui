@@ -122,14 +122,24 @@ svg{
     transition:all linear 0.1s;
     opacity:0;
 }
+
+#mapObjectInformationHzTable{
+    float: left;
+}
+#mapObjectInformationHzDiagramOnSameLevel{
+    float: left;
+    padding-left: 100px;
+}
 .overlayMapInfo {
+    overflow-y:scroll;
     background: none repeat scroll 0 0 white;
     bottom: 0;
+    padding: 15px;
     display: block;
-    left: 0;
-    opacity: 0.8;
+    left: 15px;
+    right: 15px;
+    opacity: 0.85;
     position: absolute;
-    right: 0;
     top: 70%;
     z-index: 1000;
 }
