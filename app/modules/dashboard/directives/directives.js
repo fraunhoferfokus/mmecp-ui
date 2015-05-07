@@ -14,6 +14,8 @@ angular.module('app.dashboard.directives',[
             'height="240" ' +
             'showXAxis="true" ' +
             'showYAxis="true" ' +
+            'interactive="true" ' +
+            'tooltips="true"' +
             '> ' +
             '<svg></svg></nvd3-discrete-bar-chart>',
             controller: 'StatusPanelController'

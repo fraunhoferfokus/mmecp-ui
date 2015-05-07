@@ -1,7 +1,7 @@
 /**
  * Created by Aminskee on 10.03.15.
  */
-angular.module('app.dashboard.controllers',[
+angular.module('app.dashboard.controllers',['app.dashboard.impressum'
 ])
 
     .controller('dashboardController', ['$scope','$log', '$rootScope', function($scope,$log, $rootScope) {
@@ -95,8 +95,19 @@ angular.module('app.dashboard.controllers',[
             }
         };
 
-    }])
-
-    .run(function ( $rootScope, $log ){
-        $log.log ("run dashboard controllers");
+    }]).controller('impressumnController', function mainController ($scope, $modal, $http) {
+        $scope.items = ['item1', 'item2', 'item3'];
+        $scope.openImpressum = function (modalName) {
+            var modalInstance = $modal.open({
+                templateUrl: 'modules/dashboard/partials/impressum.html',
+                controller: 'modalController',
+                resolve: {
+                }
+            });
+        };
+    }).controller('modalController', function modalController ($scope, $modalInstance) {
+        $scope.ok = function () {
+            $modalInstance.close();
+        };
     });
+
