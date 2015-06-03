@@ -34,20 +34,20 @@
     <script src="js/app.js"></script>
     <script src="js/config.js"></script>
     <script src="modules/common/services/Socket.js"></script>
-    <script src="modules/dashboard/ImpressumController.js"></script>
     <script src="modules/dashboard/controllers/dashboardController.js"></script>
     <script src="modules/dashboard/dashboard.js"></script>
     <script src="modules/dashboard/directives/directives.js"></script>
     <script src="modules/map/controllers/MapController.js"></script>
     <script src="modules/map/directives/directives.js"></script>
+    <script src="modules/map/map.js"></script>
     <script src="modules/map/olmap.js"></script>
-    <script src="modules/statusPanel/controllers/StatusPanelController.js"></script>
+    <script src="modules/map/services/services.js"></script>
     <!-- endinjector -->
 
     <script src="thirdparty/ng-websocket/ng-websocket.js"></script>
 </head>
 
-<body ndata-ng-controller="dashboardController">
+<body ng-controller="dashboardController">
     <top-bar >
         <ul class="title-area">
             <li class="name">
@@ -56,11 +56,16 @@
             <li toggle-top-bar class="toggle-topbar menu-icon"><a href="#">Menu</a></li>
         </ul>
 
+
+
         <top-bar-section>
             <!-- Right Nav Section -->
-            <ul class="right">
-                <li class="divider"></li>
-                <li ng-controller="impressumnController"><a ng-click="openImpressum()" href="#">Impressum</a></li>
+            <ul class="right" style="width:250px">
+                <li class="divider" style="float:left"></li>
+                <select ng-controller="citySelectionController" ng-model="citySelection.id" name="city" ng-options="city as city for city in cities" style="float:left; width:100px; margin-left: 5px; margin-right: 5px;">
+                </select>
+                <li class="divider" style="float:left"></li>
+                <li ng-controller="impressumnController" style="float:left"><a ng-click="openImpressum()" href="#">Impressum</a></li>
             </ul>
 
             <!-- Left Nav Section -->

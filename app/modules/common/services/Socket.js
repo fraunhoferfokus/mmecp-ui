@@ -39,7 +39,11 @@ angular.module('app.socket', ['ngWebsocket', 'app.config'])
                 console.log("Error in onMessage in SocketService");
                 res = {'username': 'anonymous', 'message': event};
             }
+
+            //interpret message
+
             mapObjects.push(res);
+            console.log("incoming message from server: " + res);
             for (var i = 0;i<subject.length;i++){
                 subject[i].notify();
             }
@@ -72,9 +76,11 @@ angular.module('app.socket', ['ngWebsocket', 'app.config'])
                 if (angular.isString(message)) {
                     this.lastCommandSends.push(message);
                     ws.$emit(message);
+                    console.log("send via socket: " + message);
                 }
                 else if (angular.isObject(message)) {
                     ws.$emit(JSON.stringify(message));
+                    console.log("send via socket: " + message);
                 }
             }
         };

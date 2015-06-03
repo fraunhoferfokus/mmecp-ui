@@ -1,12 +1,9 @@
 /**
  * Created by Aminskee on 10.03.15.
  */
-angular.module('app.dashboard.controllers',['app.dashboard.impressum'
-])
+angular.module('app.dashboard.controllers',[])
 
     .controller('dashboardController', ['$scope','$log', '$rootScope', function($scope,$log, $rootScope) {
-
-
 
         $scope.showBigMap=false;
         $scope.mapCSS='medium-7';
@@ -109,5 +106,41 @@ angular.module('app.dashboard.controllers',['app.dashboard.impressum'
         $scope.ok = function () {
             $modalInstance.close();
         };
-    });
+    }).controller('citySelectionController',['$scope', 'socketService', function citySelectionController ($scope, socketService) {
+        $scope.citySelection = {};
+        $scope.citySelection.id = "TAM";
+        $scope.cities = [
+            "BER",
+            "ROV",
+            "TAM"];
+
+        $scope.$watch('citySelection.id', function(newValue, oldValue){
+            var request = {
+                "context": {
+                    "select": "Filter"
+                }
+            };
+
+        //socketService.send("{'context':{'select': 'Filter'}}");
+            socketService.send(request);
+        });
+    }]).controller('StatusPanelController', ['$scope', function($scope){
+        $scope.exampleDataStatusPanel = [
+            {
+                "key": "Series 1",
+                "values": [
+                    [ 0 , 1],
+                    [ 1 , 5],
+                    [ 2 , 15],
+                    [ 3 , 7],
+                    [ 4 , 34],
+                    [ 5 , 3],
+                    [ 6 , 6],
+                    [ 7 , 5],
+                    [ 8 , 8],
+                    [ 9 , 12],
+                ]
+            }
+        ];
+    }]);
 

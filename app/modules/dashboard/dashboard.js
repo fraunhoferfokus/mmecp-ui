@@ -4,5 +4,5 @@
 
 angular.module('app.dashboard',[
     'app.dashboard.controllers',
-    'app.dashboard.map'
+    'app.dashboard.directives'
 ]);

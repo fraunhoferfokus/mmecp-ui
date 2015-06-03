@@ -9,10 +9,7 @@ var streetlifeDependencies=[
     'ngWebsocket',
     'app.config',
     'app.dashboard',
-    'app.dashboard.controllers',
     'app.dashboard.map',
-    'app.dashboard.statusPanel',
-    'app.dashboard.directives',
     'app.socket',
     'app.config',
     'nvd3ChartDirectives'
