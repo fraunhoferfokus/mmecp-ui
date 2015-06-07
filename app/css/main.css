@@ -27,6 +27,7 @@ svg{
     line-height: 2.8125rem;
     padding: 0 0.9375rem;
 }
+
 .top-bar-section > ul > .divider, .top-bar-section > ul > [role="separator"] {
     border-right: 1px solid #FFFFFF;
 }
@@ -96,31 +97,39 @@ svg{
 
 
 /*Animation*/
-.sample-show-hide {
-    -webkit-transition:all linear 0.5s;
-    transition:all linear 0.5s;
-}
-.sample-show-hide.ng-hide {
-    opacity:0;
-}
 
-.medium-7,.medium-12,.medium-5,.medium-10 {
-    -webkit-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
-    -moz-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
-    -o-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
-    transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+.medium-0-customer,.medium-1-customer .medium-2-customer, .medium-3-customer .medium-4-customer,
+.medium-5-customer, .medium-6-customer, .medium-7-customer,.medium-8-customer,.medium-9-customer,
+.medium-10-customer,.medium-11-customer,.medium-12-customer {
+
 }
-.medium-11,.medium-0{
-    -webkit-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
-    -moz-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
-    -o-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
-    transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+.medium-animate{
+    -webkit-transition: width 0.5s ease-in-out;
+    -moz-transition: width 0.5s ease-in-out;
+    -ms-transition: width 0.5s ease-in-out;
+    -o-transition: width 0.5s ease-in-out;
+    transition: width 0.5s ease-in-out;
 }
-.medium-0{
-    width: 10px;
-    -webkit-transition:all linear 0.1s;
-    transition:all linear 0.1s;
-    opacity:0;
+.medium-7-customer{
+    width: 60%;
+}
+.medium-5-customer{
+    width: 40%;
+}
+.medium-12-customer{
+    width: 100%;
+}
+.medium-0-customer{
+    width: 0%;
+}
+.medium-1-customer{
+    width: 6%;
+}
+.medium-3-customer{
+    width: 35%;
+}
+.medium-11-customer{
+    width: 94%;
 }
 
 #mapObjectInformationHzTable{
@@ -186,20 +195,6 @@ svg{
     max-height: 494px;
     overflow-y: scroll;
 }
-.display-none{
-    display: none;
-}
-
-
-
-
-
-
-
-
-
-
-
 
 .fi-magnifying-glass {
     position: relative;
@@ -217,6 +212,10 @@ svg{
     margin: -.5em 0 0 -1em;
     font-size: 16px;
     line-height: 17px;
+}
+
+.top-bar-section ul li > a{
+   height: 40px;
 }
 
 input[type="search"],input[type="search"]:focus {

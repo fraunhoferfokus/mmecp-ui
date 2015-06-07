@@ -6,30 +6,30 @@ angular.module('app.dashboard.controllers',[])
     .controller('dashboardController', ['$scope','$log', '$rootScope', function($scope,$log, $rootScope) {
 
         $scope.showBigMap=false;
-        $scope.mapCSS='medium-7';
-        $scope.diagramCSS='medium-5';
+        $scope.mapCSS='medium-7-customer ';
+        $scope.diagramCSS='medium-5-customer';
 
         $scope.showKPIs=true;
-        $scope.contentCSS='medium-11';
-        $scope.kipsCSS='medium-1';
+        $scope.contentCSS='medium-11-customer';
+        $scope.kipsCSS='medium-1-customer ';
 
-        $scope.singleDiagramCSS='medium-10';
+        $scope.singleDiagramCSS='medium-10-customer';
         $scope.showHideMap=function(){
 
             $scope.showBigMap = !$scope.showBigMap;
 
             if($scope.showBigMap===true){
-                $scope.mapCSS='medium-12';
-                $scope.diagramCSS='medium-12 diagramMarginBottom display-none';
-                $scope.singleDiagramCSS='medium-3';
+                $scope.mapCSS='medium-12-customer medium-animate';
+                $scope.diagramCSS='medium-0-customer medium-animate';
+                $scope.singleDiagramCSS='medium-3-customer medium-animate';
                 if(($scope.showOverlayMapInfo===false)&&( $scope.showDiagrams===false)){
                     $scope.showOverlayMapInfo=true;
                     $scope.showDiagrams=true;
                 }
             }else{
-                $scope.mapCSS='medium-7';
-                $scope.diagramCSS='medium-5';
-                $scope.singleDiagramCSS='medium-10';
+                $scope.mapCSS='medium-7-customer medium-animate';
+                $scope.diagramCSS='medium-5-customer medium-animate';
+                $scope.singleDiagramCSS='medium-10-customer medium-animate';
                 if($scope.showOverlayMapInfo===true){
                     $scope.showOverlayMapInfo=false;
                     $scope.showDiagrams=false;
@@ -45,11 +45,11 @@ angular.module('app.dashboard.controllers',[])
             $log.log ($scope.showKPIs);
 
             if($scope.showKPIs===true){
-                $scope.contentCSS='medium-11';
-                $scope.kipsCSS='medium-1';
+                $scope.contentCSS='medium-11-customer medium-animate';
+                $scope.kipsCSS='medium-1-customer medium-animate';
             }else{
-                $scope.contentCSS='medium-12';
-                $scope.kipsCSS='medium-0';
+                $scope.contentCSS='medium-12-customer medium-animate';
+                $scope.kipsCSS='medium-0-customer medium-animate';
             }
         };
 

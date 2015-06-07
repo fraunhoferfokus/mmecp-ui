@@ -1,14 +1,14 @@
 <div class="row full-width" style="padding-right: 10px">
-    <div class="medium-12">
+    <div class="medium-12-customer">
         <a class="right" ng-click="showHideKPIs()">KPIs</a>
     </div>
 </div>
 <div class="row full-width">
     <!-- Content(Map & Diagrams) -->
-    <div class="medium-11 columns map-diagramm-content" ng-class="contentCSS">
+    <div class="medium-11-customer columns map-diagramm-content" ng-class="contentCSS">
         <div class="row full-width">
             <!-- Left Sidebar & Map-->
-            <div ng-class="mapCSS" class="medium-7 columns map-content ">
+            <div ng-class="mapCSS" class=" columns map-content ">
                 <!-- Left Sidebar -->
                 <div class="off-canvas-wrap">
                     <div class="inner-wrap">
@@ -40,7 +40,7 @@
                 </div>
             </div>
             <!-- switch between Diagramms and Map Info-->
-            <div class="medium-5 columns" ng-class="diagramCSS" ng-switch on="showDiagrams">
+            <div class="medium-5-customer columns" ng-class="diagramCSS" ng-switch on="showDiagrams">
                 <!-- Right Sidebar & Diagrams-->
                 <div ng-switch-when="true">
                     <div class="off-canvas-wrap ">
@@ -86,75 +86,19 @@
         </div>
     </div>
     <!-- Kpis-->
-    <div class="medium-1 columns" ng-class="kipsCSS" style="padding: 5px;">
+    <div class="medium-1-customer columns" ng-class="kipsCSS" style="padding: 5px;">
         <div class="row full-width" style="margin-top: 50px">
-            <div class="medium-12 columns" style="background-color: #ffffff;height: 85px;margin-bottom: 5px">
+            <div class="medium-12-customer columns">
                 <a>
                     <img src="img/KipsIcon/p&r_clicked.png"/>
-                    <p style="margin-left: 10px;color: white;  margin-left: -1px;color:#1c8cba ;font-size: 0.8rem;">Park & Ride</p>
                 </a>
             </div>
-            <div class="medium-12 columns" style="background-color: #ffffff;height: 85px;margin-bottom: 5px">
+            <div class="medium-12-customer columns">
                 <a>
                     <img src="img/KipsIcon/BikeSharing.png"/>
-                    <p style="margin-left: 10px;color: white;  margin-left: -1px;color:#1c8cba ;font-size: 0.8rem;">Bike Sharing</p>
                 </a>
             </div>
 
         </div>
     </div>
 </div>
-
-<!--
-<div class="container">
-    <h3 class="demo-panel-title mbl pbl">Samples</h3>
-    <div class="row demo-samples">
-        <div class="large-4 columns">
-            <div class="todo">
-                <div class="fi-magnifying-glass">
-                    <input class="todo-search-field" type="search" value="" placeholder="Search" />
-                </div>
-                <ul>
-                    <li >
-                        <a class="todo-done">
-                            <span class="filter-element-icon fi-address-book"></span>
-                            <span class="todo-content">
-                                <h4 class="todo-name">
-                                    Meet <strong>Adrian</strong> at <strong>6pm</strong>
-                                </h4>
-                                Times Square
-                            </span>
-                        </a>
-                    </li>
-                    <li>
-                        <div class="todo-icon fui-list"></div>
-                        <div class="todo-content">
-                            <h4 class="todo-name">
-                                Chat with <strong>V.Kudinov</strong>
-                            </h4>
-                            Skype conference an 9 am
-                        </div>
-                    </li>
-                    <li>
-                        <div class="todo-icon fui-eye"></div>
-                        <div class="todo-content">
-                            <h4 class="todo-name">
-                                Watch <strong>Iron Man</strong>
-                            </h4>
-                            1998 Broadway
-                        </div>
-                    </li>
-                    <li>
-                        <div class="todo-icon fui-time"></div>
-                        <div class="todo-content">
-                            <h4 class="todo-name">
-                                Fix bug on a <strong>Website</strong>
-                            </h4>
-                            As soon as possible
-                        </div>
-                    </li>
-                </ul>
-            </div>&lt;!&ndash; /.todo &ndash;&gt;
-        </div>&lt;!&ndash; /.col-xs-4 &ndash;&gt;
-    </div>
-</div>-->
