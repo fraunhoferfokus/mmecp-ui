@@ -66,7 +66,7 @@ svg{
     background-color: green;
 }
 .left-off-canvas-menu,.right-off-canvas-menu{
-    background: #008CBA;
+    background: #f9f9f9;
 }
 .left-off-canvas-menu > .off-canvas-menu-title{
     background-color: #43ac6a;
@@ -83,15 +83,15 @@ svg{
     height: 44px;
 }
 .right-off-canvas-menu > .off-canvas-menu-title{
-    background-color: #43ac6a;
-    color: #ffffff;
+    color: black;
     margin-left: 10px;
     height: 44px;
     cursor: pointer;
+    padding-left: 185px;
 }
 .right-off-canvas-menu > .off-canvas-menu-content {
-    background-color: #43ac6a;
-    color: #ffffff;
+    background-color: white;
+    color: black;
     margin-top: 11px;
     margin-left: 10px;
 }
