@@ -20,4 +20,26 @@ angular.module('app.dashboard.directives',[
             '<svg></svg></nvd3-discrete-bar-chart>',
             controller: 'StatusPanelController'
         };
-    });
+    })
+    .directive('resizeMenu', ['$window', function ($window) {
+        return function (scope, element) {
+            var w = angular.element(window);
+            scope.getWindowDimensions = function () {
+                return { 'h': $(window).height(), 'w': $(window).width() };
+            };
+            scope.$watch(scope.getWindowDimensions, function (newValue, oldValue) {
+                scope.windowHeight = newValue.h;
+                scope.windowWidth = newValue.w;
+
+                scope.addStyle = function () {
+                    return {
+                        'height': (newValue.h ) + 'px',
+                    };
+                };
+            }, true);
+
+            w.bind('resize', function () {
+                scope.$apply();
+            });
+        };
+    }]);

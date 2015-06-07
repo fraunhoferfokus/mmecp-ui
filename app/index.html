@@ -55,25 +55,24 @@
             </li>
             <li toggle-top-bar class="toggle-topbar menu-icon"><a href="#">Menu</a></li>
         </ul>
-
-
-
         <top-bar-section>
             <!-- Right Nav Section -->
-            <ul class="right" style="width:250px">
-                <li class="divider" style="float:left"></li>
+            <ul class="right">
                 <select ng-controller="citySelectionController" ng-model="citySelection.id" name="city" ng-options="city as city for city in cities" style="float:left; width:100px; margin-left: 5px; margin-right: 5px;">
                 </select>
-                <li class="divider" style="float:left"></li>
+                <li class="has-dropdown">
+                    <a href="#">Right Button Dropdown</a>
+                    <ul class="dropdown">
+                        <li><a href="#">Berlin</a></li>
+                        <li class="active"><a href="#">Rovereto</a></li>
+                    </ul>
+                </li>
                 <li ng-controller="impressumnController" style="float:left"><a ng-click="openImpressum()" href="#">Impressum</a></li>
-                <li><a><i class="fi-list-thumbnails large" style="font-size: 20px"></i></a></li>
+                <li><a class="menu-icon-list" style="background-color:black !important;"><i class="fi-list-thumbnails large" style="font-size: 20px"></i></a></li>
             </ul>
-
             <!-- Left Nav Section -->
             <ul class="left">
-                <li class="divider"></li>
                 <li><a href="#">tools</a></li>
-                <li class="divider"></li>
             </ul>
         </top-bar-section>
     </top-bar>

@@ -1,8 +1,8 @@
-<div class="row full-width" style="padding-right: 10px">
+<!--<div class="row full-width" style="padding-right: 10px">
     <div class="medium-12-customer">
         <a class="right" ng-click="showHideKPIs()">KPIs</a>
     </div>
-</div>
+</div>-->
 <div class="row full-width">
     <!-- Content(Map & Diagrams) -->
     <div class="medium-11-customer columns map-diagramm-content" ng-class="contentCSS">
@@ -14,12 +14,12 @@
                     <div class="inner-wrap">
                         <nav class="tab-bar">
                             <section class="left-small">
-                                <a class="left-off-canvas-toggle menu-icon"><span></span></a>
+                                <a class="left-off-canvas-toggle"><i class="fi-widget" style="font-size: 20px;color:black;"></i></a>
                             </section>
                             <section ng-switch on="showBigMap" class="middle tab-bar-section tab-bar-section-map">
-                                <h1 class="title left">Map</h1>
-                                <a  ng-switch-when="true" class="right btn-showHideMap" ng-click="showHideMap()"><i class="fi-arrows-in large"></i></a>
-                                <a  ng-switch-when="false" class="right btn-showHideMap" ng-click="showHideMap()"><i class="fi-arrows-out large"></i></a>
+                                <h1 class="title left" style="color: black !important;">Map</h1>
+                                <a  ng-switch-when="true" class="right btn-showHideMap" ng-click="showHideMap()"><i class="fi-arrows-in large" style="color: black;"></i></a>
+                                <a  ng-switch-when="false" class="right btn-showHideMap" ng-click="showHideMap()"><i class="fi-arrows-out large" style="color: black;"></i></a>
                             </section>
                         </nav>
                         <!-- Filter -->
@@ -39,7 +39,7 @@
                     </div>
                 </div>
             </div>
-            <!-- switch between Diagramms and Map Info-->
+            <!-- switch between Diagrams and Map Info-->
             <div class="medium-5-customer columns" ng-class="diagramCSS" ng-switch on="showDiagrams">
                 <!-- Right Sidebar & Diagrams-->
                 <div ng-switch-when="true">
@@ -47,11 +47,11 @@
                         <div class="inner-wrap">
                             <nav class="tab-bar">
                                 <section class="middle tab-bar-section">
-                                    <h1 class="title right">Diagrams</h1>
+                                    <h1 class="title right" style="color: black !important;">Diagrams</h1>
                                 </section>
 
                                 <section class="right-small">
-                                    <a class="right-off-canvas-toggle menu-icon" ><span></span></a>
+                                    <a class="right-off-canvas-toggle"><i class="fi-widget" style="font-size: 20px;color: black"></i></a>
                                 </section>
                             </nav>
                             <aside class="right-off-canvas-menu">
@@ -86,19 +86,16 @@
         </div>
     </div>
     <!-- Kpis-->
-    <div class="medium-1-customer columns" ng-class="kipsCSS" style="padding: 5px;">
+    <div class="medium-1-customer columns use-case-menu" ng-class="kipsCSS" style="padding: 5px;border-top: solid 1px whitesmoke;" ng-style="addStyle()" resize-menu>
         <div class="row full-width" style="margin-top: 50px">
-            <div class="medium-12-customer columns">
-                <a>
-                    <img src="img/KipsIcon/p&r_clicked.png"/>
-                </a>
+            <div class="medium-12-customer padding-none columns">
+                <ul class="side-nav">
+                    <li><a href="#" class="has-tip" tooltip-placement="left" tooltip="On the Left!"><i class="fi-key"></i></a></li>
+                    <li><a href="#" class="has-tip" tooltip-placement="left" tooltip="On the Left!"><i class="fi-at-sign"></i></a></li>
+                    <li><a href="#" class="has-tip" tooltip-placement="left" tooltip="On the Left!"><i class="fi-first-aid"></i></a></li>
+                    <li><a href="#" class="has-tip" tooltip-placement="left" tooltip="On the Left!"><i class="fi-trees"></i></a></li>
+                </ul>
             </div>
-            <div class="medium-12-customer columns">
-                <a>
-                    <img src="img/KipsIcon/BikeSharing.png"/>
-                </a>
-            </div>
-
         </div>
     </div>
 </div>
