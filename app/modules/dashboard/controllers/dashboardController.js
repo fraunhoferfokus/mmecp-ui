@@ -1,7 +1,7 @@
 /**
  * Created by Aminskee on 10.03.15.
  */
-angular.module('app.dashboard.controllers',[])
+angular.module('app.dashboard.controllers',['app.common'])
 
     .controller('dashboardController', ['$scope','$log', '$rootScope', function($scope,$log, $rootScope) {
 
@@ -12,6 +12,8 @@ angular.module('app.dashboard.controllers',[])
         $scope.showKPIs=true;
         $scope.contentCSS='medium-11-customer';
         $scope.kipsCSS='medium-1-customer ';
+
+
 
         $scope.singleDiagramCSS='medium-10-customer';
         $scope.showHideMap=function(){
@@ -52,6 +54,11 @@ angular.module('app.dashboard.controllers',[])
                 $scope.kipsCSS='medium-0-customer medium-animate';
             }
         };
+
+        $scope.$on('showKPIsEvent', function (event, data) {
+            console.log("on show KPI");
+            $scope.showHideKPIs();
+        });
 
         var mapObjectInformationPanelisOpen = function(){
             if ($scope.showDiagrams === false || $scope.showOverlayMapInfo === true){
@@ -107,22 +114,31 @@ angular.module('app.dashboard.controllers',[])
             $modalInstance.close();
         };
     }).controller('citySelectionController',['$scope', 'socketService', function citySelectionController ($scope, socketService) {
-        $scope.citySelection = {};
-        $scope.citySelection.id = "TAM";
+
+        $scope.asd = function(){
+            alert("HELLO");
+        };
         $scope.cities = [
             "BER",
             "ROV",
             "TAM"];
+        $scope.citySelection = {};
+        $scope.citySelection.id = $scope.cities[0];
 
-        $scope.$watch('citySelection.id', function(newValue, oldValue){
+        $scope.changeCity = function(newCity){
             var request = {
                 "context": {
                     "select": "Filter"
                 }
             };
 
-        //socketService.send("{'context':{'select': 'Filter'}}");
+            //socketService.send("{'context':{'select': 'Filter'}}");
+            console.log("new City: " + newCity);
             socketService.send(request);
+        };
+
+        $scope.$watch('citySelection.id', function(newValue, oldValue){
+            console.log("new City (watch): " + newValue);
         });
     }]).controller('StatusPanelController', ['$scope', function($scope){
         $scope.exampleDataStatusPanel = [

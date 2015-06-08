@@ -34,6 +34,7 @@
     <script src="js/app.js"></script>
     <script src="js/config.js"></script>
     <script src="modules/common/services/Socket.js"></script>
+    <script src="modules/common/services/commonController.js"></script>
     <script src="modules/dashboard/controllers/dashboardController.js"></script>
     <script src="modules/dashboard/dashboard.js"></script>
     <script src="modules/dashboard/directives/directives.js"></script>
@@ -47,7 +48,7 @@
     <script src="thirdparty/ng-websocket/ng-websocket.js"></script>
 </head>
 
-<body ng-controller="dashboardController">
+<body ng-controller="commonController">
     <top-bar >
         <ul class="title-area">
             <li class="name">
@@ -58,17 +59,20 @@
         <top-bar-section>
             <!-- Right Nav Section -->
             <ul class="right">
-                <select ng-controller="citySelectionController" ng-model="citySelection.id" name="city" ng-options="city as city for city in cities" style="float:left; width:100px; margin-left: 5px; margin-right: 5px;">
+                <select name="city" ng-options="city as city for city in cities" style="float:left; width:100px; margin-left: 5px; margin-right: 5px;">
                 </select>
-                <li class="has-dropdown">
-                    <a href="#">Right Button Dropdown</a>
+                <li ng-controller="citySelectionController" class="has-dropdown">
+                    <a href="#">{{citySelection.id}}</a>
                     <ul class="dropdown">
-                        <li><a href="#">Berlin</a></li>
-                        <li class="active"><a href="#">Rovereto</a></li>
+                        <li ng-repeat="city in cities">
+                            <a href ng-click="asd()">{{city}}</a>
+                        </li>
+                        <!--<li><a href="#">Berlin</a></li>
+                        <li class="active"><a href="#">Rovereto</a></li>-->
                     </ul>
                 </li>
                 <li ng-controller="impressumnController" style="float:left"><a ng-click="openImpressum()" href="#">Impressum</a></li>
-                <li><a class="menu-icon-list" style="background-color:black !important;"><i class="fi-list-thumbnails large" style="font-size: 20px"></i></a></li>
+                <li><a ng-click="showHideKPIs()" class="menu-icon-list" style="background-color:black !important;"><i class="fi-list-thumbnails large" style="font-size: 20px"></i></a></li>
             </ul>
             <!-- Left Nav Section -->
             <ul class="left">
