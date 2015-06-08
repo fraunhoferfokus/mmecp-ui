@@ -302,3 +302,7 @@ input[type="search"],input[type="search"]:focus {
 .tooltip.opened {
     border-bottom: dotted 1px #003f54 !important;
     color: #008CBA !important; }
+
+ .cityElement {
+    float: none !important;
+}

@@ -115,8 +115,9 @@ angular.module('app.dashboard.controllers',['app.common'])
         };
     }).controller('citySelectionController',['$scope', 'socketService', function citySelectionController ($scope, socketService) {
 
-        $scope.asd = function(){
-            alert("HELLO");
+        $scope.asd = function(city){
+            $scope.citySelection.id = city;
+            $scope.changeCity(city);
         };
         $scope.cities = [
             "BER",
@@ -137,9 +138,6 @@ angular.module('app.dashboard.controllers',['app.common'])
             socketService.send(request);
         };
 
-        $scope.$watch('citySelection.id', function(newValue, oldValue){
-            console.log("new City (watch): " + newValue);
-        });
     }]).controller('StatusPanelController', ['$scope', function($scope){
         $scope.exampleDataStatusPanel = [
             {

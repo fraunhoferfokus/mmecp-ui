@@ -58,21 +58,20 @@
         </ul>
         <top-bar-section>
             <!-- Right Nav Section -->
-            <ul class="right">
-                <select name="city" ng-options="city as city for city in cities" style="float:left; width:100px; margin-left: 5px; margin-right: 5px;">
-                </select>
-                <li ng-controller="citySelectionController" class="has-dropdown">
-                    <a href="#">{{citySelection.id}}</a>
-                    <ul class="dropdown">
-                        <li ng-repeat="city in cities">
-                            <a href ng-click="asd()">{{city}}</a>
+            <ul ng-controller="citySelectionController" class="right">
+
+                <li>
+                    <a style="color: white" class="" dropdown-toggle="#dropdown-example-2">{{citySelection.id}}</a>
+                    <ul id="dropdown-example-2" class="f-dropdown">
+                        <li class="cityElement" ng-repeat="city in cities">
+                            <a ng-click="asd(city)" target="_blank">{{city}}</a>
                         </li>
-                        <!--<li><a href="#">Berlin</a></li>
-                        <li class="active"><a href="#">Rovereto</a></li>-->
                     </ul>
                 </li>
                 <li ng-controller="impressumnController" style="float:left"><a ng-click="openImpressum()" href="#">Impressum</a></li>
                 <li><a ng-click="showHideKPIs()" class="menu-icon-list" style="background-color:black !important;"><i class="fi-list-thumbnails large" style="font-size: 20px"></i></a></li>
+
+
             </ul>
             <!-- Left Nav Section -->
             <ul class="left">
