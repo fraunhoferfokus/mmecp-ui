@@ -16,7 +16,7 @@ angular.module('app.dashboard.map.directives', ['app.socket', 'app.config'])
 
             scope.addStyleToMap = function () {
                 return {
-                    'height': (newValue.h - 150) + 'px',
+                    'height': (newValue.h - 150) + 'px'
                 };
             };
             scope.addStyleToInfoPanel = function () {
@@ -30,6 +30,9 @@ angular.module('app.dashboard.map.directives', ['app.socket', 'app.config'])
             angular.element('#OpenLayers_Map_6_OpenLayers_ViewPort').css('width', mapContainerWidth + "px");
             angular.element('#OpenLayers_Map_6_OpenLayers_ViewPort').css('height', mapContainerHeight + "px");
 
+            angular.element('#map').css('width', mapContainerWidth + "px");
+            angular.element('#map').css('height', mapContainerHeight + "px");
+
         }, true);
 
         w.bind('resize', function () {
@@ -41,7 +44,7 @@ angular.module('app.dashboard.map.directives', ['app.socket', 'app.config'])
     .directive('olMap', function(){
     return {
         restrict: 'E',
-        template: ' <div id="map" ng-style="addStyleToMap()"  style="height: 800px; width: 800px" resize></div> ',
+        template: ' <div id="map" ng-style="addStyleToMap()"  style="height: 600px;" resize></div> ',
         controller: 'mapController'
     };
     }).directive('filter', function(){
