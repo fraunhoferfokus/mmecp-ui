@@ -50,6 +50,8 @@ angular.module('app.dashboard.map.controller', ['app.socket', 'app.config', 'app
         };
         //******************
 
+        angular.element('#OpenLayers_Map_6_OpenLayers_ViewPort').css('width', "100%");
+        angular.element('#OpenLayers_Map_6_OpenLayers_ViewPort').css('height', "100%");
     }])
 
     .controller('filterController', ['$scope', 'mapService', function($scope, mapService){
@@ -141,7 +143,7 @@ angular.module('app.dashboard.map.controller', ['app.socket', 'app.config', 'app
 
     .controller('mapObjectInformationController', ['$scope', 'mapService', '$timeout', function($scope, mapService, $timeout){
 
-        $scope.headline = "Modal Split";
+        //$scope.headline = "Modal Split";
         $scope.elements = [];
 
         $scope.$on('updateMapObject', function(event, mapObject){

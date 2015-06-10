@@ -13,8 +13,6 @@ angular.module('app.dashboard.controllers',['app.common'])
         $scope.contentCSS='medium-11-customer';
         $scope.kipsCSS='medium-1-customer ';
 
-
-
         $scope.singleDiagramCSS='medium-10-customer';
         $scope.showHideMap=function(){
 
@@ -143,16 +141,13 @@ angular.module('app.dashboard.controllers',['app.common'])
             {
                 "key": "Series 1",
                 "values": [
-                    [ 0 , 1],
-                    [ 1 , 5],
-                    [ 2 , 15],
-                    [ 3 , 7],
-                    [ 4 , 34],
-                    [ 5 , 3],
-                    [ 6 , 6],
-                    [ 7 , 5],
-                    [ 8 , 8],
-                    [ 9 , 12],
+                    [ "Mo" , 1],
+                    [ "Tu" , 5],
+                    [ "We" , 15],
+                    [ "Th" , 7],
+                    [ "Fr" , 34],
+                    [ "Sa" , 3],
+                    [ "Su" , 6],
                 ]
             }
         ];
