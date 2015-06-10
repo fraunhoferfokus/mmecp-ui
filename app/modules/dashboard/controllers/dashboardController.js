@@ -157,4 +157,3 @@ angular.module('app.dashboard.controllers',['app.common'])
             }
         ];
     }]);
-

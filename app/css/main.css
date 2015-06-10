@@ -306,3 +306,7 @@ input[type="search"],input[type="search"]:focus {
  .cityElement {
     float: none !important;
 }
+
+.filterEntry{
+    background-color: #008CBA;
+}
