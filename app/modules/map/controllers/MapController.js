@@ -50,6 +50,15 @@ angular.module('app.dashboard.map.controller', ['app.socket', 'app.config', 'app
         };
         //******************
 
+        //initial use case and filter
+        var initialRequest = {
+            "context": {
+                "select":"Filter"
+            }
+        };
+
+        mapService.send(initialRequest);
+
         //angular.element('#OpenLayers_Map_6_OpenLayers_ViewPort').css('width', "100%");
         //angular.element('#OpenLayers_Map_6_OpenLayers_ViewPort').css('height', "100%");
     }])
@@ -119,10 +128,14 @@ angular.module('app.dashboard.map.controller', ['app.socket', 'app.config', 'app
             }
         ];
 
+        $scope.$on("receiveUseCaseEvent", function(object) {
+            console.log("receiveUseCaseEvent!!!");
+        });
+
         $scope.callFilter = function(filterOption, event){
 
             if (!filterOption.requested){
-                mapService.requestnewMapObjects(filterOption.requestString);
+                mapService.send(filterOption.requestString);
                 console.log("request: " + filterOption.requestString);
             }else {
                 $scope.$emit('removeMapObjects',

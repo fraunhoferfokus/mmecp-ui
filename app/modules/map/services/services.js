@@ -5,7 +5,7 @@
 angular.module('app.dashboard.map.services', ['app.socket', 'app.config', 'app.dashboard.map.directives', 'nvd3ChartDirectives'])
 
 .service('mapService', function(socketService){
-    this.requestnewMapObjects = function(requestString){
+    this.send = function(requestString){
         socketService.send(requestString);
     };
     this.mapObjectForInformationPanel = undefined;

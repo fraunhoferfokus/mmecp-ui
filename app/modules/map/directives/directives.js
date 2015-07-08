@@ -29,7 +29,6 @@ angular.module('app.dashboard.map.directives', ['app.socket', 'app.config'])
             var mapContainerHeight = angular.element("#mapContainer").height();
             angular.element('#OpenLayers_Map_6_OpenLayers_ViewPort').css('width', mapContainerWidth + "px");
             angular.element('#OpenLayers_Map_6_OpenLayers_ViewPort').css('height', mapContainerHeight + "px");
-
             angular.element('#map').css('width', mapContainerWidth + "px");
             angular.element('#map').css('height', mapContainerHeight + "px");
 

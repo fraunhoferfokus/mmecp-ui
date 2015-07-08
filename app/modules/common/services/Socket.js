@@ -42,7 +42,13 @@ angular.module('app.socket', ['ngWebsocket', 'app.config'])
 
             //interpret message
 
-            mapObjects.push(res);
+            if (res.options){
+                //use case and filter object
+                $scope.$broadcast('receiveUseCaseEvent', "asdasdas");
+            }else {
+                mapObjects.push(res);
+            }
+
             console.log("incoming message from server: " + res);
             for (var i = 0;i<subject.length;i++){
                 subject[i].notify();
@@ -80,7 +86,7 @@ angular.module('app.socket', ['ngWebsocket', 'app.config'])
                 }
                 else if (angular.isObject(message)) {
                     ws.$emit(JSON.stringify(message));
-                    console.log("send via socket: " + message);
+                    console.dir("send via socket: " + message);
                 }
             }
         };
