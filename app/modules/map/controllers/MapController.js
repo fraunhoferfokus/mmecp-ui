@@ -66,65 +66,182 @@ angular.module('app.dashboard.map.controller', ['app.socket', 'app.config', 'app
     .controller('filterController', ['$scope', 'mapService', function($scope, mapService){
 
         //Testvalues
-        $scope.filters = [
+
+
+        $scope.city = [
             {
-                title: "park and ride",
-                options:{
-                    0: {
-                        value: "ParkingAreas",
-                        id: "parkandride:ParkingAreas",
-                        requestString: "getObjectsOfType:ParkingAreas",
-                        subType: "macro",
-                        requested: false
+                "city": "Rovereto",
+                "title": "park and ride",
+                "useCaseID": "ParkAndRide@Rovereto",
+                "options": [
+                     {
+                        "value": "ParkingAreas",
+                        "id": "parkandride:ParkingAreas",
+                        "request": {
+                            "useCaseID": "ParkAndRide@Rovereto",
+                            "context": {
+                                "select": "ParkingArea"
+                            }
+                        },
+                        "subType": "macro",
+                        "requested": false
                     },
-                    1: {
-                        value: "ParkingStationsFree",
-                        id: "parkandride:ParkingStationsFree",
-                        requestString: "getObjectsOfType:ParkingStationsFree",
-                        subType: "forfree",
-                        requested: false
+                     {
+                        "value": "ParkingStationsFree",
+                        "id": "parkandride:ParkingStationsFree",
+                        "request": {
+                            "useCaseID": "ParkAndRide@Rovereto",
+                            "context": {
+                                "select": "ParkingArea",
+                                "where": {
+                                    "type": [
+                                        "free"
+                                    ]
+                                }
+                            }
+                        },
+                        "subType": "free",
+                        "requested": false
                     },
-                    2: {
-                        value: "ParkingStationsFee",
-                        id: "parkandride:ParkingStationsFee",
-                        requestString: "getObjectsOfType:ParkingStationsFee",
-                        subType: "fee",
-                        requested: false
+                     {
+                        "value": "ParkingStationsFee",
+                        "id": "parkandride:ParkingStationsFee",
+                        "request": {
+                            "useCaseID": "ParkAndRide@Rovereto",
+                            "context": {
+                                "select": "ParkingArea",
+                                "where": {
+                                    "type": [
+                                        "fee"
+                                    ]
+                                }
+                            }
+                        },
+                        "subType": "fee",
+                        "requested": false
                     },
-                    3: {
-                        value: "ParkingStationsClock",
-                        id: "parkandride:ParkingStationsClock",
-                        requestString: "getObjectsOfType:ParkingStationsClock",
-                        subType: "cardblock",
-                        requested: false
+                    {
+                        "value": "ParkingStationsClock",
+                        "id": "parkandride:ParkingStationsClock",
+                        "request": {
+                            "useCaseID": "ParkAndRide@Rovereto",
+                            "context": {
+                                "select": "ParkingArea",
+                                "where": {
+                                    "type": [
+                                        "clock"
+                                    ]
+                                }
+                            }
+                        },
+                        "subType": "clock",
+                        "requested": false
                     }
-                }
-            },
+                ]
+            }];
+
+        $scope.allCities = [
             {
-                title: "Berlin Event",
-                options:{
-                    0: {
-                        value: "events",
-                        id: "BerlinEvent:events",
-                        requestString: "xxx:xxx",
-                        subType: "-",
-                        requested: false
+                "options": [
+                    {
+                        "city": "Rovereto",
+                        "title": "park and ride",
+                        "useCaseID": "ParkAndRide@Rovereto",
+                        "options": [
+                             {
+                                "value": "ParkingAreas",
+                                "id": "parkandride:ParkingAreas",
+                                "request": {
+                                    "useCaseID": "ParkAndRide@Rovereto",
+                                    "context": {
+                                        "select": "ParkingArea"
+                                    }
+                                },
+                                "subType": "macro",
+                                "requested": false
+                            },
+                             {
+                                "value": "ParkingStationsFree",
+                                "id": "parkandride:ParkingStationsFree",
+                                "request": {
+                                    "useCaseID": "ParkAndRide@Rovereto",
+                                    "context": {
+                                        "select": "ParkingArea",
+                                        "where": {
+                                            "type": [
+                                                "free"
+                                            ]
+                                        }
+                                    }
+                                },
+                                "subType": "free",
+                                "requested": false
+                            },
+                             {
+                                "value": "ParkingStationsFee",
+                                "id": "parkandride:ParkingStationsFee",
+                                "request": {
+                                    "useCaseID": "ParkAndRide@Rovereto",
+                                    "context": {
+                                        "select": "ParkingArea",
+                                        "where": {
+                                            "type": [
+                                                "fee"
+                                            ]
+                                        }
+                                    }
+                                },
+                                "subType": "fee",
+                                "requested": false
+                            },
+                             {
+                                "value": "ParkingStationsClock",
+                                "id": "parkandride:ParkingStationsClock",
+                                "request": {
+                                    "useCaseID": "ParkAndRide@Rovereto",
+                                    "context": {
+                                        "select": "ParkingArea",
+                                        "where": {
+                                            "type": [
+                                                "clock"
+                                            ]
+                                        }
+                                    }
+                                },
+                                "subType": "clock",
+                                "requested": false
+                            }
+                        ]
                     },
-                    1: {
-                        value: "streetwork",
-                        id: "BerlinEvent:streetwork",
-                        subType: "-",
-                        requestString: "xxx:xxx",
-                        requested: false
-                    },
-                    2: {
-                        value: "...",
-                        id: "BerlinEvent:...",
-                        requestString: "xxx:xxx",
-                        subType: "-",
-                        requested: false
+                    {
+                        "city": "Berlin",
+                        "title": "Berlin Event",
+                        "useCaseID": "ParkAndRide@Berlin",
+                        "options": [
+                             {
+                                "value": "events",
+                                "id": "BerlinEvent:events",
+                                "request": "xxx:xxx",
+                                "subType": "-",
+                                "requested": false
+                            },
+                             {
+                                "value": "streetwork",
+                                "id": "BerlinEvent:streetwork",
+                                "subType": "-",
+                                "request": "xxx:xxx",
+                                "requested": false
+                            },
+                             {
+                                "value": "...",
+                                "id": "BerlinEvent:...",
+                                "request": "xxx:xxx",
+                                "subType": "-",
+                                "requested": false
+                            }
+                        ]
                     }
-                }
+                ]
             }
         ];
 
@@ -135,8 +252,8 @@ angular.module('app.dashboard.map.controller', ['app.socket', 'app.config', 'app
         $scope.callFilter = function(filterOption, event){
 
             if (!filterOption.requested){
-                mapService.send(filterOption.requestString);
-                console.log("request: " + filterOption.requestString);
+                mapService.send(filterOption.request);
+                console.log("request: " + filterOption.request);
             }else {
                 $scope.$emit('removeMapObjects',
                     {
