@@ -1,7 +1,7 @@
 /**
  * Created by Aminskee on 10.03.15.
  */
-angular.module('app.dashboard.controllers',['app.common'])
+angular.module('app.dashboard.controllers',['app.common', 'app.dashboard.map.controller'])
 
     .controller('dashboardController', ['$scope','$log', '$rootScope', function($scope,$log, $rootScope) {
 
@@ -111,8 +111,7 @@ angular.module('app.dashboard.controllers',['app.common'])
         $scope.ok = function () {
             $modalInstance.close();
         };
-    }).controller('citySelectionController',['$scope', 'socketService', function citySelectionController ($scope, socketService) {
-
+    }).controller('citySelectionController',['$scope', 'socketService', 'mapService', '$rootScope', function citySelectionController ($scope, socketService, mapService, $rootScope) {
         $scope.asd = function(city){
             $scope.citySelection.id = city;
             $scope.changeCity(city);
@@ -122,18 +121,61 @@ angular.module('app.dashboard.controllers',['app.common'])
             "ROV",
             "TAM"];
         $scope.citySelection = {};
-        $scope.citySelection.id = $scope.cities[0];
+        $scope.citySelection.id = $scope.cities[1];
 
         $scope.changeCity = function(newCity){
-            var request = {
-                "context": {
-                    "select": "Filter"
-                }
-            };
 
             //socketService.send("{'context':{'select': 'Filter'}}");
             console.log("new City: " + newCity);
-            socketService.send(request);
+
+            updateSelectedCity(newCity);
+        };
+
+        var initialRequest = {
+            "context": {
+                "select": "Filter"
+            }
+        };
+        socketService.send(initialRequest);
+
+
+        var notifyFilterController = function(){
+            updateSelectedCity(mapService.defaultCity);
+        };
+        mapService.registerNotifyMethod(notifyFilterController);
+
+        var updateSelectedCity = function(cityName){
+            var city = cityName;
+            var cityID = "";
+            var cityOLMapID = "";
+            if (city == "ROV"){
+                cityID = "Rovereto";
+                cityOLMapID = "ROVERETO";
+
+            }else if (city == "BER"){
+                cityID = "Berlin";
+                cityOLMapID = "BERLIN";
+
+            }else if (city == "TAM"){
+                cityID = "Tampere";
+                cityOLMapID = "TAMPERE";
+
+            }
+
+            //update map position
+
+            $rootScope.$broadcast("changeCityOnMap",cityOLMapID);
+
+            for (i = 0;i<mapService.allCities[0].options.length; i++){
+                var actualCity = mapService.allCities[0].options[i].city;
+                console.log(cityID);
+                if (actualCity == cityID){
+                    mapService.city[0] = mapService.allCities[0].options[i];
+                    $rootScope.$broadcast("updateToNewCityEvent");
+                    return;
+                }
+            }
+            $scope.city = [];
         };
 
     }]).controller('StatusPanelController', ['$scope', function($scope){

@@ -2,9 +2,9 @@
  * Created by lwi on 19.03.2015.
  */
 
-angular.module('app.socket', ['ngWebsocket', 'app.config'])
+angular.module('app.socket', ['ngWebsocket', 'app.config', 'app.dashboard.map.services'])
 
-    .factory('socketService', function($websocket, configService){
+    .factory('socketService', function($websocket, configService, mapService){
     // Open a WebSocket connection
         var ws = $websocket.$new({
             url: configService.socket.url,
@@ -44,7 +44,8 @@ angular.module('app.socket', ['ngWebsocket', 'app.config'])
 
             if (res.options){
                 //use case and filter object
-                $scope.$broadcast('receiveUseCaseEvent', "asdasdas");
+                //$scope.$broadcast('receiveUseCaseEvent', "asdasdas");
+                mapService.setAllCityObject(res);
             }else {
                 mapObjects.push(res);
             }

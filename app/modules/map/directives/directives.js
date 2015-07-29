@@ -60,8 +60,7 @@ angular.module('app.dashboard.map.directives', ['app.socket', 'app.config'])
             template: '<li><label>{{cityEntry.title}}</label></li>' +
             '<li class="filterEntry" ng-repeat="option in cityEntry.options">' +
             '<a ng-class="{filterActive: option.requested}" id="{{option.id}}" ng-click="callFilter(option, $event)">{{option.value}}</a>' +
-            '</li>',
-            controller: 'filterController'
+            '</li>'
         };
     }).directive('mapObjectInformation', function(){
         return{
