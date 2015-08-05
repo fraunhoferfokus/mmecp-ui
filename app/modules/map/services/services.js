@@ -19,8 +19,7 @@ angular.module('app.dashboard.map.services', ['app.config', 'app.dashboard.map.d
         this.setAllCityObject = function(allCityObject){
             this.allCities[0] = allCityObject;
             console.log("set initial filter")
-            this.notifyFilterController;
-            notifyFilterController();
+           // this.notifyFilterController.notify();
 
         };
 

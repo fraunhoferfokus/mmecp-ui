@@ -131,10 +131,14 @@ angular.module('app.dashboard.controllers',['app.common', 'app.dashboard.map.con
             updateSelectedCity(newCity);
         };
 
-        var notifyFilterController = function(){
-            updateSelectedCity(mapService.defaultCity);
+
+        var newObserver = {
+            notify : function(){
+                updateSelectedCity(mapService.defaultCity);
+            }
         };
-        mapService.registerNotifyMethod(notifyFilterController);
+
+        mapService.registerNotifyMethod(newObserver);
 
         var updateSelectedCity = function(cityName){
             var city = cityName;

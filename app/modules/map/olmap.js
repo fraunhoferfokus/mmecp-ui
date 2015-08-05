@@ -52,20 +52,6 @@ function OLMap(config, rootboadcastEvent, mapService){
                 }
             },
 
-
-          /*  featureover: function(e)
-            {
-                if (e.dragging) {
-        $(element).popover('destroy');
-        return;
-    }
-    var pixel = this.olMap.getEventPixel(e.originalEvent);
-    var hit = this.olMap.hasFeatureAtPixel(pixel);
-    this.olMap.getTarget().style.cursor = hit ? 'pointer' : '';
-                console.log("huurraa");
-            },*/
-
-
             featureclick: function(e) {
                 if (selectedfeature == e.feature){
                     setSelected(selectedfeature, false);
@@ -99,63 +85,102 @@ function OLMap(config, rootboadcastEvent, mapService){
 
     //experiments
 
-var tampere =
-    {
-        "type": "mapobject",
-        "objectID": "FNPK.11",
-        "objectType": "ParkingStation",
-        "objectSubtype": "cardblock",
-        "description": "Parkingslot",
-        "location": {
-        "type": "Point",
-            "coordinateSystem": "EPSG:2393",
-            "coordinates": [
-            3327571,
-            6825825
-        ]
-    },
-        "elements": [
+var tampere = [
         {
-            "attribute": {
-                "label": "Trend",
-                "value": "decreasing"
-            }
+            "type": "mapobject",
+            "objectID": "FNPK.11",
+            "objectType": "ParkingStation",
+            "objectSubtype": "cardblock",
+            "description": "Parkingslot",
+            "location": {
+                "type": "Point",
+                "coordinateSystem": "EPSG:2393",
+                "coordinates": [
+                    3327571,
+                    6825825
+                ]
+            },
+            "elements": [
+                {
+                    "attribute": {
+                        "label": "Trend",
+                        "value": "decreasing"
+                    }
+                },
+                {
+                    "attribute": {
+                        "label": "Status",
+                        "value": "spacesAvailable"
+                    }
+                },
+                {
+                    "arrowedCircle": {
+                        "circle": {
+                            "x": 3327571,
+                            "y": 6825825
+                        },
+                        "color": {
+                            "red": 0,
+                            "green": 125,
+                            "blue": 0,
+                            "alpha": 0.5
+                        },
+                        "arrowtype": "up"
+                    }
+                }
+            ]
         },
         {
-            "attribute": {
-                "label": "Status",
-                "value": "spacesAvailable"
-            }
-        },
-        {
-            "arrowedCircle": {
-                "circle": {
-                    "x": 3327571,
-                    "y": 6825825
+            "type": "mapobject",
+            "objectID": "FNPK.11",
+            "objectType": "ParkingStation",
+            "objectSubtype": "cardblock",
+            "description": "Parkingslot",
+            "location": {
+                "type": "Point",
+                "coordinateSystem": "EPSG:2393",
+                "coordinates": [
+                    3327677,
+                    6825503
+                ]
+            },
+            "elements": [
+                {
+                    "attribute": {
+                        "label": "Trend",
+                        "value": "stable"
+                    }
                 },
-                "color": {
-                    "red": 0,
-                    "green": 125,
-                    "blue": 0,
-                    "alpha": 0.5
+                {
+                    "attribute": {
+                        "label": "Status",
+                        "value": "full"
+                    }
                 },
-                "arrowtype": "up"
-            }
+                {
+                    "arrowedCircle": {
+                        "circle": {
+                            "x": 3327677,
+                            "y": 6825503
+                        },
+                        "color": {
+                            "red": 125,
+                            "green": 0,
+                            "blue": 0,
+                            "alpha": 0.5
+                        },
+                        "arrowtype": "middle"
+                    }
+                }
+            ]
         }
-    ]
-    };
+    ];
 
-
-
-
-
-
-
-     var feature = new OpenLayers.Feature.Vector(
+    var feature = new OpenLayers.Feature.Vector(
      // new OpenLayers.Geometry.Point(3327571, 6825825),
      new OpenLayers.Geometry.Point(this.config.coordinate.TAM.lon, this.config.coordinate.TAM.lat).transform(new OpenLayers.Projection("EPSG:4326"),  new OpenLayers.Projection("EPSG:900913")),
      {some:'data'},
-     {externalGraphic: 'img/up_icon.png', graphicHeight: 28, graphicWidth: 47});
+     {externalGraphic: 'img/car_green_up.png', graphicHeight: 54, graphicWidth: 96});
 
     var vectorLayer = new OpenLayers.Layer.Vector("Overlay");
      vectorLayer.addFeatures(feature);
@@ -163,8 +188,8 @@ var tampere =
      this.olMap.zoomToMaxExtent();
 
 
-
-
+    console.log("add tampere test data");
+    //OLMap.prototype.addObjects(tampere);
 
 }
 
@@ -207,33 +232,29 @@ OLMap.prototype.getmapAreaofMapObject = function(mapObject){
 OLMap.prototype.addObjects = function (mapObjectList){
 
 
-    console.log("draw example arrow fsadf")
-
-
-
-
+    console.log("start drawing map objects");
+    console.log(mapObjectList);
+    console.log(mapObjectList.length);
 
     if (this.vector === undefined) return;
     for (i = 0;i<mapObjectList.length; i++){
 
         var mapArea = this.getmapAreaofMapObject(mapObjectList[i]);
-        var fid = mapObjectList[i].objectID + ":" +
-            mapObjectList[i].objectType + ":" +
-            mapObjectList[i].objectSubtype;
-        var feature = this.createPolygonFeature(mapArea, fid);
-      //  var feature = this.createArrowCircle(mapArea, fid);
-        feature.mapObject = mapObjectList[i];
-        this.vector.addFeatures([feature]);
-
+        if(mapArea != null) {
+            var fid = mapObjectList[i].objectID + ":" +
+                mapObjectList[i].objectType + ":" +
+                mapObjectList[i].objectSubtype;
+            var feature = this.createPolygonFeature(mapArea, fid);
+            //  var feature = this.createArrowCircle(mapArea, fid);
+            feature.mapObject = mapObjectList[i];
+            this.vector.addFeatures([feature]);
+        }
+        else
+        {
+            console.log("todo start arrowCircles");
+        }
 
     }
-    console.log("draw example arrow");
-
-
-
-
-
-
 
 
 };
