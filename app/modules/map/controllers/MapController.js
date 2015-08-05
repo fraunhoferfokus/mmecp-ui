@@ -30,7 +30,7 @@ angular.module('app.dashboard.map.controller', ['app.socket', 'app.config', 'app
             $scope.updateMap();
         });
         $scope.$on('changeCityOnMap', function(event, city){
-            
+
             map.setCenter(city);
 
 

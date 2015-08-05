@@ -131,14 +131,6 @@ angular.module('app.dashboard.controllers',['app.common', 'app.dashboard.map.con
             updateSelectedCity(newCity);
         };
 
-        var initialRequest = {
-            "context": {
-                "select": "Filter"
-            }
-        };
-        socketService.send(initialRequest);
-
-
         var notifyFilterController = function(){
             updateSelectedCity(mapService.defaultCity);
         };
@@ -171,11 +163,10 @@ angular.module('app.dashboard.controllers',['app.common', 'app.dashboard.map.con
                 console.log(cityID);
                 if (actualCity == cityID){
                     mapService.city[0] = mapService.allCities[0].options[i];
-                    $rootScope.$broadcast("updateToNewCityEvent");
                     return;
                 }
             }
-            $scope.city = [];
+            mapService.city[0] = [];
         };
 
     }]).controller('StatusPanelController', ['$scope', function($scope){
@@ -194,3 +185,6 @@ angular.module('app.dashboard.controllers',['app.common', 'app.dashboard.map.con
             }
         ];
     }]);
+
+
+

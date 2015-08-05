@@ -17,6 +17,7 @@ angular.module('app.socket', ['ngWebsocket', 'app.config', 'app.dashboard.map.se
 
         ws.$on('$open', function () {
             console.log('connection open');
+            initRequests();
         });
         ws.$on('$message', function(event) {
             var res = event;
@@ -42,9 +43,11 @@ angular.module('app.socket', ['ngWebsocket', 'app.config', 'app.dashboard.map.se
 
             //interpret message
 
+            console.log("got it");
             if (res.options){
                 //use case and filter object
                 //$scope.$broadcast('receiveUseCaseEvent', "asdasdas");
+                console.log("got it");
                 mapService.setAllCityObject(res);
             }else {
                 mapObjects.push(res);
@@ -91,5 +94,22 @@ angular.module('app.socket', ['ngWebsocket', 'app.config', 'app.dashboard.map.se
                 }
             }
         };
+
+
+        // do initial requests
+        function initRequests() {
+            console.log("ask backend for cities");
+            var initialRequest = {
+                "context": {
+                    "select": "Filter"
+                }
+            };
+            ws.$emit(JSON.stringify(initialRequest));
+        }
+
+
     });
+
+
+
 

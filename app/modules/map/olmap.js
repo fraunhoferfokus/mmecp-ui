@@ -43,6 +43,7 @@ function OLMap(config, rootboadcastEvent, mapService){
             featureover: function(e) {
                 e.feature.style.strokeWidth = 2;
                 e.feature.layer.redraw();
+
             },
             featureout: function(e) {
                 if (e.feature != selectedfeature){
@@ -50,6 +51,21 @@ function OLMap(config, rootboadcastEvent, mapService){
                     e.feature.layer.redraw();
                 }
             },
+
+
+          /*  featureover: function(e)
+            {
+                if (e.dragging) {
+        $(element).popover('destroy');
+        return;
+    }
+    var pixel = this.olMap.getEventPixel(e.originalEvent);
+    var hit = this.olMap.hasFeatureAtPixel(pixel);
+    this.olMap.getTarget().style.cursor = hit ? 'pointer' : '';
+                console.log("huurraa");
+            },*/
+
+
             featureclick: function(e) {
                 if (selectedfeature == e.feature){
                     setSelected(selectedfeature, false);
@@ -78,6 +94,78 @@ function OLMap(config, rootboadcastEvent, mapService){
 
     this.vector = this.getParkingLayer();
     this.olMap.addLayer(this.vector);
+
+
+
+    //experiments
+
+var tampere =
+    {
+        "type": "mapobject",
+        "objectID": "FNPK.11",
+        "objectType": "ParkingStation",
+        "objectSubtype": "cardblock",
+        "description": "Parkingslot",
+        "location": {
+        "type": "Point",
+            "coordinateSystem": "EPSG:2393",
+            "coordinates": [
+            3327571,
+            6825825
+        ]
+    },
+        "elements": [
+        {
+            "attribute": {
+                "label": "Trend",
+                "value": "decreasing"
+            }
+        },
+        {
+            "attribute": {
+                "label": "Status",
+                "value": "spacesAvailable"
+            }
+        },
+        {
+            "arrowedCircle": {
+                "circle": {
+                    "x": 3327571,
+                    "y": 6825825
+                },
+                "color": {
+                    "red": 0,
+                    "green": 125,
+                    "blue": 0,
+                    "alpha": 0.5
+                },
+                "arrowtype": "up"
+            }
+        }
+    ]
+    };
+
+
+
+
+
+
+
+     var feature = new OpenLayers.Feature.Vector(
+     // new OpenLayers.Geometry.Point(3327571, 6825825),
+     new OpenLayers.Geometry.Point(this.config.coordinate.TAM.lon, this.config.coordinate.TAM.lat).transform(new OpenLayers.Projection("EPSG:4326"),  new OpenLayers.Projection("EPSG:900913")),
+     {some:'data'},
+     {externalGraphic: 'img/up_icon.png', graphicHeight: 28, graphicWidth: 47});
+
+    var vectorLayer = new OpenLayers.Layer.Vector("Overlay");
+     vectorLayer.addFeatures(feature);
+     this.olMap.addLayer(vectorLayer);
+     this.olMap.zoomToMaxExtent();
+
+
+
+
+
 }
 
 OLMap.prototype.setCenter = function(city) {
@@ -118,16 +206,36 @@ OLMap.prototype.getmapAreaofMapObject = function(mapObject){
 
 OLMap.prototype.addObjects = function (mapObjectList){
 
+
+    console.log("draw example arrow fsadf")
+
+
+
+
+
     if (this.vector === undefined) return;
     for (i = 0;i<mapObjectList.length; i++){
+
         var mapArea = this.getmapAreaofMapObject(mapObjectList[i]);
         var fid = mapObjectList[i].objectID + ":" +
             mapObjectList[i].objectType + ":" +
             mapObjectList[i].objectSubtype;
         var feature = this.createPolygonFeature(mapArea, fid);
+      //  var feature = this.createArrowCircle(mapArea, fid);
         feature.mapObject = mapObjectList[i];
         this.vector.addFeatures([feature]);
+
+
     }
+    console.log("draw example arrow");
+
+
+
+
+
+
+
+
 };
 
 OLMap.prototype.getParkingLayer = function(){
@@ -189,4 +297,52 @@ OLMap.prototype.createPolygonFeature = function(area, id){
     };
 
     return newVector;
+};
+OLMap.prototype.createArrowCircle = function(area, id){
+
+    var pointList = [],
+        polygonGeometry,
+        polygonFeature,
+        vector = new OpenLayers.Layer.Vector('polygonLayerVector');
+
+    var coords = area.area.coordinates[0];
+
+        var point = new OpenLayers.Geometry.Point(coords[0][0], coords[0][1]);
+
+    console.log(point);
+
+    var featureNewVector = new OpenLayers.Feature.Vector(
+        // new OpenLayers.Geometry.Point(3327571, 6825825),
+        point.transform(new OpenLayers.Projection("EPSG:4326"),  new OpenLayers.Projection("EPSG:900913")),
+        {some:'data'},
+        {externalGraphic: 'img/up_icon.png', graphicHeight: 28, graphicWidth: 47});
+
+    featureNewVector.fid = id;
+
+
+    featureNewVector.defaultStyle = {
+        fillColor : {
+            string : "rgba(" + area.color.red + ", " + area.color.green + ", " + area.color.blue + ", " + area.color.alpha + ")",
+            red : area.color.red,
+            green : area.color.green,
+            blue : area.color.blue,
+            alpha : area.color.alpha
+        },
+        strokeColor : {
+            string : "rgba(" + area.color.red + ", " + area.color.green + ", " + area.color.blue + ", " + area.color.alpha + ")",
+            red : area.color.red,
+            green : area.color.green,
+            blue : area.color.blue,
+            alpha : area.color.alpha
+        },
+        select: {
+            strokeColor: "rgba(0, 0, 0, 1)",
+            fillColor: "rgba(" + area.color.red + ", " + area.color.green + ", " + area.color.blue + ", " + 0.9 + ")",
+            strokeWidth: 2
+        },
+        strokeWidth: 1
+    };
+
+
+    return featureNewVector;
 };
