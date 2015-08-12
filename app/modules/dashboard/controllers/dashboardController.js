@@ -134,6 +134,7 @@ angular.module('app.dashboard.controllers',['app.common', 'app.dashboard.map.con
 
         var newObserver = {
             notify : function(){
+                console.log("set default city filter");
                 updateSelectedCity(mapService.defaultCity);
             }
         };
@@ -162,6 +163,7 @@ angular.module('app.dashboard.controllers',['app.common', 'app.dashboard.map.con
 
             $rootScope.$broadcast("changeCityOnMap",cityOLMapID);
 
+            mapService.city[0] = [];
             for (i = 0;i<mapService.allCities[0].options.length; i++){
                 var actualCity = mapService.allCities[0].options[i].city;
                 console.log(cityID);

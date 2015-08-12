@@ -9,7 +9,7 @@ angular.module('app.dashboard.map.services', ['app.config', 'app.dashboard.map.d
     this.mapObjectForInformationPanel = undefined;
 
 
-        this.notifyFilterController;
+      //  this.notifyFilterController;
         this.defaultCity = "ROV";
         this.registerNotifyMethod = function(notifyFilterController){
             this.notifyFilterController = notifyFilterController;
@@ -18,8 +18,8 @@ angular.module('app.dashboard.map.services', ['app.config', 'app.dashboard.map.d
         this.allCities = [];
         this.setAllCityObject = function(allCityObject){
             this.allCities[0] = allCityObject;
-            console.log("set initial filter")
-           // this.notifyFilterController.notify();
+            console.log("set initial filter");
+            this.notifyFilterController.notify();
 
         };
 
