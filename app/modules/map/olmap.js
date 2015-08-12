@@ -85,97 +85,170 @@ function OLMap(config, rootboadcastEvent, mapService){
 
     //experiments
 
-var tampere = [
-        {
-            "type": "mapobject",
-            "objectID": "FNPK.11",
-            "objectType": "ParkingStation",
-            "objectSubtype": "cardblock",
-            "description": "Parkingslot",
-            "location": {
-                "type": "Point",
-                "coordinateSystem": "EPSG:2393",
-                "coordinates": [
-                    3327571,
-                    6825825
-                ]
-            },
-            "elements": [
-                {
-                    "attribute": {
-                        "label": "Trend",
-                        "value": "decreasing"
-                    }
-                },
-                {
-                    "attribute": {
-                        "label": "Status",
-                        "value": "spacesAvailable"
-                    }
-                },
-                {
-                    "arrowedCircle": {
-                        "circle": {
-                            "x": 3327571,
-                            "y": 6825825
-                        },
-                        "color": {
-                            "red": 0,
-                            "green": 125,
-                            "blue": 0,
-                            "alpha": 0.5
-                        },
-                        "arrowtype": "up"
-                    }
-                }
+    var berlin =  [{
+        "type": "mapobject",
+        "objectID": "BER_Crossing _ 03",
+        "objectType": "CO2Emission",
+        "objectSubtype": "DTVw",
+        "description": "via_VMZ",
+        "location": {
+            "type": "Point",
+            "coordinates": [
+                13.286821,
+                52.518842
             ]
         },
-        {
-            "type": "mapobject",
-            "objectID": "FNPK.11",
-            "objectType": "ParkingStation",
-            "objectSubtype": "cardblock",
-            "description": "Parkingslot",
-            "location": {
-                "type": "Point",
-                "coordinateSystem": "EPSG:2393",
-                "coordinates": [
-                    3327677,
-                    6825503
-                ]
+        "elements": [
+            {
+                "attribute": {
+                    "label": "crossing_number",
+                    "value": "1234"
+                }
             },
-            "elements": [
-                {
-                    "attribute": {
-                        "label": "Trend",
-                        "value": "stable"
-                    }
-                },
-                {
-                    "attribute": {
-                        "label": "Status",
-                        "value": "full"
-                    }
-                },
-                {
-                    "arrowedCircle": {
-                        "circle": {
-                            "x": 3327677,
-                            "y": 6825503
-                        },
-                        "color": {
-                            "red": 125,
-                            "green": 0,
-                            "blue": 0,
-                            "alpha": 0.5
-                        },
-                        "arrowtype": "middle"
+            {
+                "attribute": {
+                    "label": "traffic_rate",
+                    "value": "12345"
+                }
+            },
+            {
+                "attribute": {
+                    "label": "co2 (est.)",
+                    "value": "123"
+                }
+            },
+            {
+                "maparea": {
+                    "area": {
+                        "type": "Polygon",
+                        "coordinates": [
+                            [
+                                [
+                                    13.286821,
+                                    52.518842
+                                ],
+                                [
+                                    13.286921,
+                                    52.518842
+                                ],
+                                [
+                                    13.286921,
+                                    52.518942
+                                ],
+                                [
+                                    13.286821,
+                                    52.518942
+                                ]
+                            ]
+                        ]
+                    },
+                    "color": {
+                        "red": 125,
+                        "green": 125,
+                        "blue": 125,
+                        "alpha": 0.5
                     }
                 }
-            ]
-        }
-    ];
+            }
+        ]
+    }
+];
 
+
+var tampere =[
+    {
+        "type": "mapobject",
+        "objectID": "FNPK.11",
+        "objectType": "ParkingStation",
+        "objectSubtype": "cardblock",
+        "description": "Parkingslot",
+        "location": {
+            "type": "Point",
+            "coordinateSystem": "EPSG:2393",
+            "coordinates": [
+                3327571,
+                6825825
+            ]
+        },
+        "elements": [
+            {
+                "attribute": {
+                    "label": "Trend",
+                    "value": "decreasing"
+                }
+            },
+            {
+                "attribute": {
+                    "label": "Status",
+                    "value": "spacesAvailable"
+                }
+            },
+            {
+                "arrowedCircle": {
+                    "circle": {
+                        "x": 3327571,
+                        "y": 6825825
+                    },
+                    "color": {
+                        "red": 0,
+                        "green": 125,
+                        "blue": 0,
+                        "alpha": 0.5
+                    },
+                    "arrowtype": "up",
+                    "icon": "icon_green_arrow_up"
+                }
+            }
+        ]
+    },
+    {
+        "type": "mapobject",
+        "objectID": "FNPK.11",
+        "objectType": "ParkingStation",
+        "objectSubtype": "cardblock",
+        "description": "Parkingslot",
+        "location": {
+            "type": "Point",
+            "coordinateSystem": "EPSG:2393",
+            "coordinates": [
+                3327677,
+                6825503
+            ]
+        },
+        "elements": [
+            {
+                "attribute": {
+                    "label": "Trend",
+                    "value": "stable"
+                }
+            },
+            {
+                "attribute": {
+                    "label": "Status",
+                    "value": "full"
+                }
+            },
+            {
+                "arrowedCircle": {
+                    "circle": {
+                        "x": 3327677,
+                        "y": 6825503
+                    },
+                    "color": {
+                        "red": 125,
+                        "green": 0,
+                        "blue": 0,
+                        "alpha": 0.5
+                    },
+                    "arrowtype": "middle",
+                    "icon": "icon_red_arrow_straight"
+                }
+            }
+        ]
+    }
+]
+
+    this.addObjects(berlin);
     this.addObjects(tampere);
 
 }
@@ -256,7 +329,6 @@ OLMap.prototype.addObjects = function (mapObjectList){
                 console.log("draw polygon");
                 var mapArea = this.getmapAreaofMapObject(mapObjectList[i]);
                 feature = this.createPolygonFeature(mapArea, fid);
-                //  var feature = this.createArrowCircle(mapArea, fid);
 
                 break;
             }
@@ -291,6 +363,8 @@ OLMap.prototype.createPolygonFeature = function(area, id){
     var linearRing = new OpenLayers.Geometry.LinearRing(pointList).transform(
         new OpenLayers.Projection("EPSG:4326"),
         new OpenLayers.Projection("EPSG:900913"));
+
+    
 
     var polygon = new OpenLayers.Geometry.Polygon([linearRing]);
 
@@ -383,10 +457,13 @@ OLMap.prototype.createArrowCircle = function(arrowCircle, id){
 */
     //END
 
+    var iconPng = "img/"+arrowCircle.icon + ".png";
+
+
     var featureNewVector = new OpenLayers.Feature.Vector(
         point,
         {some:'data'},
-        {externalGraphic: 'img/icon_green_arrow_up.png', graphicHeight: 28, graphicWidth: 47});
+        {externalGraphic: iconPng, graphicHeight: 28, graphicWidth: 47});
 
     featureNewVector.fid = id;
 
