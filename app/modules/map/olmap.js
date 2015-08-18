@@ -80,91 +80,7 @@ function OLMap(config, rootboadcastEvent, mapService){
 
     this.vector = this.getParkingLayer();
     this.olMap.addLayer(this.vector);
-
-
-
-    //experiments
-
-    var berlin = [
-        {
-            "type": "mapobject",
-            "objectID": "BER_Crossing _ 03",
-            "objectType": "CO2Emission",
-            "objectSubtype": "DTVw",
-            "description": "via_VMZ",
-            "location": {
-                "type": "Point",
-                "coordinates": [
-                    13.286821,
-                    52.518842
-                ]
-            },
-            "elements": [
-                {
-                    "attribute": {
-                        "label": "crossing_number",
-                        "value": "1234"
-                    }
-                },
-                {
-                    "attribute": {
-                        "label": "traffic_rate",
-                        "value": "12345"
-                    }
-                },
-                {
-                    "attribute": {
-                        "label": "co2 (est.)",
-                        "value": "123"
-                    }
-                },
-                {
-                    "attribute": {
-                        "label": "street",
-                        "value": "Manteuffelstr."
-                    }
-                },
-                {
-                    "maparea": {
-                        "area": {
-                            "type": "Polygon",
-                            "coordinateType": "UTM",
-                            "coordinates": [
-                                {
-                                    "zone": "33N",
-                                    "E" :  389100.36812789790565148,
-                                    "N" : 5814100.89597235433757305
-                                },
-                                {
-                                    "zone": "33N",
-                                    "E" :  389100.36812789790565148,
-                                    "N" : 5814200.89597235433757305
-                                },
-                                {
-                                    "zone": "33N",
-                                    "E" :  389200.36812789790565148,
-                                    "N" : 5814200.89597235433757305
-                                },
-                                {
-                                    "zone": "33N",
-                                    "E" :  389200.36812789790565148,
-                                    "N" : 5814100.89597235433757305
-                                }
-                            ]
-                        },
-                        "color": {
-                            "red": 255,
-                            "green": 0,
-                            "blue": 0,
-                            "alpha": 1
-                        }
-                    }
-                }
-            ]
-        }
-    ];
-    this.addObjects(berlin);
-
+    
 }
 
 OLMap.prototype.setCenter = function(city) {
@@ -211,6 +127,31 @@ OLMap.prototype.getCircleArrowOfMapObject = function(mapObject){
     return null;
 };
 
+OLMap.prototype.prepareMapData = function (mapObject){
+
+    // sometimes elements contains "text$attribute" instead of "attribute"
+    for (var i = 0;i<mapObject.elements.length;i++){
+
+        var orginalKey = Object.keys(mapObject.elements[i])[0];
+        key  = orginalKey.toLowerCase();
+        if(key.indexOf("attribute") > -1)
+        {
+            console.log(orginalKey);
+            mapObject.elements[i].attribute = mapObject.elements[i][orginalKey];
+            delete mapObject.elements[i][orginalKey];
+        }
+        if(key.indexOf("maparea") > -1)
+        {
+            mapObject.elements[i].maparea = mapObject.elements[i][orginalKey];
+            delete mapObject.elements[i][orginalKey];
+        }
+
+    }
+
+    return mapObject;
+}
+
+
 
 OLMap.prototype.addObjects = function (mapObjectList){
 
@@ -221,8 +162,7 @@ OLMap.prototype.addObjects = function (mapObjectList){
 
     if (this.vector === undefined) return;
     for (i = 0;i<mapObjectList.length; i++){
-
-
+        mapObjectList[i] = this.prepareMapData(mapObjectList[i]);
         var mapObjectTyp = getMapObjectTyp(mapObjectList[i]);
         var fid = mapObjectList[i].objectID + ":" +
             mapObjectList[i].objectType + ":" +
