@@ -132,31 +132,31 @@ function OLMap(config, rootboadcastEvent, mapService){
                             "coordinates": [
                                 {
                                     "zone": "33N",
-                                    "N" :  389811.36812789790565148,
-                                    "E" : 5814398.89597235433757305
+                                    "E" :  389100.36812789790565148,
+                                    "N" : 5814100.89597235433757305
                                 },
                                 {
                                     "zone": "33N",
-                                    "N" :  389850.36812789790565148,
-                                    "E" : 5814398.89597235433757305
+                                    "E" :  389100.36812789790565148,
+                                    "N" : 5814200.89597235433757305
                                 },
                                 {
                                     "zone": "33N",
-                                    "N" :  389850.36812789790565148,
-                                    "E" : 5814340.89597235433757305
+                                    "E" :  389200.36812789790565148,
+                                    "N" : 5814200.89597235433757305
                                 },
                                 {
                                     "zone": "33N",
-                                    "N" :  389811.36812789790565148,
-                                    "E" : 5814399.89597235433757305
+                                    "E" :  389200.36812789790565148,
+                                    "N" : 5814100.89597235433757305
                                 }
                             ]
                         },
                         "color": {
-                            "red": 125,
-                            "green": 125,
-                            "blue": 125,
-                            "alpha": 0.5
+                            "red": 255,
+                            "green": 0,
+                            "blue": 0,
+                            "alpha": 1
                         }
                     }
                 }
@@ -341,13 +341,12 @@ OLMap.prototype.createPolygonFromUTMFeature = function(area, id){
     console.log(area);
     var pointList = [],
         polygonGeometry,
-        polygonFeature,
         vector = new OpenLayers.Layer.Vector('polygonLayerVector');
 
     var coords = area.area.coordinates;
     for (var i=0; i<coords.length; i++) {
 
-        var point = new OpenLayers.Geometry.Point(coords[i].N, coords[i].E);
+        var point = new OpenLayers.Geometry.Point(coords[i].E, coords[i].N);
         //transform point into EPSG:900913
         Proj4js.defs["EPSG:32633"] = "+title= WGS 84 +proj=utm +zone=33 +ellps=WGS84 +datum=WGS84 +units=m +no_defs";
         var sourceCoords = new Proj4js.Proj("EPSG:32633");
