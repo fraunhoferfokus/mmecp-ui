@@ -153,103 +153,7 @@ function OLMap(config, rootboadcastEvent, mapService){
         ]
     }
 ];
-
-
-var tampere =[
-    {
-        "type": "mapobject",
-        "objectID": "FNPK.11",
-        "objectType": "ParkingStation",
-        "objectSubtype": "cardblock",
-        "description": "Parkingslot",
-        "location": {
-            "type": "Point",
-            "coordinateSystem": "EPSG:2393",
-            "coordinates": [
-                3327571,
-                6825825
-            ]
-        },
-        "elements": [
-            {
-                "attribute": {
-                    "label": "Trend",
-                    "value": "decreasing"
-                }
-            },
-            {
-                "attribute": {
-                    "label": "Status",
-                    "value": "spacesAvailable"
-                }
-            },
-            {
-                "arrowedCircle": {
-                    "circle": {
-                        "x": 3327571,
-                        "y": 6825825
-                    },
-                    "color": {
-                        "red": 0,
-                        "green": 125,
-                        "blue": 0,
-                        "alpha": 0.5
-                    },
-                    "arrowtype": "up",
-                    "icon": "icon_green_arrow_up"
-                }
-            }
-        ]
-    },
-    {
-        "type": "mapobject",
-        "objectID": "FNPK.11",
-        "objectType": "ParkingStation",
-        "objectSubtype": "cardblock",
-        "description": "Parkingslot",
-        "location": {
-            "type": "Point",
-            "coordinateSystem": "EPSG:2393",
-            "coordinates": [
-                3327677,
-                6825503
-            ]
-        },
-        "elements": [
-            {
-                "attribute": {
-                    "label": "Trend",
-                    "value": "stable"
-                }
-            },
-            {
-                "attribute": {
-                    "label": "Status",
-                    "value": "full"
-                }
-            },
-            {
-                "arrowedCircle": {
-                    "circle": {
-                        "x": 3327677,
-                        "y": 6825503
-                    },
-                    "color": {
-                        "red": 125,
-                        "green": 0,
-                        "blue": 0,
-                        "alpha": 0.5
-                    },
-                    "arrowtype": "middle",
-                    "icon": "icon_red_arrow_straight"
-                }
-            }
-        ]
-    }
-]
-
     this.addObjects(berlin);
-    this.addObjects(tampere);
 
 }
 
@@ -364,7 +268,7 @@ OLMap.prototype.createPolygonFeature = function(area, id){
         new OpenLayers.Projection("EPSG:4326"),
         new OpenLayers.Projection("EPSG:900913"));
 
-    
+
 
     var polygon = new OpenLayers.Geometry.Polygon([linearRing]);
 

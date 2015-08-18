@@ -77,9 +77,16 @@ angular.module('app.dashboard.map.controller', ['app.socket', 'app.config', 'app
         $scope.callFilter = function(filterOption, event){
 
             if (!filterOption.requested){
-                socketService.send(filterOption.request);
-                console.log("request: " + filterOption.request);
+                socketService.send(filterOption.requestActivated);
+                console.log("send requestActivated: " + filterOption.requestActivated);
             }else {
+
+                if(filterOption.requestDeactivated  != undefined)
+                {
+                    socketService.send(filterOption.requestDeactivated);
+                    console.log("send requestDeactivated: " + filterOption.requestDeactivated);
+                }
+
                 $scope.$emit('removeMapObjects',
                     {
                         layer: "parkingLayer",
