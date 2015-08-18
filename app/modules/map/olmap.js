@@ -85,74 +85,84 @@ function OLMap(config, rootboadcastEvent, mapService){
 
     //experiments
 
-    var berlin =  [{
-        "type": "mapobject",
-        "objectID": "BER_Crossing _ 03",
-        "objectType": "CO2Emission",
-        "objectSubtype": "DTVw",
-        "description": "via_VMZ",
-        "location": {
-            "type": "Point",
-            "coordinates": [
-                13.286821,
-                52.518842
-            ]
-        },
-        "elements": [
-            {
-                "attribute": {
-                    "label": "crossing_number",
-                    "value": "1234"
-                }
+    var berlin = [
+        {
+            "type": "mapobject",
+            "objectID": "BER_Crossing _ 03",
+            "objectType": "CO2Emission",
+            "objectSubtype": "DTVw",
+            "description": "via_VMZ",
+            "location": {
+                "type": "Point",
+                "coordinates": [
+                    13.286821,
+                    52.518842
+                ]
             },
-            {
-                "attribute": {
-                    "label": "traffic_rate",
-                    "value": "12345"
-                }
-            },
-            {
-                "attribute": {
-                    "label": "co2 (est.)",
-                    "value": "123"
-                }
-            },
-            {
-                "maparea": {
-                    "area": {
-                        "type": "Polygon",
-                        "coordinates": [
-                            [
-                                [
-                                    13.286821,
-                                    52.518842
-                                ],
-                                [
-                                    13.286921,
-                                    52.518842
-                                ],
-                                [
-                                    13.286921,
-                                    52.518942
-                                ],
-                                [
-                                    13.286821,
-                                    52.518942
-                                ]
+            "elements": [
+                {
+                    "attribute": {
+                        "label": "crossing_number",
+                        "value": "1234"
+                    }
+                },
+                {
+                    "attribute": {
+                        "label": "traffic_rate",
+                        "value": "12345"
+                    }
+                },
+                {
+                    "attribute": {
+                        "label": "co2 (est.)",
+                        "value": "123"
+                    }
+                },
+                {
+                    "attribute": {
+                        "label": "street",
+                        "value": "Manteuffelstr."
+                    }
+                },
+                {
+                    "maparea": {
+                        "area": {
+                            "type": "Polygon",
+                            "coordinateType": "UTM",
+                            "coordinates": [
+                                {
+                                    "zone": "33N",
+                                    "N" :  389811.36812789790565148,
+                                    "E" : 5814398.89597235433757305
+                                },
+                                {
+                                    "zone": "33N",
+                                    "N" :  389850.36812789790565148,
+                                    "E" : 5814398.89597235433757305
+                                },
+                                {
+                                    "zone": "33N",
+                                    "N" :  389850.36812789790565148,
+                                    "E" : 5814340.89597235433757305
+                                },
+                                {
+                                    "zone": "33N",
+                                    "N" :  389811.36812789790565148,
+                                    "E" : 5814399.89597235433757305
+                                }
                             ]
-                        ]
-                    },
-                    "color": {
-                        "red": 125,
-                        "green": 125,
-                        "blue": 125,
-                        "alpha": 0.5
+                        },
+                        "color": {
+                            "red": 125,
+                            "green": 125,
+                            "blue": 125,
+                            "alpha": 0.5
+                        }
                     }
                 }
-            }
-        ]
-    }
-];
+            ]
+        }
+    ];
     this.addObjects(berlin);
 
 }
@@ -225,14 +235,21 @@ OLMap.prototype.addObjects = function (mapObjectList){
             {
                 console.log("draw arrowCircles");
                 var arrowCircle =  this.getCircleArrowOfMapObject(mapObjectList[i]);
-                 feature = this.createArrowCircle(arrowCircle, fid);
+                 feature = this.createArrowCircleFeature(arrowCircle, fid);
                 break;
             }
             case "mapArea":
             {
-                console.log("draw polygon");
+
                 var mapArea = this.getmapAreaofMapObject(mapObjectList[i]);
-                feature = this.createPolygonFeature(mapArea, fid);
+                if(mapArea.area.coordinateType == "UTM") {
+                    console.log("draw polygon utm");
+                    feature = this.createPolygonFromUTMFeature(mapArea, fid);
+                }
+                else{
+                    console.log("draw polygon normal");
+                    feature = this.createPolygonFeature(mapArea, fid);
+                }
 
                 break;
             }
@@ -271,6 +288,13 @@ OLMap.prototype.createPolygonFeature = function(area, id){
 
 
     var polygon = new OpenLayers.Geometry.Polygon([linearRing]);
+    console.log(polygon);
+    var newVector = this.addPolygon(area,polygon,id);
+
+    return newVector;
+};
+
+OLMap.prototype.addPolygon = function(area,polygon, id){
 
 
     var style=  {
@@ -308,7 +332,55 @@ OLMap.prototype.createPolygonFeature = function(area, id){
     return newVector;
 };
 
-OLMap.prototype.createArrowCircle = function(arrowCircle, id){
+
+
+OLMap.prototype.createPolygonFromUTMFeature = function(area, id){
+
+
+    console.log("create with UTM");
+    console.log(area);
+    var pointList = [],
+        polygonGeometry,
+        polygonFeature,
+        vector = new OpenLayers.Layer.Vector('polygonLayerVector');
+
+    var coords = area.area.coordinates;
+    for (var i=0; i<coords.length; i++) {
+
+        var point = new OpenLayers.Geometry.Point(coords[i].N, coords[i].E);
+        //transform point into EPSG:900913
+        Proj4js.defs["EPSG:32633"] = "+title= WGS 84 +proj=utm +zone=33 +ellps=WGS84 +datum=WGS84 +units=m +no_defs";
+        var sourceCoords = new Proj4js.Proj("EPSG:32633");
+        var destCoords = new Proj4js.Proj("EPSG:900913");
+        console.log(point);
+        point =Proj4js.transform(sourceCoords, destCoords, point);
+        console.log("transform");
+        console.log(point);
+
+   /*  var iconPng = "img/"+"icon_red_arrow_straight" + ".png";
+        var featureNewVector = new OpenLayers.Feature.Vector(
+            point,
+            {some:'data'},
+            {externalGraphic: iconPng, graphicHeight: 28, graphicWidth: 47})
+        return featureNewVector; */
+
+
+        pointList.push(point);
+    }
+
+    var linearRing = new OpenLayers.Geometry.LinearRing(pointList);
+
+
+    var polygon = new OpenLayers.Geometry.Polygon([linearRing]);
+    console.log("polygon");
+    console.log(polygon);
+    var newVector = this.addPolygon(area,polygon,id);
+    return newVector;
+};
+
+
+
+OLMap.prototype.createArrowCircleFeature = function(arrowCircle, id){
 
 
     var coords = arrowCircle.circle;
@@ -334,32 +406,7 @@ OLMap.prototype.createArrowCircle = function(arrowCircle, id){
     console.log("Point:"+result);
     x= result.x;
     y= result.y;
-    point = new OpenLayers.Geometry.Point(x, y,0);
-
-    //END
-    //Berlin tranform
-    /*
-    var x_berlin_test = 385432.25584348139818758;
-    var y_berlin_test = 5815814.65779814217239618;
-    x = x_berlin_test;
-    y = y_berlin_test;
-    Proj4js.defs["EPSG:32633"] = "+title= WGS 84 +proj=utm +zone=33 +ellps=WGS84 +datum=WGS84 +units=m +no_defs";
-
-    var sourceCoords = new Proj4js.Proj("EPSG:32633");
-    var destCoords = new Proj4js.Proj("EPSG:900913");
-    var p = new Proj4js.Point(x, y);
-    console.log(sourceCoords);
-    console.log(destCoords);
-    console.log(p);
-
-    console.log("there:");
-    result = Proj4js.transform(sourceCoords, destCoords, p);
-    console.log("Point:"+result);
-    x= result.x;
-    y= result.y;
-    point = new OpenLayers.Geometry.Point(x, y,0);
-*/
-    //END
+    var point = new OpenLayers.Geometry.Point(x, y,0);
 
     var iconPng = "img/"+arrowCircle.icon + ".png";
 

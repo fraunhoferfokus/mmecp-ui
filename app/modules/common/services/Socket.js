@@ -14,10 +14,20 @@ angular.module('app.socket', ['ngWebsocket', 'app.config', 'app.dashboard.map.se
 
         var mapObjects = [];
         var subject = [];
+        var doInitRequest = true;
 
         ws.$on('$open', function () {
             console.log('connection open');
-            initRequests();
+            if(doInitRequest == true)
+            {
+                var initialRequest = {
+                    "context": {
+                        "select": "Filter"
+                    }
+                };
+                ws.$emit(JSON.stringify(initialRequest));
+                doInitRequest = false;
+            }
         });
         ws.$on('$message', function(event) {
             var res = event;
@@ -42,21 +52,23 @@ angular.module('app.socket', ['ngWebsocket', 'app.config', 'app.dashboard.map.se
             }
 
             //interpret message
-
-            console.log("got it");
-            if (res.options){
+            if (res.options != undefined) {
                 //use case and filter object
                 //$scope.$broadcast('receiveUseCaseEvent', "asdasdas");
                 console.log("Backend Server send: all cities");
                 mapService.setAllCityObject(res);
             }else {
+                console.log("new map Object rec");
+                console.log(res);
                 mapObjects.push(res);
+
+                console.log("incoming message from server: " + res);
+                for (var i = 0;i<subject.length;i++){
+                    subject[i].notify();
+                }
             }
 
-            console.log("incoming message from server: " + res);
-            for (var i = 0;i<subject.length;i++){
-                subject[i].notify();
-            }
+
         });
         ws.$on('$error', function() {
             console.log('connection Error');
@@ -94,18 +106,6 @@ angular.module('app.socket', ['ngWebsocket', 'app.config', 'app.dashboard.map.se
                 }
             }
         };
-
-
-        // do initial requests
-        function initRequests() {
-            console.log("ask backend for cities");
-            var initialRequest = {
-                "context": {
-                    "select": "Filter"
-                }
-            };
-            ws.$emit(JSON.stringify(initialRequest));
-        }
 
 
     });
