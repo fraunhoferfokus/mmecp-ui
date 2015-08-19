@@ -337,12 +337,12 @@ OLMap.prototype.createPolygonFromUTMFeature = function(area, id){
         console.log("transform");
         console.log(point);
 
-    var iconPng = "img/"+"icon_red_arrow_straight" + ".png";
+   /* var iconPng = "img/"+"icon_red_arrow_straight" + ".png";
         var featureNewVector = new OpenLayers.Feature.Vector(
             point,
             {some:'data'},
             {externalGraphic: iconPng, graphicHeight: 28, graphicWidth: 47})
-        return featureNewVector;
+        return featureNewVector;*/
 
 
         pointList.push(point);
