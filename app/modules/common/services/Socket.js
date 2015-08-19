@@ -58,11 +58,11 @@ angular.module('app.socket', ['ngWebsocket', 'app.config', 'app.dashboard.map.se
                 console.log("Backend Server send: all cities");
                 mapService.setAllCityObject(res);
             }else {
-                console.log("new map Object rec");
-                console.log(res);
+                console.log("new map Object recieved");
+
                 mapObjects.push(res);
 
-                console.log("incoming message from server: " + res);
+                console.log("incoming message from server ... ");
                 for (var i = 0;i<subject.length;i++){
                     subject[i].notify();
                 }

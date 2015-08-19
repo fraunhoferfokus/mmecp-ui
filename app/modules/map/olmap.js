@@ -43,6 +43,7 @@ function OLMap(config, rootboadcastEvent, mapService){
             featureover: function(e) {
                 e.feature.style.strokeWidth = 2;
                 e.feature.layer.redraw();
+                console.log("yeaaa");
 
             },
             featureout: function(e) {
@@ -80,7 +81,7 @@ function OLMap(config, rootboadcastEvent, mapService){
 
     this.vector = this.getParkingLayer();
     this.olMap.addLayer(this.vector);
-    
+
 }
 
 OLMap.prototype.setCenter = function(city) {
@@ -130,17 +131,20 @@ OLMap.prototype.getCircleArrowOfMapObject = function(mapObject){
 OLMap.prototype.prepareMapData = function (mapObject){
 
     // sometimes elements contains "text$attribute" instead of "attribute"
+
+    if(mapObject.elements == undefined)
+    return mapObject;
     for (var i = 0;i<mapObject.elements.length;i++){
 
         var orginalKey = Object.keys(mapObject.elements[i])[0];
         key  = orginalKey.toLowerCase();
-        if(key.indexOf("attribute") > -1)
+        if(key.indexOf("attribute") > -1 && key != "attribute")
         {
             console.log(orginalKey);
             mapObject.elements[i].attribute = mapObject.elements[i][orginalKey];
             delete mapObject.elements[i][orginalKey];
         }
-        if(key.indexOf("maparea") > -1)
+        if(key.indexOf("maparea") > -1 && key != "maparea")
         {
             mapObject.elements[i].maparea = mapObject.elements[i][orginalKey];
             delete mapObject.elements[i][orginalKey];
@@ -157,13 +161,12 @@ OLMap.prototype.addObjects = function (mapObjectList){
 
 
     console.log("start drawing map objects");
-    //console.log(mapObjectList);
-    console.log(mapObjectList.length);
 
     if (this.vector === undefined) return;
     for (i = 0;i<mapObjectList.length; i++){
-        mapObjectList[i] = this.prepareMapData(mapObjectList[i]);
-        var mapObjectTyp = getMapObjectTyp(mapObjectList[i]);
+       mapObjectList[i] = this.prepareMapData(mapObjectList[i]);
+        console.log(mapObjectList[i]);
+        var mapObjectTyp = this.getMapObjectTyp(mapObjectList[i]);
         var fid = mapObjectList[i].objectID + ":" +
             mapObjectList[i].objectType + ":" +
             mapObjectList[i].objectSubtype;
@@ -318,6 +321,22 @@ OLMap.prototype.createPolygonFromUTMFeature = function(area, id){
 };
 
 
+OLMap.prototype.getMapObjectTyp = function (mapObject)
+{
+    if(mapObject.elements == undefined)
+        return "unkown";
+    console.log(mapObject.elements.length);
+    for (var i = 0;i<mapObject.elements.length;i++){
+        if (mapObject.elements[i].maparea !== undefined){
+            return "mapArea";
+        }
+        if (mapObject.elements[i].arrowedCircle !== undefined){
+            return "arrowedCircle";
+        }
+    }
+    return "unknown";
+};
+
 
 OLMap.prototype.createArrowCircleFeature = function(arrowCircle, id){
 
@@ -385,15 +404,3 @@ OLMap.prototype.createArrowCircleFeature = function(arrowCircle, id){
     return featureNewVector;
 };
 
-function getMapObjectTyp(mapObject)
-{
-    for (var i = 0;i<mapObject.elements.length;i++){
-        if (mapObject.elements[i].maparea !== undefined){
-            return "mapArea";
-        }
-        if (mapObject.elements[i].arrowedCircle !== undefined){
-            return "arrowedCircle";
-        }
-    }
-    return "unknown";
-}
