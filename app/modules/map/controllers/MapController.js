@@ -21,6 +21,8 @@ angular.module('app.dashboard.map.controller', ['app.socket', 'app.config', 'app
         //Events:
         //******************
         $scope.$on('removeMapObjects', function(event, args){
+            console.log("args layer");
+            console.log(args.layer);
             removeMapObjects(args.layer, args.subType);
         });
         $scope.$on('switchLayer', function(event, args){
@@ -89,7 +91,7 @@ angular.module('app.dashboard.map.controller', ['app.socket', 'app.config', 'app
 
                 $scope.$emit('removeMapObjects',
                     {
-                        layer: "parkingLayer",
+                        layer: "mapObjectsLayer",
                         subType: filterOption.subType
                     }
                 );

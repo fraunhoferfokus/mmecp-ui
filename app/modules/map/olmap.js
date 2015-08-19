@@ -79,7 +79,7 @@ function OLMap(config, rootboadcastEvent, mapService){
     this.olMap.addLayer(this.layerOSM);
     this.setCenter(this.config.default.city);
 
-    this.vector = this.getParkingLayer();
+    this.vector = this.getMapObjectsLayer();
     this.olMap.addLayer(this.vector);
 
 }
@@ -153,7 +153,67 @@ OLMap.prototype.prepareMapData = function (mapObject){
     }
 
     return mapObject;
+};
+
+
+OLMap.prototype.generateMapObjectFeature = function (mapObjectTyp,mapObjectElement,fid){
+
+    var feature;
+    switch(mapObjectTyp)
+    {
+        case "arrowedCircle":
+        {
+            console.log("draw arrowCircle " + i);
+            var arrowCircle =  this.getCircleArrowOfMapObject(mapObjectElement);
+            feature = this.createArrowCircleFeature(arrowCircle, fid);
+            break;
+        }
+        case "mapArea":
+        {
+
+            var mapArea = this.getmapAreaofMapObject(mapObjectElement);
+            if(mapArea.area.coordinateType == "UTM") {
+                console.log("draw polygon utm");
+                feature = this.createPolygonFromUTMFeature(mapArea, fid);
+            }
+            else{
+                console.log("draw polygon normal");
+                feature = this.createPolygonFeature(mapArea, fid);
+            }
+
+            break;
+        }
+    }
+    return feature;
+
 }
+
+
+
+OLMap.prototype.addMapObjectToMap = function (mapObjectElement){
+
+    var mapObjectTyp = this.getMapObjectTyp(mapObjectElement);
+    var fid = mapObjectElement.objectID + ":" +
+        mapObjectElement.objectType + ":" +
+        mapObjectElement.objectSubtype;
+
+
+    var feature = this.generateMapObjectFeature(mapObjectTyp,mapObjectElement,fid);
+
+    feature.mapObject = mapObjectElement;
+
+    //remove old mapobject with same fid if existing
+    var existingMapObject = this.vector.getFeatureBy('fid', fid);
+    if(existingMapObject)
+    {
+        this.vector.removeFeatures(existingMapObject);
+    }
+
+
+    this.vector.addFeatures([feature]);
+
+
+};
 
 
 
@@ -164,49 +224,19 @@ OLMap.prototype.addObjects = function (mapObjectList){
 
     if (this.vector === undefined) return;
     for (i = 0;i<mapObjectList.length; i++){
+
        mapObjectList[i] = this.prepareMapData(mapObjectList[i]);
-        console.log(mapObjectList[i]);
-        var mapObjectTyp = this.getMapObjectTyp(mapObjectList[i]);
-        var fid = mapObjectList[i].objectID + ":" +
-            mapObjectList[i].objectType + ":" +
-            mapObjectList[i].objectSubtype;
-        var feature;
+        this.addMapObjectToMap(mapObjectList[i]);
 
-        switch(mapObjectTyp)
-        {
-            case "arrowedCircle":
-            {
-                console.log("draw arrowCircles");
-                var arrowCircle =  this.getCircleArrowOfMapObject(mapObjectList[i]);
-                 feature = this.createArrowCircleFeature(arrowCircle, fid);
-                break;
-            }
-            case "mapArea":
-            {
 
-                var mapArea = this.getmapAreaofMapObject(mapObjectList[i]);
-                if(mapArea.area.coordinateType == "UTM") {
-                    console.log("draw polygon utm");
-                    feature = this.createPolygonFromUTMFeature(mapArea, fid);
-                }
-                else{
-                    console.log("draw polygon normal");
-                    feature = this.createPolygonFeature(mapArea, fid);
-                }
-
-                break;
-            }
-        }
-        feature.mapObject = mapObjectList[i];
-        this.vector.addFeatures([feature]);
 
 
     }
 
 };
 
-OLMap.prototype.getParkingLayer = function(){
-    vector = new OpenLayers.Layer.Vector("parkingLayer");
+OLMap.prototype.getMapObjectsLayer = function(){
+    vector = new OpenLayers.Layer.Vector("mapObjectsLayer");
     return vector;
 };
 
@@ -325,7 +355,6 @@ OLMap.prototype.getMapObjectTyp = function (mapObject)
 {
     if(mapObject.elements == undefined)
         return "unkown";
-    console.log(mapObject.elements.length);
     for (var i = 0;i<mapObject.elements.length;i++){
         if (mapObject.elements[i].maparea !== undefined){
             return "mapArea";
@@ -349,19 +378,13 @@ OLMap.prototype.createArrowCircleFeature = function(arrowCircle, id){
     //TAMPERE tranform
 
     Proj4js.defs["EPSG:2393"] = "+title= KKJ +proj=tmerc +lat_0=0 +lon_0=27 +k=1 +x_0=3500000 +y_0=0 +ellps=intl +units=m +no_defs";
-    console.log(Proj4js.defs["EPSG:2393"]);
-    console.log(Proj4js.defs["EPSG:900913"]);
+
     var sourceCoords = new Proj4js.Proj("EPSG:2393");
     var destCoords = new Proj4js.Proj("EPSG:900913");
     destCoords.readyToUse = true;
     var p = new Proj4js.Point(x, y);
-    console.log(sourceCoords);
-    console.log(destCoords);
-    console.log(p);
 
-    console.log("there:");
     result = Proj4js.transform(sourceCoords, destCoords, p);
-    console.log("Point:"+result);
     x= result.x;
     y= result.y;
     var point = new OpenLayers.Geometry.Point(x, y,0);
