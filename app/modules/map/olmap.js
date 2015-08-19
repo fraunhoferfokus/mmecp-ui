@@ -43,15 +43,23 @@ function OLMap(config, rootboadcastEvent, mapService){
             featureover: function(e) {
                 e.feature.style.strokeWidth = 2;
                 e.feature.layer.redraw();
-                console.log("yeaaa");
+                e.feature.style.cursor = 'pointer';
+
 
             },
             featureout: function(e) {
                 if (e.feature != selectedfeature){
                     e.feature.style.strokeWidth = 1;
+                    e.feature.style.cursor = '';
                     e.feature.layer.redraw();
                 }
             },
+
+
+
+
+
+
 
             featureclick: function(e) {
                 if (selectedfeature == e.feature){
@@ -319,7 +327,7 @@ OLMap.prototype.createPolygonFromUTMFeature = function(area, id){
     var coords = area.area.coordinates;
     for (var i=0; i<coords.length; i++) {
 
-        var point = new OpenLayers.Geometry.Point(coords[i].E, coords[i].N);
+        var point = new OpenLayers.Geometry.Point(coords[i].e, coords[i].n);
         //transform point into EPSG:900913
         Proj4js.defs["EPSG:32633"] = "+title= WGS 84 +proj=utm +zone=33 +ellps=WGS84 +datum=WGS84 +units=m +no_defs";
         var sourceCoords = new Proj4js.Proj("EPSG:32633");
@@ -329,12 +337,12 @@ OLMap.prototype.createPolygonFromUTMFeature = function(area, id){
         console.log("transform");
         console.log(point);
 
-   /*  var iconPng = "img/"+"icon_red_arrow_straight" + ".png";
+    var iconPng = "img/"+"icon_red_arrow_straight" + ".png";
         var featureNewVector = new OpenLayers.Feature.Vector(
             point,
             {some:'data'},
             {externalGraphic: iconPng, graphicHeight: 28, graphicWidth: 47})
-        return featureNewVector; */
+        return featureNewVector;
 
 
         pointList.push(point);
