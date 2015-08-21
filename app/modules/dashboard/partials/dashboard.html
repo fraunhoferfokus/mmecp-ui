@@ -1,0 +1,106 @@
+<div class="row full-width">
+    <!-- Content(Map & Diagrams) -->
+    <div class="medium-11-customer columns map-diagramm-content" ng-class="contentCSS">
+        <div class="row full-width">
+            <!-- Left Sidebar & Map-->
+            <div ng-class="mapCSS" class=" columns map-content ">
+                <!-- Left Sidebar -->
+                <div class="off-canvas-wrap">
+                    <div class="inner-wrap">
+                        <nav class="tab-bar">
+                            <section class="left-small">
+                                <a class="left-off-canvas-toggle"><i class="fi-widget" style="font-size: 20px;color:black;"></i></a>
+                            </section>
+                            <section ng-switch on="showBigMap" class="middle tab-bar-section tab-bar-section-map">
+                                <h1 class="title left" style="color: black !important;">Map</h1>
+                                <a  ng-switch-when="true" class="right btn-showHideMap" ng-click="showHideMap()"><i class="fi-arrows-in large" style="color: black;"></i></a>
+                                <a  ng-switch-when="false" class="right btn-showHideMap" ng-click="showHideMap()"><i class="fi-arrows-out large" style="color: black;"></i></a>
+                            </section>
+                        </nav>
+                        <!-- Filter -->
+                        <aside class="left-off-canvas-menu">
+                            <filter></filter>
+                        </aside>
+                        <!-- Map -->
+                        <section class="main-section overlayMapInfo-section">
+                            <div id="mapContainer" class="small-12 columns panel">
+                                <ol-map alt="Map ol-map"></ol-map>
+                                <div class="overlayMapInfo" ng-show="showOverlayMapInfo">
+                                    <map-Object-Information  align="Horizontal"></map-Object-Information>
+                                </div>
+                            </div>
+                        </section>
+                        <a class="exit-off-canvas"></a>
+                    </div>
+                </div>
+            </div>
+            <!-- switch between Diagrams and Map Info-->
+            <div class="medium-5-customer columns" ng-class="diagramCSS" ng-switch on="showDiagrams">
+                <!-- Right Sidebar & Diagrams-->
+                <div ng-switch-when="true">
+                    <div class="off-canvas-wrap ">
+                        <div class="inner-wrap">
+                            <nav class="tab-bar">
+                                <section class="middle tab-bar-section">
+                                    <h1 class="title right" style="color: black !important;">Diagrams</h1>
+                                </section>
+
+                                <section class="right-small">
+                                    <a class="right-off-canvas-toggle"><i class="fi-widget" style="font-size: 20px;color: black"></i></a>
+                                </section>
+                            </nav>
+                            <aside class="right-off-canvas-menu">
+                                <div class="off-canvas-menu-title off-canvas-list">
+                                    <strong><h5 class="title right" style="color: black !important;">Diagrams</h5></strong>
+                                </div>
+                                <div class="off-canvas-menu-content">
+                                    <label>Datum</label>
+                                    <label class="apiControllEntry">Von:
+                                        <input type="text"  />
+                                    </label>
+                                    <label class="apiControllEntry">Bis:
+                                        <input type="text"  />
+                                    </label>
+                                    <label>Uhrzeit</label>
+                                    <input id="checkbox1" type="checkbox"><label for="checkbox1">6-10</label>
+                                    <input id="checkbox2" type="checkbox"><label for="checkbox2">10-16</label>
+                                    <input id="checkbox3" type="checkbox"><label for="checkbox3">16-22</label>
+                                    <a href="#" class="button">Request</a>
+                                </div>
+                            </aside>
+                            <section class="main-section diagrams-section">
+                                <div class="medium-12 columns">
+                                    <div class="row">
+                                        <div class="columns" ng-class="singleDiagramCSS">
+                                            <div class="panel callout">
+                                                <status-panel></status-panel>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                            <a class="exit-off-canvas"></a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Map Obeject Info -->
+                <div ng-switch-when="false" class="panel callout map-object-info" ng-style="addStyleToInfoPanel()" resize>
+                    <map-Object-Information align="Vertical"></map-Object-Information>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Kpis-->
+    <div class="medium-1-customer columns use-case-menu" ng-class="kipsCSS" style="padding: 5px;border-top: solid 1px whitesmoke;" ng-style="addStyle()" resize-menu>
+        <div class="row full-width" style="margin-top: 50px">
+            <div class="medium-12-customer padding-none columns">
+                <ul class="side-nav">
+                    <li><a href="#" class="has-tip" tooltip-placement="left" tooltip="On the Left!"><i class="fi-key"></i></a></li>
+                    <li><a href="#" class="has-tip" tooltip-placement="left" tooltip="On the Left!"><i class="fi-at-sign"></i></a></li>
+                    <li><a href="#" class="has-tip" tooltip-placement="left" tooltip="On the Left!"><i class="fi-first-aid"></i></a></li>
+                    <li><a href="#" class="has-tip" tooltip-placement="left" tooltip="On the Left!"><i class="fi-trees"></i></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

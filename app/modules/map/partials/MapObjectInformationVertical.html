@@ -1,0 +1,29 @@
+<div>
+    <table>
+        <thead>
+        </thead>
+
+        <tbody>
+                <tr class="elemententry" ng-repeat="element in elements">
+                    <td>{{element.label}}</td>
+                    <td>{{element.value}}</td>
+                </tr>
+        </tbody>
+
+    </table>
+    <div>
+        <nvd3-discrete-bar-chart
+                data="exampleData"
+                width="380"
+                height="240"
+                showXAxis="true"
+                interactive="true"
+                tooltips="true"
+                showYAxis="true"
+                showLegend="true" +
+                yAxisLabel="in %" +
+                xAxisLabel="average occupancy per weekday" +>
+            <svg></svg>
+        </nvd3-discrete-bar-chart>
+    </div>
+</div>
