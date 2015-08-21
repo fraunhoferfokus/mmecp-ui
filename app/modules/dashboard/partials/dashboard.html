@@ -93,12 +93,12 @@
     <!-- Kpis-->
     <div class="medium-1-customer columns use-case-menu" ng-class="kipsCSS" style="padding: 5px;border-top: solid 1px whitesmoke;" ng-style="addStyle()" resize-menu>
         <div class="row full-width" style="margin-top: 50px">
+
             <div class="medium-12-customer padding-none columns">
-                <ul class="side-nav">
-                    <li><a href="#" class="has-tip" tooltip-placement="left" tooltip="On the Left!"><i class="fi-key"></i></a></li>
-                    <li><a href="#" class="has-tip" tooltip-placement="left" tooltip="On the Left!"><i class="fi-at-sign"></i></a></li>
-                    <li><a href="#" class="has-tip" tooltip-placement="left" tooltip="On the Left!"><i class="fi-first-aid"></i></a></li>
-                    <li><a href="#" class="has-tip" tooltip-placement="left" tooltip="On the Left!"><i class="fi-trees"></i></a></li>
+                <ul ng-repeat="filterOption in useCaseList" class="side-nav">
+                    <li><a href="#" class="has-tip" tooltip-placement="left" tooltip="">{{filterOption.icon}}<i class="fi-key"></i></a></li>
+
+
                 </ul>
             </div>
         </div>

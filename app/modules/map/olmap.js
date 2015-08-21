@@ -320,25 +320,28 @@ OLMap.prototype.createPolygonFromUTMFeature = function(area, id){
         vector = new OpenLayers.Layer.Vector('polygonLayerVector');
 
     var coords = area.area.coordinates;
+    Proj4js.defs["EPSG:32633"] = "+title= WGS 84 +proj=utm +zone=33 +ellps=WGS84 +datum=WGS84 +units=m +no_defs";
+    var sourceCoords = new Proj4js.Proj("EPSG:32633");
+    var destCoords = new Proj4js.Proj("EPSG:900913");
+
+
     for (var i=0; i<coords.length; i++) {
 
         var point = new OpenLayers.Geometry.Point(coords[i].e, coords[i].n);
         //transform point into EPSG:900913
-        Proj4js.defs["EPSG:32633"] = "+title= WGS 84 +proj=utm +zone=33 +ellps=WGS84 +datum=WGS84 +units=m +no_defs";
-        var sourceCoords = new Proj4js.Proj("EPSG:32633");
-        var destCoords = new Proj4js.Proj("EPSG:900913");
+
         console.log(point);
         point =Proj4js.transform(sourceCoords, destCoords, point);
         console.log("transform");
         console.log(point);
 
-   /* var iconPng = "img/"+"icon_red_arrow_straight" + ".png";
+  /*  var iconPng = "img/"+"icon_red_arrow_straight" + ".png";
         var featureNewVector = new OpenLayers.Feature.Vector(
             point,
             {some:'data'},
             {externalGraphic: iconPng, graphicHeight: 28, graphicWidth: 47})
-        return featureNewVector;*/
-
+        return featureNewVector;
+    */
 
         pointList.push(point);
     }

@@ -9,17 +9,26 @@ angular.module('app.dashboard.map.services', ['app.config', 'app.dashboard.map.d
     this.mapObjectForInformationPanel = undefined;
 
 
-      //  this.notifyFilterController;
+        this.cityChangeNotifyList = [];
+        this.cityChangNotifyAll = function()
+        {
+            for(var i = 0;i<this.cityChangeNotifyList.length;i++)
+            {
+                this.cityChangeNotifyList[i].notify();
+            }
+        }
+
         this.defaultCity = "ROV";
-        this.registerNotifyMethod = function(notifyFilterController){
-            this.notifyFilterController = notifyFilterController;
+        this.registerNotifyCityChange= function(method){
+            this.cityChangeNotifyList.push(method);
         };
         this.city = [];
         this.allCities = [];
+        this.actualUseCase = [];
         this.setAllCityObject = function(allCityObject){
             this.allCities[0] = allCityObject;
             console.log("set initial filter");
-            this.notifyFilterController.notify();
+            this.cityChangNotifyAll();
 
         };
 
