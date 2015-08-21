@@ -145,34 +145,56 @@ angular.module('app.dashboard.controllers',['app.common', 'app.dashboard.map.con
             var city = cityName;
             var cityID = "";
             var cityOLMapID = "";
+            var defaultUseCase = "";
             if (city == "ROV"){
                 cityID = "Rovereto";
                 cityOLMapID = "ROVERETO";
+                defaultUseCase = "ParkAndRide@Rovereto";
+
 
             }else if (city == "BER"){
                 cityID = "Berlin";
                 cityOLMapID = "BERLIN";
+                defaultUseCase = "CO2Emissions@Berlin";
+
 
             }else if (city == "TAM"){
                 cityID = "Tampere";
                 cityOLMapID = "TAMPERE";
+                defaultUseCase = "ParkAndRide@Tampere";
 
             }
 
-            //update map position
 
-            $rootScope.$broadcast("changeCityOnMap",cityOLMapID);
+            for(var i = 0;i < mapService.allCities[0].options.length;i++) {
+                var actualCity = mapService.allCities[0].options[i];
 
-            mapService.city[0] = [];
-            for (i = 0;i<mapService.allCities[0].options.length; i++){
-                var actualCity = mapService.allCities[0].options[i].city;
-                console.log(cityID);
-                if (actualCity == cityID){
-                    mapService.city[0] = mapService.allCities[0].options[i];
-                    return;
+                if (actualCity.city == cityID) {
+
+                    var useCases = actualCity.useCases;
+                    for(var useCase in useCases) {
+
+                        if(useCase == defaultUseCase)
+                        {
+                            console.log("Set DefaultUseCase for City " + actualCity.city);
+                            mapService.city[0] = actualCity.useCases[useCase].options;
+                        }
+
+                    }
                 }
             }
-            mapService.city[0] = [];
+
+
+
+
+
+
+            //update map position
+            $rootScope.$broadcast("changeCityOnMap",cityOLMapID);
+
+            console.log("update city");
+            console.log(mapService.city);
+
         };
 
     }]).controller('StatusPanelController', ['$scope', function($scope){

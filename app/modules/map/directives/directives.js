@@ -58,7 +58,7 @@ angular.module('app.dashboard.map.directives', ['app.socket', 'app.config'])
         return{
             restrict: 'E',
             template: '<li><label>{{cityEntry.title}}</label></li>' +
-            '<li class="filterEntry" ng-repeat="option in cityEntry.options">' +
+            '<li class="filterEntry" ng-repeat="option in cityEntry">' +
             '<a ng-class="{filterActive: option.requested}" id="{{option.id}}" ng-click="callFilter(option, $event)">{{option.value}}</a>' +
             '</li>'
         };

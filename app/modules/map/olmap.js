@@ -43,7 +43,7 @@ function OLMap(config, rootboadcastEvent, mapService){
             featureover: function(e) {
                 e.feature.style.strokeWidth = 2;
                 e.feature.layer.redraw();
-                e.feature.style.cursor = 'pointer';
+               e.feature.style.cursor = 'pointer';
 
 
             },
@@ -55,13 +55,8 @@ function OLMap(config, rootboadcastEvent, mapService){
                 }
             },
 
-
-
-
-
-
-
             featureclick: function(e) {
+                console.log("feature click");
                 if (selectedfeature == e.feature){
                     setSelected(selectedfeature, false);
                     rootboadcastEvent('closeMapObjectInformationPanel', null);

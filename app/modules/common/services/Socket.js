@@ -56,7 +56,8 @@ angular.module('app.socket', ['ngWebsocket', 'app.config', 'app.dashboard.map.se
             if (res.options != undefined) {
                 //use case and filter object
                 //$scope.$broadcast('receiveUseCaseEvent', "asdasdas");
-                console.log("Backend Server send: all cities");
+                console.log("Backend Server recieve: all cities");
+                console.log(res);
                 mapService.setAllCityObject(res);
             }else {
                 console.log("new map Object recieved");
