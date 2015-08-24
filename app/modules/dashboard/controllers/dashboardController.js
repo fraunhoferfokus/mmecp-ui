@@ -16,6 +16,7 @@ angular.module('app.dashboard.controllers',['app.common', 'app.dashboard.map.con
         {
             console.log("Information: Clicked on UseCase:" + useCaseID);
             mapService.updateUseCase(useCaseID);
+            $scope.$apply();
         }
 
 
