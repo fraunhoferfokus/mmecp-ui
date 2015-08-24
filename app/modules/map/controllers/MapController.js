@@ -77,6 +77,7 @@ angular.module('app.dashboard.map.controller', ['app.socket', 'app.config', 'app
         $scope.city = mapService.city;
         $scope.actualUseCase =mapService.actualUseCase;
 
+
         $scope.callFilter = function(filterOption, event){
 
             if (!filterOption.requested){

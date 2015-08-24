@@ -95,9 +95,9 @@
         <div class="row full-width" style="margin-top: 50px">
 
             <div class="medium-12-customer padding-none columns">
-                <ul ng-repeat="filterOption in useCaseList" class="side-nav">
-                    <li><a href="#" class="has-tip" tooltip-placement="left" tooltip="">{{filterOption.icon}}<i class="fi-key"></i></a></li>
+                <ul ng-repeat="useCase in useCaseList" class="side-nav">
 
+                 <a ng-click="useCaseClicked(useCase.useCaseID)"><img src="{{'img/'+useCase.icon}}" style="height:32px;width:32px"></a>
 
                 </ul>
             </div>
