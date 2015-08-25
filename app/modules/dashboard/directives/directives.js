@@ -18,7 +18,7 @@ angular.module('app.dashboard.directives',[
             'tooltips="true"' +
             'showLegend="true"' +
             'yAxisLabel="in %"' +
-            'xAxisLabel="average occupancy per weekday"' +
+            'xAxisLabel="average occupancy per weekday 3"' +
             '> ' +
             '<svg></svg></nvd3-discrete-bar-chart>',
             controller: 'StatusPanelController'

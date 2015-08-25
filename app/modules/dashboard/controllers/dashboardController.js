@@ -171,12 +171,28 @@ angular.module('app.dashboard.controllers',['app.common', 'app.dashboard.map.con
                     [ "Mo" , 1],
                     [ "Tu" , 5],
                     [ "We" , 15],
-                    [ "Th" , 7],
-                    [ "Fr" , 34],
+                    [ "Th" , 30],
+                    [ "Fr" , 30],
                     [ "Sa" , 3],
                     [ "Su" , 6],
                 ]
             }
+
+        ];
+        $scope.example2DataStatusPanel = [
+            {
+                "key": "Series 1",
+                "values": [
+                    [ "Mo" , 1],
+                    [ "Tu" , 5],
+                    [ "We" , 15],
+                    [ "Th" , 30],
+                    [ "Fr" , 30],
+                    [ "Sa" , 3],
+                    [ "Su" , 6],
+                ]
+            }
+
         ];
     }]);
 
