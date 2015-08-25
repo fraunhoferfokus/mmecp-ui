@@ -398,10 +398,11 @@ OLMap.prototype.createArrowCircleFeature = function(arrowCircle, id){
     var iconPng = "img/"+arrowCircle.icon + ".png";
 
 
+    var scaleFactor = 0.6;
     var featureNewVector = new OpenLayers.Feature.Vector(
         point,
         {some:'data'},
-        {externalGraphic: iconPng, graphicHeight: 28, graphicWidth: 47});
+        {externalGraphic: iconPng, graphicHeight: 100*scaleFactor, graphicWidth: 75*scaleFactor});
 
     featureNewVector.fid = id;
 
