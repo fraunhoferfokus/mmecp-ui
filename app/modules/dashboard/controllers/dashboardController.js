@@ -16,6 +16,23 @@ angular.module('app.dashboard.controllers',['app.common', 'app.dashboard.map.con
         {
             console.log("Information: Clicked on UseCase:" + useCaseID);
             mapService.updateUseCase(useCaseID);
+
+
+            /*
+            TODO: BEN
+             the actual selected useCase is saved in mapService.actualUseCase[0]
+
+            if the useCase Button is clicked, a new request to the backend server has to be send
+
+
+            something like this
+             socketService.send(mapService.actualUseCase[0].requestGetCharts);
+
+
+
+
+             */
+
             console.log("todo: send chart request for useCase");
         }
 
