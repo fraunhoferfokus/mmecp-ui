@@ -148,7 +148,7 @@ angular.module('app.dashboard.map.services', ['app.config', 'app.dashboard.map.d
                     }
                 }
             }
-            $rootScope.$broadcast('useCaseListChanged', "fuu");
+            $rootScope.$broadcast('useCaseListChanged', useCaseName);
 
         };
 

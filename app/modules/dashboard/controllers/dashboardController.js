@@ -16,19 +16,56 @@ angular.module('app.dashboard.controllers',['app.common', 'app.dashboard.map.con
         {
             console.log("Information: Clicked on UseCase:" + useCaseID);
             mapService.updateUseCase(useCaseID);
-            $scope.$apply();
         }
+
+
+        $scope.highlightActiveUseCaseIcon = function(activeUseCase)
+        {
+
+            for(var useCaseId in $scope.useCaseList) {
+
+                //workaround for @ symbols in icon names
+                //start
+                if($scope.useCaseList[useCaseId].icon.indexOf("@") > -1)
+                {
+                    $scope.useCaseList[useCaseId].icon = $scope.useCaseList[useCaseId].icon.replace("@","at");
+                }
+                //end
+
+                if(useCaseId == activeUseCase)
+                {
+                    //active clicked use case icon
+                    if($scope.useCaseList[useCaseId].icon.indexOf("_active.png") == -1)
+                    {
+
+                        $scope.useCaseList[useCaseId].icon = $scope.useCaseList[useCaseId].icon.replace(".png","_active.png");
+                    }
+
+                }
+                else
+                {
+                    //decative usecase icon if not actual any more
+                   if($scope.useCaseList[useCaseId].icon.indexOf("_active.png" > -1))
+                    {
+                        $scope.useCaseList[useCaseId].icon = $scope.useCaseList[useCaseId].icon.replace("_active.png",".png");
+                    }
+                }
+            }
+
+        };
 
 
         $scope.useCaseList = mapService.city.useCases;
 
-        $scope.$on('useCaseListChanged', function(event, args) {
+        $scope.$on('useCaseListChanged', function(event,activeUseCaseName) {
 
-            console.log("I am useCaseListChanged");
+            console.log("I am useCaseListChanged" +activeUseCaseName);
             $scope.useCaseList = mapService.city.useCases;
+            $scope.highlightActiveUseCaseIcon(activeUseCaseName);
 
 
         });
+
 
 
 
