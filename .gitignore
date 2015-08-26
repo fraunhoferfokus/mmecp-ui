@@ -4,6 +4,5 @@
 
 # --- exclude frontend dependencies
 /node_modules
-/app/bower_components
 *.log
 app/dest
