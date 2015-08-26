@@ -391,8 +391,10 @@ OLMap.prototype.createArrowCircleFeature = function(arrowCircle, id){
     var p = new Proj4js.Point(x, y);
 
     result = Proj4js.transform(sourceCoords, destCoords, p);
+
     x= result.x;
     y= result.y;
+
     var point = new OpenLayers.Geometry.Point(x, y,0);
 
     var iconPng = "img/"+arrowCircle.icon + ".png";
@@ -403,6 +405,13 @@ OLMap.prototype.createArrowCircleFeature = function(arrowCircle, id){
         point,
         {some:'data'},
         {externalGraphic: iconPng, graphicHeight: 100*scaleFactor, graphicWidth: 75*scaleFactor});
+
+
+   /* var featureNewVector = new OpenLayers.Feature.Vector(
+        point,
+        {some:'data'}); */
+
+
 
     featureNewVector.fid = id;
 

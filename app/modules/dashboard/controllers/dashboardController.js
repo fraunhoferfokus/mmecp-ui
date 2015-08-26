@@ -164,7 +164,8 @@ angular.module('app.dashboard.controllers',['app.common', 'app.dashboard.map.con
 
 
     }]).controller('StatusPanelController', ['$scope', function($scope){
-        $scope.exampleDataStatusPanel = [
+        $scope.title = "";
+        $scope.chartData = [
             {
                 "key": "Series 1",
                 "values": [
@@ -179,21 +180,22 @@ angular.module('app.dashboard.controllers',['app.common', 'app.dashboard.map.con
             }
 
         ];
-        $scope.example2DataStatusPanel = [
+
+    }]).controller('StatusPanel2Controller', ['$scope', function($scope) {
+        $scope.chartData = [
             {
                 "key": "Series 1",
                 "values": [
-                    [ "Mo" , 1],
-                    [ "Tu" , 5],
-                    [ "We" , 15],
-                    [ "Th" , 30],
-                    [ "Fr" , 30],
-                    [ "Sa" , 3],
-                    [ "Su" , 6],
+                    ["Free", 50],
+                    ["Occupied", 150]
+
+
                 ]
             }
 
         ];
+
+
     }]);
 
 

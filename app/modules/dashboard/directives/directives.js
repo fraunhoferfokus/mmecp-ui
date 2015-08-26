@@ -8,8 +8,8 @@ angular.module('app.dashboard.directives',[
     .directive('statusPanel', function(){
         return{
             restrict: 'E',
-            template: '<nvd3-discrete-bar-chart ' +
-            'data="exampleDataStatusPanel" ' +
+            template: '<b>BarChart </b><nvd3-discrete-bar-chart ' +
+            'data="chartData" ' +
             'width="380" ' +
             'height="240" ' +
             'showXAxis="true" ' +
@@ -18,10 +18,10 @@ angular.module('app.dashboard.directives',[
             'tooltips="true"' +
             'showLegend="true"' +
             'yAxisLabel="in %"' +
-            'xAxisLabel="average occupancy per weekday 3"' +
+            'xAxisLabel="average occupancy per weekday"' +
             '> ' +
-            '<svg></svg></nvd3-discrete-bar-chart>',
-            controller: 'StatusPanelController'
+            '<svg></svg></nvd3-discrete-bar-chart>'
+
         };
     })
     .directive('resizeMenu', ['$window', function ($window) {

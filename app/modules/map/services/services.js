@@ -7,12 +7,8 @@ angular.module('app.dashboard.map.services', ['app.config', 'app.dashboard.map.d
 .service('mapService',['$rootScope', function($rootScope    ){
 
     this.mapObjectForInformationPanel = undefined;
-
-
-
-
-
         this.defaultCity = "ROV";
+
 
         this.city = [];
         this.allCities = [];

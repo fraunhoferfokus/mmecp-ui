@@ -73,7 +73,13 @@
                                     <div class="row">
                                         <div class="columns" ng-class="singleDiagramCSS">
                                             <div class="panel callout">
-                                                <status-panel></status-panel>
+                                                <h3>Overview</h3>
+                                                <div ng-controller="StatusPanelController">
+                                                <status-panel></status-panel></div>
+                                                <div ng-controller="StatusPanel2Controller">
+                                                    <status-panel></status-panel></div>
+                                                <div ng-controller="StatusPanelController">
+                                                    <status-panel></status-panel></div>
                                             </div>
                                         </div>
                                     </div>
