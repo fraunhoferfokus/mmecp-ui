@@ -71,6 +71,9 @@ angular.module('app.socket', ['ngWebsocket', 'app.config', 'app.dashboard.map.se
             }
 
 
+
+
+
         });
         ws.$on('$error', function() {
             console.log('connection Error');

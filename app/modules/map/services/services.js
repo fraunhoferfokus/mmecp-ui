@@ -7,7 +7,45 @@ angular.module('app.dashboard.map.services', ['app.config', 'app.dashboard.map.d
 .service('mapService',['$rootScope', function($rootScope    ){
 
     this.mapObjectForInformationPanel = undefined;
-        this.defaultCity = "ROV";
+
+
+
+        this.accessToCities = [];
+
+        //needed because only "dev" should see all cities
+        this.setStreetlifeInstance = function()
+        {
+            this.streetlifeInstance = window.location.href;
+            if(this.streetlifeInstance.indexOf("dev") > -1 || this.streetlifeInstance.indexOf("localhost") > -1)
+            {
+                this.streetlifeInstance = "dev";
+                this.defaultCity = "ROV";
+                this.accessToCities = ["ROV","BER","TAM"];
+            }
+            if(this.streetlifeInstance.indexOf("berlin") > -1)
+            {
+                this.streetlifeInstance = "berlin";
+                this.defaultCity = "BER";
+                this.accessToCities = ["BER"];
+            }
+            if(this.streetlifeInstance.indexOf("rovereto") > -1)
+            {
+                this.streetlifeInstance = "rovereto";
+                this.defaultCity = "ROV";
+                this.accessToCities = ["ROV"];
+            }
+            if(this.streetlifeInstance.indexOf("tampere") > -1)
+            {
+                this.streetlifeInstance = "tampere";
+                this.defaultCity = "TAM";
+                this.accessToCities = ["TAM"];
+            }
+
+
+        }
+
+        this.setStreetlifeInstance();
+
 
 
         this.city = [];

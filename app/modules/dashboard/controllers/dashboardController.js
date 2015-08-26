@@ -144,12 +144,9 @@ angular.module('app.dashboard.controllers',['app.common', 'app.dashboard.map.con
             $scope.citySelection.id = city;
             $scope.changeCity(city);
         };
-        $scope.cities = [
-            "BER",
-            "ROV",
-            "TAM"];
+        $scope.cities = mapService.accessToCities;
         $scope.citySelection = {};
-        $scope.citySelection.id = $scope.cities[1];
+        $scope.citySelection.id = $scope.cities[0];
 
         $scope.changeCity = function(newCity){
 
