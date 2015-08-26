@@ -74,12 +74,12 @@
                                         <div class="columns" ng-class="singleDiagramCSS">
                                             <div class="panel callout">
                                                 <h3>Overview</h3>
-                                                <div ng-controller="StatusPanelController">
-                                                <status-panel></status-panel></div>
-                                                <div ng-controller="StatusPanel2Controller">
-                                                    <status-panel></status-panel></div>
-                                                <div ng-controller="StatusPanelController">
-                                                    <status-panel></status-panel></div>
+                                                <div ng-controller="StatusPanelChartOneController">
+                                                    <nvd3 options="options" data="data"></div>
+                                                <div ng-controller="StatusPanelChartTwoController">
+                                                    <nvd3 options="options" data="data"> </div>
+                                                <div ng-controller="StatusPanelChartThreeController">
+                                                    <nvd3 options="options" data="data"></nvd3>
                                             </div>
                                         </div>
                                     </div>

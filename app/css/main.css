@@ -3,6 +3,12 @@ body,.tab-bar{
     background-color: #f9f9f9 !important;
 }
 /*Gird*/
+
+
+#mapContainer
+{
+    height: 853px;
+}
 svg{
     display: auto;
     width: auto;

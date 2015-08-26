@@ -13,6 +13,7 @@ var streetlifeDependencies=[
     'app.socket',
     'app.config',
     'nvd3ChartDirectives',
+    'nvd3'
 ];
 
 var app = angular.module('app', streetlifeDependencies)
