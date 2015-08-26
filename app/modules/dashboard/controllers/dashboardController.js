@@ -4,7 +4,7 @@
 angular.module('app.dashboard.controllers',['app.common', 'app.dashboard.map.controller'])
 
 
-    .controller('dashboardController', ['$scope','$log', '$rootScope','mapService', function($scope,$log, $rootScope,mapService) {
+    .controller('dashboardController', ['$scope','$log', '$rootScope','mapService','socketService', function($scope,$log, $rootScope,mapService,socketService) {
 
         console.log("DashboardController");
         console.log(mapService.allCities);
@@ -16,6 +16,7 @@ angular.module('app.dashboard.controllers',['app.common', 'app.dashboard.map.con
         {
             console.log("Information: Clicked on UseCase:" + useCaseID);
             mapService.updateUseCase(useCaseID);
+            console.log("todo: send chart request for useCase");
         }
 
 
@@ -198,73 +199,17 @@ angular.module('app.dashboard.controllers',['app.common', 'app.dashboard.map.con
 
 
     }]).controller('StatusPanelChartOneController', ['$scope', function($scope){
-        $scope.data = [
-            {
-                key: "Cumulative Return",
-                values: [
-                    {
-                        "label" : "A" ,
-                        "value" : -29.765957771107
-                    } ,
-                    {
-                        "label" : "B" ,
-                        "value" : 0
-                    } ,
-                    {
-                        "label" : "C" ,
-                        "value" : 32.807804682612
-                    } ,
-                    {
-                        "label" : "D" ,
-                        "value" : 196.45946739256
-                    } ,
-                    {
-                        "label" : "E" ,
-                        "value" : 0.19434030906893
-                    } ,
-                    {
-                        "label" : "F" ,
-                        "value" : -98.079782601442
-                    } ,
-                    {
-                        "label" : "G" ,
-                        "value" : -13.925743130903
-                    } ,
-                    {
-                        "label" : "H" ,
-                        "value" : -5.1387322875705
-                    }
-                ]
-            }
-        ];
+        $scope.data = [];
+        $scope.options = {};
 
-        $scope.options = {
-            chart: {
-                type: 'discreteBarChart',
-                height: 240,
-                width: 380,
-                margin : {
-                    top: 20,
-                    right: 20,
-                    bottom: 60,
-                    left: 55
-                },
-                x: function(d){return d.label;},
-                y: function(d){return d.value;},
-                showValues: true,
-                valueFormat: function(d){
-                    return d3.format(',.4f')(d);
-                },
-                transitionDuration: 500,
-                xAxis: {
-                    axisLabel: 'X Axis 1'
-                },
-                yAxis: {
-                    axisLabel: 'Y Axis',
-                    axisLabelDistance: 30
-                }
-            }
-        };
+        $scope.$on('chartOneUpdate', function(event, options,data){
+            console.log("chartOneUpdate");
+            console.log(data);
+           $scope.data = data;
+           $scope.options = options;
+
+        });
+
 
     }]).controller('StatusPanelChartTwoController', ['$scope', function($scope) {
 
@@ -324,60 +269,68 @@ angular.module('app.dashboard.controllers',['app.common', 'app.dashboard.map.con
     }]).controller('StatusPanelChartThreeController', ['$scope', function($scope) {
         $scope.options = {
             chart: {
-                type: 'pieChart',
+                type: 'discreteBarChart',
                 height: 240,
                 width: 380,
-                donut: true,
-                x: function(d){return d.key;},
-                y: function(d){return d.y;},
-                showLabels: true,
-
-                pie: {
-                    startAngle: function(d) { return d.startAngle/2 -Math.PI/2 },
-                    endAngle: function(d) { return d.endAngle/2 -Math.PI/2 }
+                margin : {
+                    top: 20,
+                    right: 20,
+                    bottom: 60,
+                    left: 55
                 },
-                transitionDuration: 500,
-                legend: {
-                    margin: {
-                        top: 5,
-                        right: 140,
-                        bottom: 5,
-                        left: 0
-                    }
+                x: function(d){return d.label;},
+                y: function(d){return d.value;},
+                showValues: true,
+
+                xAxis: {
+                    axisLabel: 'X Axis'
+                },
+                yAxis: {
+                    axisLabel: 'Y Axis',
+                    axisLabelDistance: 30
                 }
             }
         };
 
         $scope.data = [
             {
-                key: "One",
-                y: 5
-            },
-            {
-                key: "Two",
-                y: 2
-            },
-            {
-                key: "Three",
-                y: 9
-            },
-            {
-                key: "Four",
-                y: 7
-            },
-            {
-                key: "Five",
-                y: 4
-            },
-            {
-                key: "Six",
-                y: 3
-            },
-            {
-                key: "Seven",
-                y: .5
+                key: "Cumulative Return",
+                values: [
+                    {
+                        "label" : "A" ,
+                        "value" : -29.765957771107
+                    } ,
+                    {
+                        "label" : "B" ,
+                        "value" : 0
+                    } ,
+                    {
+                        "label" : "C" ,
+                        "value" : 32.807804682612
+                    } ,
+                    {
+                        "label" : "D" ,
+                        "value" : 196.45946739256
+                    } ,
+                    {
+                        "label" : "E" ,
+                        "value" : 0.19434030906893
+                    } ,
+                    {
+                        "label" : "F" ,
+                        "value" : -98.079782601442
+                    } ,
+                    {
+                        "label" : "G" ,
+                        "value" : -13.925743130903
+                    } ,
+                    {
+                        "label" : "H" ,
+                        "value" : -5.1387322875705
+                    }
+                ]
             }
-        ];
+        ]
 
     }]);
 

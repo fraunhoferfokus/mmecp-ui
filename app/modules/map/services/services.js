@@ -2,9 +2,9 @@
  * Created by lwi on 11.05.2015.
  */
 
-angular.module('app.dashboard.map.services', ['app.config', 'app.dashboard.map.directives', 'nvd3ChartDirectives'])
+angular.module('app.dashboard.map.services', ['app.config', 'app.dashboard.map.directives','app.socket','app.socket'])
 
-.service('mapService',['$rootScope', function($rootScope    ){
+.service('mapService',['$rootScope', function($rootScope ){
 
     this.mapObjectForInformationPanel = undefined;
 
@@ -58,6 +58,17 @@ angular.module('app.dashboard.map.services', ['app.config', 'app.dashboard.map.d
 
         };
 
+
+
+        this.updateCharts = function(chartsObjects)
+        {
+
+            console.log("Update Charts here");
+            $rootScope.$broadcast('chartOneUpdate', chartsObjects.elements[0].chart.options ,chartsObjects.elements[0].chart.data);
+         //   $rootScope.$broadcast('chartTwoUpdate', chartsObjects.elements[1].chart.options ,chartsObjects.elements[1].chart.data);
+         //   $rootScope.$broadcast('chartThreeUpdate', chartsObjects.elements[2].chart.options ,chartsObjects.elements[2].chart.data);
+
+        }
 
 
 
@@ -143,12 +154,16 @@ angular.module('app.dashboard.map.services', ['app.config', 'app.dashboard.map.d
                             this.city[0] = actualCity.useCases[useCase].options;
                             this.actualUseCase[0] =  actualCity.useCases[useCase].options;
 
+
+
+
                         }
 
                     }
                 }
             }
             $rootScope.$broadcast('useCaseListChanged', useCaseName);
+
 
         };
 
