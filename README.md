@@ -21,7 +21,7 @@ Implementation of STREETLIFE Mobility and Emission Control Panel UI with Angular
     *   npm install
     *   grunt
     *   npm start
-*   MMECP is available at localhost:8000
+*   MMECP is available at localhost:8000/app
 
 ## 4 Dev's ##
 
