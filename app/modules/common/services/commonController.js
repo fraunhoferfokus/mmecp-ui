@@ -8,7 +8,9 @@
         console.log("run commonController");
 
             $scope.showHideKPIs = function(){
-                $scope.$broadcast('showKPIsEvent', {});
+               $scope.$broadcast('showKPIsEvent', {});
             };
+
+
 
     }]);

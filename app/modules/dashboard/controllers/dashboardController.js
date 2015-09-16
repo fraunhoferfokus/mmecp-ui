@@ -215,139 +215,106 @@ angular.module('app.dashboard.controllers',['app.common', 'app.dashboard.map.con
 
 
 
-    }]).controller('StatusPanelChartOneController', ['$scope', function($scope){
-        $scope.data = [];
-        $scope.options = {};
+    }]).controller('StatusPanelMainChartController', ['$scope', function($scope){
+        $scope.defaultData = [{
+            key: "default",
+            values: [
+                { "label" : "default" , "value" : 0,color: "green" }
 
-        $scope.$on('chartOneUpdate', function(event, options,data){
-            console.log("chartOneUpdate");
-            console.log(data);
-           $scope.data = data;
-           $scope.options = options;
-
-        });
-
-
-    }]).controller('StatusPanelChartTwoController', ['$scope', function($scope) {
-
-        $scope.options = {
-            chart: {
-                type: 'pieChart',
-                height: 240,
-                width: 380,
-                x: function(d){return d.key;},
-                y: function(d){return d.y;},
-                showLabels: true,
-                transitionDuration: 500,
-                labelThreshold: 0.01,
-                legend: {
-                    margin: {
-                        top: 5,
-                        right: 35,
-                        bottom: 5,
-                        left: 0
-                    }
-                }
-            }
-        };
-
-        $scope.data = [
-            {
-                key: "One",
-                y: 5
-            },
-            {
-                key: "Two",
-                y: 2
-            },
-            {
-                key: "Three",
-                y: 9
-            },
-            {
-                key: "Four",
-                y: 7
-            },
-            {
-                key: "Five",
-                y: 4
-            },
-            {
-                key: "Six",
-                y: 3
-            },
-            {
-                key: "Seven",
-                y: .5
-            }
-        ];
-
-
-    }]).controller('StatusPanelChartThreeController', ['$scope', function($scope) {
-        $scope.options = {
+            ]
+        }];
+        $scope.defaultOptions = {
             chart: {
                 type: 'discreteBarChart',
-                height: 240,
-                width: 380,
+                height: 320,
                 margin : {
                     top: 20,
                     right: 20,
                     bottom: 60,
                     left: 55
                 },
-                x: function(d){return d.label;},
-                y: function(d){return d.value;},
+                x: function(d){ return d.label; },
+                y: function(d){ return d.value; },
                 showValues: true,
-
-                xAxis: {
-                    axisLabel: 'X Axis'
-                },
-                yAxis: {
-                    axisLabel: 'Y Axis',
-                    axisLabelDistance: 30
+                valueFormat: function(d){
+                    return d3.format(',.4f')(d);
                 }
             }
         };
 
-        $scope.data = [
+        $scope.appendXYAndColor = function(options,data)
+        {
+                options.chart['x'] = function(d){ return d.label; };
+                options.chart['y'] = function(d){ return d.value; };
+            //    options.chart['color'] = function(d){ return d.color; };
+
+            var colors = [];
+
+            for(var i = 0;i<data.length;i++)
             {
-                key: "Cumulative Return",
-                values: [
-                    {
-                        "label" : "A" ,
-                        "value" : -29.765957771107
-                    } ,
-                    {
-                        "label" : "B" ,
-                        "value" : 0
-                    } ,
-                    {
-                        "label" : "C" ,
-                        "value" : 32.807804682612
-                    } ,
-                    {
-                        "label" : "D" ,
-                        "value" : 196.45946739256
-                    } ,
-                    {
-                        "label" : "E" ,
-                        "value" : 0.19434030906893
-                    } ,
-                    {
-                        "label" : "F" ,
-                        "value" : -98.079782601442
-                    } ,
-                    {
-                        "label" : "G" ,
-                        "value" : -13.925743130903
-                    } ,
-                    {
-                        "label" : "H" ,
-                        "value" : -5.1387322875705
-                    }
-                ]
+                colors.push(data[i].color);
             }
-        ]
+
+            options.chart['color'] = colors;
+
+            return options;
+
+        }
+
+
+
+    }]).controller('StatusPanelChartOneController', ['$scope', function($scope){
+        $scope.data = $scope.defaultData;
+        $scope.options = $scope.defaultOptions;
+        $scope.title = "default";
+
+
+        $scope.$on('chartOneUpdate', function(event, options,data,title){
+
+          options = $scope.appendXYAndColor(options,data);
+            $scope.data = data;
+            $scope.options = options;
+            $scope.title = title;
+            $scope.$apply();
+
+        });
+
+
+    }]).controller('StatusPanelChartTwoController', ['$scope', function($scope) {
+
+        $scope.data = $scope.defaultData;
+        $scope.options = $scope.defaultOptions
+        $scope.title = "default";
+
+        $scope.$on('chartTwoUpdate', function(event, options,data,title){
+
+            options = $scope.appendXYAndColor(options,data);
+            $scope.data = data;
+            $scope.options = options;
+            $scope.title = title;
+            $scope.$apply();
+
+
+
+        });
+
+
+    }]).controller('StatusPanelChartThreeController', ['$scope', function($scope) {
+        $scope.data = $scope.defaultData;
+        $scope.options = $scope.defaultOptions;
+        $scope.title = "default";
+
+        $scope.$on('chartThreeUpdate', function(event, options,data,title){
+
+            options = $scope.appendXYAndColor(options,data);
+            $scope.data = data;
+            $scope.options = options;
+            $scope.title = title;
+            $scope.$apply();
+
+
+
+        });
 
     }]);
 

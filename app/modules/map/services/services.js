@@ -51,6 +51,9 @@ angular.module('app.dashboard.map.services', ['app.config', 'app.dashboard.map.d
         this.city = [];
         this.allCities = [];
         this.actualUseCase = [];
+
+
+
         this.setAllCityObject = function(allCityObject){
             this.allCities[0] = allCityObject;
             console.log("set initial city");
@@ -64,9 +67,12 @@ angular.module('app.dashboard.map.services', ['app.config', 'app.dashboard.map.d
         {
 
             console.log("Update Charts here");
-            $rootScope.$broadcast('chartOneUpdate', chartsObjects.elements[0].chart.options ,chartsObjects.elements[0].chart.data);
-         //   $rootScope.$broadcast('chartTwoUpdate', chartsObjects.elements[1].chart.options ,chartsObjects.elements[1].chart.data);
-         //   $rootScope.$broadcast('chartThreeUpdate', chartsObjects.elements[2].chart.options ,chartsObjects.elements[2].chart.data);
+
+
+
+           $rootScope.$broadcast('chartOneUpdate', chartsObjects.elements[0].chart.options ,chartsObjects.elements[0].chart.data,chartsObjects.elements[0].chart.title);
+           $rootScope.$broadcast('chartTwoUpdate', chartsObjects.elements[1].chart.options ,chartsObjects.elements[1].chart.data,chartsObjects.elements[1].chart.title);
+            $rootScope.$broadcast('chartThreeUpdate', chartsObjects.elements[2].chart.options ,chartsObjects.elements[2].chart.data,chartsObjects.elements[2].chart.title);
 
         }
 
