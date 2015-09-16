@@ -16,6 +16,11 @@ angular.module('app.socket', ['ngWebsocket', 'app.config', 'app.dashboard.map.se
         var subject = [];
         var doInitRequest = true;
 
+
+
+
+
+
         ws.$on('$open', function () {
             console.log('connection open');
             console.log(mapService.city);
@@ -56,16 +61,159 @@ angular.module('app.socket', ['ngWebsocket', 'app.config', 'app.dashboard.map.se
             if (res.options != undefined) {
                 //use case and filter object
                 //$scope.$broadcast('receiveUseCaseEvent', "asdasdas");
-                console.log("Backend Server recieve: all cities");
+                console.log("New Message from Backend: all cities");
                 console.log(res);
                 mapService.setAllCityObject(res);
 
+   //sample call
+                this.sampleChartObject = {
+                    "type": "chartObject",
+                    "elements": [
+
+                        {
+                            "chart": {
+                                "title" : "Parking Occupancy Rate",
+                                "options": {
+                                    chart: {
+                                        type: 'discreteBarChart',
+                                        height: 240,
+                                        width: 380,
+                                        margin : {
+                                            top: 20,
+                                            right: 20,
+                                            bottom: 60,
+                                            left: 55
+                                        },
+                                        showValues: true,
+
+                                        xAxis: {
+                                            axisLabel: 'Parking Slots'
+                                        },
+                                        yAxis: {
+                                            axisLabel: 'Amount of Cars',
+                                            axisLabelDistance: 30
+                                        }
+                                    }
+                                },
+                                "data" :[
+                                    {
+                                        "key": "Cumulative Return",
+                                        "values": [
+                                            {
+                                                "label" : "Free" ,
+                                                "value" : 1532,
+                                                "color" : "#A5C989"
+                                            } ,
+                                            {
+                                                "label" : "Not Free" ,
+                                                "value" : 4321,
+                                                "color" : "#D16D82"
+                                            }
+
+                                        ]
+                                    }
+                                ]
+                            }
+                        },
+
+                        {
+                            "chart": {
+                                "title" : "Parking Situation",
+                                "options": {
+                                    chart: {
+                                        type: 'pieChart',
+                                        height: 320,
+                                        showLabels: true,
+                                        transitionDuration: 500,
+                                        labelThreshold: 0.01,
+                                        legend: {
+                                            margin: {
+                                                top: 5,
+                                                right: 35,
+                                                bottom: 5,
+                                                left: 0
+                                            }
+                                        }
+                                    }
+                                },
+                               "data": [
+                                    {
+                                        label: "Free Parking Slots",
+                                        value: 500,
+                                        "color" : "#5D8896"
+                                    },
+                                    {
+                                        label: "Fee Parking Slots",
+                                        value: 3200,
+                                        "color" : "#5AC3E6"
+                                    },
+                                    {
+                                        label: "Clock Parking Slots",
+                                        value: 1300,
+                                        "color" : "#9CCBDB"
+                                    }
+
+                                ]
+                            }
+                        },
+                        {
+                            "chart": {
+                                "title": "Average Occupancy",
+                                "options": {
+                                    chart: {
+                                        type: 'discreteBarChart',
+                                        height: 240,
+                                        width: 380,
+                                        margin : {
+                                            top: 20,
+                                            right: 20,
+                                            bottom: 60,
+                                            left: 55
+                                        },
+                                        showValues: true,
+
+                                        xAxis: {
+                                            axisLabel: 'Parking Slot Type'
+                                        },
+                                        yAxis: {
+                                            axisLabel: 'Percentage',
+                                            axisLabelDistance: 30
+                                        }
+                                    }
+                                },
+                                "data" :[
+                                    {
+                                        "key": "Cumulative Return",
+                                        "values": [
+                                            {
+                                                "label" : "Fee Slots" ,
+                                                "value" : 80,
+                                                "color" : "#D1D665"
+                                            } ,
+                                            {
+                                                "label" : "Clock Slots" ,
+                                                "value" : 60,
+                                                "color" : "#959951"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        }
+
+                    ]
+                };
+
+
+
+           //     this.sample = {"type":"chartObject","elements":[{"chart":{"title":"Titel","options":{"chart":{"type":"discreteBarChart","height":240,"width":380,"margin":{"top":20,"right":20,"bottom":60,"left":55},"showValues":true,"xAxis":{"axisLabel":"X Axis Test"},"yAxis":{"axisLabel":"Y Axis","axisLabelDistance":30}}},"data":[{"key":"Cumulative Return","values":[{"label":"A","value":-29.765957771107},{"label":"B","value":0},{"label":"C","value":32.807804682612},{"label":"D","value":196.45946739256},{"label":"E","value":0.19434030906893},{"label":"F","value":-98.079782601442},{"label":"G","value":-13.925743130903},{"label":"H","value":-5.1387322875705}]}]}},{"chart":{"title":"test test","options":{"chart":{"type":"pieChart","height":320,"showLabels":true,"transitionDuration":500,"labelThreshold":0.01,"legend":{"margin":{"top":5,"right":35,"bottom":5,"left":0}}}},"data":[{"label":"One","value":5},{"label":"Two","value":2},{"label":"Three","value":9},{"label":"Four","value":7},{"label":"Five","value":4},{"label":"Six","value":3},{"label":"Seven","value":0.5}]}},{"chart":{"title":"test test","options":{"chart":{"type":"discreteBarChart","height":240,"width":380,"margin":{"top":20,"right":20,"bottom":60,"left":55},"showValues":true,"xAxis":{"axisLabel":"X Axis Test 2"},"yAxis":{"axisLabel":"Y Axis 2","axisLabelDistance":30}}},"data":[{"key":"Cumulative Return","values":[{"label":"A","value":50},{"label":"B","value":11.22},{"label":"C","value":32.807804682612}]}]}}]};
+
+                mapService.updateCharts(this.sampleChartObject);
+
             }else {
-                console.log("new map Object recieved");
+                console.log("New Message from Backend: mapobject");
 
                 mapObjects.push(res);
-
-                console.log("incoming message from server ... ");
                 for (var i = 0;i<subject.length;i++){
                     subject[i].notify();
                 }

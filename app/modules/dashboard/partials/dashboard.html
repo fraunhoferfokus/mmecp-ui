@@ -74,13 +74,18 @@
                                         <div class="columns" ng-class="singleDiagramCSS">
                                             <div class="panel callout">
                                                 <h3>Overview</h3>
+                                                <div ng-controller="StatusPanelMainChartController">
                                                 <div ng-controller="StatusPanelChartOneController">
-                                                    <nvd3 options="options" data="data"></div>
+                                                    {{title}}
+                                                    <nvd3 options="options" data="data" api="api"></div>
                                                 <div ng-controller="StatusPanelChartTwoController">
+                                                    {{title}}
                                                     <nvd3 options="options" data="data"> </div>
                                                 <div ng-controller="StatusPanelChartThreeController">
+                                                    {{title}}
                                                     <nvd3 options="options" data="data"></nvd3>
                                             </div>
+                                                </div>
                                         </div>
                                     </div>
                                 </div>
