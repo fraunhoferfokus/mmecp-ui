@@ -59,6 +59,7 @@ angular.module('app.socket', ['ngWebsocket', 'app.config', 'app.dashboard.map.se
                 console.log("Backend Server recieve: all cities");
                 console.log(res);
                 mapService.setAllCityObject(res);
+
             }else {
                 console.log("new map Object recieved");
 
@@ -69,7 +70,6 @@ angular.module('app.socket', ['ngWebsocket', 'app.config', 'app.dashboard.map.se
                     subject[i].notify();
                 }
             }
-
 
 
 

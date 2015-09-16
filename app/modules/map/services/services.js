@@ -20,7 +20,7 @@ angular.module('app.dashboard.map.services', ['app.config', 'app.dashboard.map.d
             {
                 this.streetlifeInstance = "dev";
                 this.defaultCity = "ROV";
-                this.accessToCities = ["ROV","BER","TAM"];
+                this.accessToCities = ["ROV","BER","TRE"];
             }
             if(this.streetlifeInstance.indexOf("berlin") > -1)
             {
@@ -37,8 +37,8 @@ angular.module('app.dashboard.map.services', ['app.config', 'app.dashboard.map.d
             if(this.streetlifeInstance.indexOf("tampere") > -1)
             {
                 this.streetlifeInstance = "tampere";
-                this.defaultCity = "TAM";
-                this.accessToCities = ["TAM"];
+                this.defaultCity = "TRE";
+                this.accessToCities = ["TRE"];
             }
 
 
@@ -78,7 +78,7 @@ angular.module('app.dashboard.map.services', ['app.config', 'app.dashboard.map.d
                 defaultUseCase = "CO2Emissions@Berlin";
 
 
-            }else if (city == "TAM"){
+            }else if (city == "TRE"){
                 cityID = "Tampere";
                 cityOLMapID = "TAMPERE";
                 defaultUseCase = "ParkAndRide@Tampere";
