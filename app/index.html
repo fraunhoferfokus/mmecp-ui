@@ -27,15 +27,6 @@
     <script src="http://maps.google.com/maps/api/js?v=3&amp;sensor=false"></script>
 
     <!-- injector:js -->
-
-    <meta charset="utf-8">  <!-- it's important for d3.js -->
-    <script src="bower_components/angular/angular.js"></script>
-    <script src="bower_components/d3/d3.js"></script>
-    <script src="bower_components/nvd3/nv.d3.js"></script> <!-- or use another assembly -->
-    <script src="bower_components/angular-nvd3/dist/angular-nvd3.js"></script>
-
-
-
     <script src="bower_components/modernizr/modernizr.js"></script>
     <script src="bower_components/jquery/dist/jquery.js"></script>
     <script src="bower_components/angular/angular.js"></script>
@@ -50,8 +41,41 @@
     <script src="bower_components/d3/d3.js"></script>
     <script src="bower_components/nvd3/nv.d3.js"></script>
     <script src="bower_components/angularjs-nvd3-directives/dist/angularjs-nvd3-directives.js"></script>
+    <script src="bower_components/proj4/dist/proj4.js"></script>
+    <script src="bower_components/angular-nvd3/dist/angular-nvd3.min.js"></script>
     <script src="js/app.js"></script>
     <script src="js/config.js"></script>
+    <script src="js/proj4js/defs/EPSG2393.js"></script>
+    <script src="js/proj4js/defs/EPSG32633.js"></script>
+    <script src="js/proj4js/defs/EPSG900913.js"></script>
+    <script src="js/proj4js/proj4js.js"></script>
+    <script src="js/proj4js/projCode/aea.js"></script>
+    <script src="js/proj4js/projCode/aeqd.js"></script>
+    <script src="js/proj4js/projCode/cass.js"></script>
+    <script src="js/proj4js/projCode/cea.js"></script>
+    <script src="js/proj4js/projCode/eqc.js"></script>
+    <script src="js/proj4js/projCode/eqdc.js"></script>
+    <script src="js/proj4js/projCode/equi.js"></script>
+    <script src="js/proj4js/projCode/gauss.js"></script>
+    <script src="js/proj4js/projCode/gnom.js"></script>
+    <script src="js/proj4js/projCode/gstmerc.js"></script>
+    <script src="js/proj4js/projCode/krovak.js"></script>
+    <script src="js/proj4js/projCode/laea.js"></script>
+    <script src="js/proj4js/projCode/lcc.js"></script>
+    <script src="js/proj4js/projCode/merc.js"></script>
+    <script src="js/proj4js/projCode/mill.js"></script>
+    <script src="js/proj4js/projCode/moll.js"></script>
+    <script src="js/proj4js/projCode/nzmg.js"></script>
+    <script src="js/proj4js/projCode/omerc.js"></script>
+    <script src="js/proj4js/projCode/ortho.js"></script>
+    <script src="js/proj4js/projCode/poly.js"></script>
+    <script src="js/proj4js/projCode/sinu.js"></script>
+    <script src="js/proj4js/projCode/somerc.js"></script>
+    <script src="js/proj4js/projCode/stere.js"></script>
+    <script src="js/proj4js/projCode/sterea.js"></script>
+    <script src="js/proj4js/projCode/tmerc.js"></script>
+    <script src="js/proj4js/projCode/utm.js"></script>
+    <script src="js/proj4js/projCode/vandg.js"></script>
     <script src="modules/common/services/Socket.js"></script>
     <script src="modules/common/services/commonController.js"></script>
     <script src="modules/dashboard/controllers/dashboardController.js"></script>
@@ -88,7 +112,7 @@
                         </li>
                     </ul>
                 </li>
-                <li ng-controller="impressumnController" style="float:left"><a ng-click="openImpressum()" href="#">Impressum</a></li>
+                <li ng-controller="impressumnController" style="float:left"><a ng-click="openImpressum()" href="#">Imprint</a></li>
                 <li><a ng-click="showHideKPIs()" class="menu-icon-list" style="background-color:black !important;"><i class="fi-list-thumbnails large" style="font-size: 20px"></i></a></li>
 
 
