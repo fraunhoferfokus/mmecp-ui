@@ -19,6 +19,11 @@ angular.module('app.dashboard.map.directives', ['app.socket', 'app.config'])
                     'height': (newValue.h - 150) + 'px'
                 };
             };
+            scope.addStyleToOlMap = function () {
+                return {
+                    'height': (newValue.h - 170) + 'px'
+                };
+            };
             scope.addStyleToInfoPanel = function () {
                 return {
                     'height': (newValue.h - 150) + 'px'
@@ -43,7 +48,7 @@ angular.module('app.dashboard.map.directives', ['app.socket', 'app.config'])
     .directive('olMap', function(){
     return {
         restrict: 'E',
-        template: ' <div id="map" ng-style="addStyleToMap()"  style="height: 600px;" resize></div> ',
+        template: ' <div id="map" ng-style="addStyleToOlMap()"  style="height: 600px;" resize></div> ',
         controller: 'mapController'
     };
     }).directive('filter', function(){
