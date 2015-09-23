@@ -36,7 +36,7 @@ angular.module('app.dashboard.directives',[
 
                 scope.addStyle = function () {
                     return {
-                        'height': (newValue.h ) + 'px',
+                        'height': (newValue.h - 45 ) + 'px',
                     };
                 };
             }, true);

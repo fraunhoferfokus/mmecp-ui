@@ -140,7 +140,7 @@ svg{
     width: 35%;
 }
 .medium-11-customer{
-    width: 96%;
+    width: 95%;
 }
 .medium-12-customer{
     width: 100%;
@@ -273,7 +273,6 @@ input[type="search"],input[type="search"]:focus {
 }
 
 
-
 .tooltip {
     background: black;
     color: #FFFFFF;
@@ -286,7 +285,8 @@ input[type="search"],input[type="search"]:focus {
     position: absolute;
     width: 100%;
     z-index: 1006;
-    left: 50%; }
+    left: 50%;
+}
 .tooltip > .nub {
     border-color: transparent transparent #333333 transparent;
     border: solid 5px;
@@ -316,4 +316,33 @@ input[type="search"],input[type="search"]:focus {
 
 .filterEntry{
     background-color: #008CBA;
+}
+
+.nvtooltip {
+    margin-left: 38px !important;
+}
+.nvtooltip h3 {
+    background-color: #008cba !important;
+    border-bottom: 1px solid #ebebeb;
+    border-radius: 0 !important;
+    font-weight: normal;
+    line-height: 18px;
+    margin-bottom: 10px;
+    padding: 4px 20px;
+    text-align: center;
+    font-size: 14px !important;
+    color: #ffffff !important;
+}
+.nvtooltip p {
+    margin: -10px 0 0 0 !important;
+    padding: 0 !important;
+    text-align: center;
+    font-size: 12px !important;
+}
+
+
+@media only screen and (max-width: 64.0626em){
+    .medium-11-customer{
+        width: 92%;
+    }
 }

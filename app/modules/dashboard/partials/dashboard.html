@@ -22,8 +22,8 @@
                             <filter></filter>
                         </aside>
                         <!-- Map -->
-                        <section class="main-section overlayMapInfo-section">
-                            <div id="mapContainer" class="small-12 columns panel">
+                        <section  id="mapContainer" class="main-section overlayMapInfo-section panel" ng-style="addStyleToMap()" resize >
+                            <div class="small-12 columns">
                                 <ol-map alt="Map ol-map"></ol-map>
                                 <div class="overlayMapInfo" ng-show="showOverlayMapInfo">
                                     <map-Object-Information  align="Horizontal"></map-Object-Information>
@@ -68,22 +68,26 @@
                                     <a href="#" class="button">Request</a>
                                 </div>
                             </aside>
-                            <section class="main-section diagrams-section">
+                            <section class="main-section diagrams-section panel" ng-style="addStyleToMap()" resize>
                                 <div class="medium-12 columns">
                                     <div class="row">
                                         <div class="columns" ng-class="singleDiagramCSS">
-                                            <div class="panel callout">
+                                            <div class=" callout">
                                                 <h3>Overview</h3>
 
 
                                                 <div ng-controller="StatusPanelMainChartController">
+
 
                                                     <div ng-repeat="chart in charts">
                                                         {{chart.chart.title}}
                                                         <nvd3 options="chart.chart.options" data="chart.chart.data" api="api"></nvd3>
                                                         </div>
 
+
                                                 </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
