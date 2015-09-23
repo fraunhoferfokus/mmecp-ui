@@ -18,6 +18,12 @@ angular.module('app.dashboard.controllers',['app.common', 'app.dashboard.map.con
             mapService.updateUseCase(useCaseID);
 
             console.log("todo: send chart request for useCase");
+            console.log(mapService.actualUseCase);
+            if(mapService.actualUseCase.requestChart != undefined)
+            {
+                socketService.send(mapService.actualUseCase.requestChart);
+                console.log("Chart Request send for Usecase")
+            }
         }
 
 
@@ -194,46 +200,27 @@ angular.module('app.dashboard.controllers',['app.common', 'app.dashboard.map.con
             mapService.updateSelectedCity(newCity);
         };
 
-
-
-
-
-
     }]).controller('StatusPanelMainChartController', ['$scope','mapService', function($scope,mapService){
 
         console.log("loading Diagrams Controller");
 
-        $scope.chartOne = mapService.charts[0].chart;
-        $scope.chartTwo = mapService.charts[1].chart;
-        $scope.chartThree = mapService.charts[2].chart;
+        $scope.charts = mapService.charts;
 
-        $scope.$watch("chartOne", function(newValue, oldValue) {
+        $scope.$watch("charts", function(newValue, oldValue) {
 
-            console.log("chartOne watch");
-            $scope.chartOne.options = $scope.appendXYAndColor($scope.chartOne.options,$scope.chartOne.data);
+            for(var i = 0;i<$scope.charts.length;i++)
+            {
+                $scope.charts[i].chart.options = $scope.appendXYAndColor($scope.charts[i].chart.options,$scope.charts[i].chart.data);
+            }
+
         });
-        $scope.$watch("chartTwo", function(newValue, oldValue) {
-
-            console.log("chartTwo watch");
-            $scope.chartTwo.options = $scope.appendXYAndColor($scope.chartTwo.options,$scope.chartTwo.data);
-        });
-        $scope.$watch("chartThree", function(newValue, oldValue) {
-
-            console.log("chartThree watch");
-            $scope.chartThree.options = $scope.appendXYAndColor($scope.chartThree.options,$scope.chartThree.data);
-        });
-
-
 
         $scope.$on('chartUpdate', function(event, options){
-            $scope.chartOne = mapService.charts[0].chart;
-            $scope.chartTwo = mapService.charts[1].chart;
-            $scope.chartThree = mapService.charts[2].chart;
+
+            $scope.charts = mapService.charts;
             $scope.$apply();
 
         });
-
-
 
         $scope.appendXYAndColor = function(options,data)
         {

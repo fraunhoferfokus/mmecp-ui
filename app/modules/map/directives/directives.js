@@ -50,7 +50,7 @@ angular.module('app.dashboard.map.directives', ['app.socket', 'app.config'])
     return{
         restrict: 'E',
         template: '<ul class="off-canvas-list">' +
-        '<filterentry ng-repeat="cityEntry in actualUseCase"></filterentry>' +
+        '<filterentry ng-repeat="cityEntry in actualUsecaseOptions"></filterentry>' +
         '</ul>',
         controller: 'filterController'
     };

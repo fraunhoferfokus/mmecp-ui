@@ -74,14 +74,15 @@
                                         <div class="columns" ng-class="singleDiagramCSS">
                                             <div class="panel callout">
                                                 <h3>Overview</h3>
-                                                <div ng-controller="StatusPanelMainChartController">
-                                                    {{chartOne.title}}
-                                                    <nvd3 options="chartOne.options" data="chartOne.data" api="api"></nvd3>
-                                                    {{chartTwo.title}}
-                                                    <nvd3 options="chartTwo.options" data="chartTwo.data"></nvd3>
 
-                                                    {{chartThree.title}}
-                                                    <nvd3 options="chartThree.options" data="chartThree.data"></nvd3>
+
+                                                <div ng-controller="StatusPanelMainChartController">
+
+                                                    <div ng-repeat="chart in charts">
+                                                        {{chart.chart.title}}
+                                                        <nvd3 options="chart.chart.options" data="chart.chart.data" api="api"></nvd3>
+                                                        </div>
+
                                                 </div>
                                         </div>
                                     </div>

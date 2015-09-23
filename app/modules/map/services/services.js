@@ -50,9 +50,9 @@ angular.module('app.dashboard.map.services', ['app.config', 'app.dashboard.map.d
 
         this.city = [];
         this.allCities = [];
-        this.actualUseCase = [];
-        this.charts = [{"chart":{"title":"default","options":{"chart":{"type":"discreteBarChart","height":240,"width":380,"margin":{"top":20,"right":20,"bottom":60,"left":55},"showValues":true,"xAxis":{"axisLabel":"default"},"yAxis":{"axisLabel":"default","axisLabelDistance":30}}},"data":[{"key":"Cumulative Return","values":[{"label":"Free","value":1532,"color":"#A5C989"},{"label":"Not Free","value":4321,"color":"#D16D82"}]}]}},{"chart":{"title":"Parking Situation","options":{"chart":{"type":"pieChart","height":320,"showLabels":true,"transitionDuration":500,"labelThreshold":0.01,"legend":{"margin":{"top":5,"right":35,"bottom":5,"left":0}}}},"data":[{"label":"Free Parking Slots","value":500,"color":"#5D8896"},{"label":"Fee Parking Slots","value":3200,"color":"#5AC3E6"},{"label":"Clock Parking Slots","value":1300,"color":"#9CCBDB"}]}},{"chart":{"title":"Average Occupancy","options":{"chart":{"type":"discreteBarChart","height":240,"width":380,"margin":{"top":20,"right":20,"bottom":60,"left":55},"showValues":true,"xAxis":{"axisLabel":"Parking Slot Type"},"yAxis":{"axisLabel":"Percentage","axisLabelDistance":30}}},"data":[{"key":"Cumulative Return","values":[{"label":"Fee Slots","value":80,"color":"#D1D665"},{"label":"Clock Slots","value":60,"color":"#959951"}]}]}}];
-
+        this.actualUseCase = {};
+        this.actualUsecaseOptions = [];
+        this.charts = [];
 
 
 
@@ -155,7 +155,8 @@ angular.module('app.dashboard.map.services', ['app.config', 'app.dashboard.map.d
                         {
                             console.log("Set Usecase "+useCaseName+"for City " + actualCity.city);
                             this.city[0] = actualCity.useCases[useCase].options;
-                            this.actualUseCase[0] =  actualCity.useCases[useCase].options;
+                            this.actualUsecaseOptions[0] =  actualCity.useCases[useCase].options;
+                            this.actualUseCase = actualCity.useCases[useCase];
 
 
 
