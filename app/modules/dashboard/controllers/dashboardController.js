@@ -6,7 +6,7 @@ angular.module('app.dashboard.controllers',['app.common', 'app.dashboard.map.con
 
     .controller('dashboardController', ['$scope','$log', '$rootScope','mapService','socketService', function($scope,$log, $rootScope,mapService,socketService) {
 
-        console.log("DashboardController");
+        console.log("DashboardController loaded");
         console.log(mapService.allCities);
         console.log("Dashboard Controller City");
         console.log(mapService.city);
@@ -16,22 +16,6 @@ angular.module('app.dashboard.controllers',['app.common', 'app.dashboard.map.con
         {
             console.log("Information: Clicked on UseCase:" + useCaseID);
             mapService.updateUseCase(useCaseID);
-
-
-            /*
-            TODO: BEN
-             the actual selected useCase is saved in mapService.actualUseCase[0]
-
-            if the useCase Button is clicked, a new request to the backend server has to be send
-
-
-            something like this
-             socketService.send(mapService.actualUseCase[0].requestGetCharts);
-
-
-
-
-             */
 
             console.log("todo: send chart request for useCase");
         }
@@ -215,35 +199,45 @@ angular.module('app.dashboard.controllers',['app.common', 'app.dashboard.map.con
 
 
 
-    }]).controller('StatusPanelMainChartController', ['$scope', function($scope){
-        $scope.defaultData = [{
-            key: "default",
-            values: [
-                { "label" : "default" , "value" : 0,color: "green" }
+    }]).controller('StatusPanelMainChartController', ['$scope','mapService', function($scope,mapService){
 
-            ]
-        }];
-        $scope.defaultOptions = {
-            chart: {
-                type: 'discreteBarChart',
-                height: 320,
-                margin : {
-                    top: 20,
-                    right: 20,
-                    bottom: 60,
-                    left: 55
-                },
-                x: function(d){ return d.label; },
-                y: function(d){ return d.value; },
-                showValues: true,
-                valueFormat: function(d){
-                    return d3.format(',.4f')(d);
-                }
-            }
-        };
+        console.log("loading Diagrams Controller");
+
+        $scope.chartOne = mapService.charts[0].chart;
+        $scope.chartTwo = mapService.charts[1].chart;
+        $scope.chartThree = mapService.charts[2].chart;
+
+        $scope.$watch("chartOne", function(newValue, oldValue) {
+
+            console.log("chartOne watch");
+            $scope.chartOne.options = $scope.appendXYAndColor($scope.chartOne.options,$scope.chartOne.data);
+        });
+        $scope.$watch("chartTwo", function(newValue, oldValue) {
+
+            console.log("chartTwo watch");
+            $scope.chartTwo.options = $scope.appendXYAndColor($scope.chartTwo.options,$scope.chartTwo.data);
+        });
+        $scope.$watch("chartThree", function(newValue, oldValue) {
+
+            console.log("chartThree watch");
+            $scope.chartThree.options = $scope.appendXYAndColor($scope.chartThree.options,$scope.chartThree.data);
+        });
+
+
+
+        $scope.$on('chartUpdate', function(event, options){
+            $scope.chartOne = mapService.charts[0].chart;
+            $scope.chartTwo = mapService.charts[1].chart;
+            $scope.chartThree = mapService.charts[2].chart;
+            $scope.$apply();
+
+        });
+
+
 
         $scope.appendXYAndColor = function(options,data)
         {
+            console.log(options);
                 options.chart['x'] = function(d){ return d.label; };
                 options.chart['y'] = function(d){ return d.value; };
             //    options.chart['color'] = function(d){ return d.color; };
@@ -262,59 +256,6 @@ angular.module('app.dashboard.controllers',['app.common', 'app.dashboard.map.con
         }
 
 
-
-    }]).controller('StatusPanelChartOneController', ['$scope', function($scope){
-        $scope.data = $scope.defaultData;
-        $scope.options = $scope.defaultOptions;
-        $scope.title = "default";
-
-
-        $scope.$on('chartOneUpdate', function(event, options,data,title){
-
-          options = $scope.appendXYAndColor(options,data);
-            $scope.data = data;
-            $scope.options = options;
-            $scope.title = title;
-            $scope.$apply();
-
-        });
-
-
-    }]).controller('StatusPanelChartTwoController', ['$scope', function($scope) {
-
-        $scope.data = $scope.defaultData;
-        $scope.options = $scope.defaultOptions
-        $scope.title = "default";
-
-        $scope.$on('chartTwoUpdate', function(event, options,data,title){
-
-            options = $scope.appendXYAndColor(options,data);
-            $scope.data = data;
-            $scope.options = options;
-            $scope.title = title;
-            $scope.$apply();
-
-
-
-        });
-
-
-    }]).controller('StatusPanelChartThreeController', ['$scope', function($scope) {
-        $scope.data = $scope.defaultData;
-        $scope.options = $scope.defaultOptions;
-        $scope.title = "default";
-
-        $scope.$on('chartThreeUpdate', function(event, options,data,title){
-
-            options = $scope.appendXYAndColor(options,data);
-            $scope.data = data;
-            $scope.options = options;
-            $scope.title = title;
-            $scope.$apply();
-
-
-
-        });
 
     }]);
 
