@@ -46,9 +46,13 @@ angular.module('app.dashboard.map.controller', ['app.socket', 'app.config', 'app
             var ollayer = map.olMap.getLayersByName(layer)[0];
             var featuresToRemove = [];
             for (i = 0;i<ollayer.features.length;i++){
-                if (ollayer.features[i].mapObject.objectSubtype == subType){
+                console.log("remove");
+                console.log("json-subType:"+subType);
+                console.log("mapobject-subType:"+ollayer.features[i].mapObject.objectSubtype);
+               if (ollayer.features[i].mapObject.objectSubtype == subType){
                     featuresToRemove.push(ollayer.features[i]);
-                }
+
+               }
             }
             ollayer.removeFeatures(featuresToRemove);
         };
@@ -85,12 +89,14 @@ angular.module('app.dashboard.map.controller', ['app.socket', 'app.config', 'app
                 console.log("send requestActivated: " + filterOption.requestActivated);
             }else {
 
+                //inform backend about deactivation
                 if(filterOption.requestDeactivated  != undefined)
                 {
                     socketService.send(filterOption.requestDeactivated);
                     console.log("send requestDeactivated: " + filterOption.requestDeactivated);
                 }
 
+                //delete locally
                 $scope.$emit('removeMapObjects',
                     {
                         layer: "mapObjectsLayer",
