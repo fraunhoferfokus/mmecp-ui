@@ -92,6 +92,7 @@ angular.module('app.socket', ['ngWebsocket', 'app.config', 'app.dashboard.map.se
             if(res[0].type == "mapobject") {
                 console.log("New Message from Backend: mapobject");
                 mapObjects.push(res);
+                console.log(res);
                 for (var i = 0;i<subject.length;i++){
                     subject[i].notify();
                 }
