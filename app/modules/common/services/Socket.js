@@ -83,6 +83,9 @@ angular.module('app.socket', ['ngWebsocket', 'app.config', 'app.dashboard.map.se
 
             }
 
+			console.log("Message from Carsten##############################################");
+			console.log(res);
+			console.log(res.type);
             if(res.type == "charts")
             {
                 console.log("New Message from Backend: charts");

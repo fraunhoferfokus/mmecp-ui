@@ -24,7 +24,8 @@
   },
   "socket":
   {
-    "url": "ws://193.175.133.251/api-websocket",
-    "_url": "ws://localhost:8080/api-websocket/panelui"
+    "_url": "ws://193.175.133.251/api-websocket",
+    "__url": "ws://localhost:8080/api-websocket/panelui",
+    "url": "ws://10.147.67.75:8080/api-websocket/panelui"
   }
 }
