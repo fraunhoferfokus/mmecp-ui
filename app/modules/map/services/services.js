@@ -112,6 +112,7 @@ angular.module('app.dashboard.map.services', ['app.config', 'app.dashboard.map.d
 
             }
 
+            defaultUseCase = this.city.defaultUseCase;
 
 
 

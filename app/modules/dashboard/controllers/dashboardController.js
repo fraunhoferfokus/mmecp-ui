@@ -17,8 +17,6 @@ angular.module('app.dashboard.controllers',['app.common', 'app.dashboard.map.con
             console.log("Information: Clicked on UseCase:" + useCaseID);
             mapService.updateUseCase(useCaseID);
 
-            console.log("todo: send chart request for useCase");
-            console.log(mapService.actualUseCase);
             if(mapService.actualUseCase.requestChart != undefined)
             {
                 socketService.send(mapService.actualUseCase.requestChart);
@@ -198,6 +196,16 @@ angular.module('app.dashboard.controllers',['app.common', 'app.dashboard.map.con
             //socketService.send("{'context':{'select': 'Filter'}}");
             console.log("new City: " + newCity);
             mapService.updateSelectedCity(newCity);
+            if(mapService.actualUseCase.requestChart != undefined)
+            {
+                socketService.send(mapService.actualUseCase.requestChart);
+                console.log("Chart Request send for Usecase")
+            }
+
+
+
+
+
         };
 
     }]).controller('StatusPanelMainChartController', ['$scope','mapService', function($scope,mapService){
