@@ -374,6 +374,14 @@ ul.off-canvas-list li  {
 .filterEntry {
     background-color: #ffffff;
 }
+.reveal-modal {
+    max-height: 33.1rem;
+    overflow: scroll;
+    top: 48px !important;
+    padding-left: 30px;
+    border-left: 20px solid #008cba;
+
+}
 
 @media only screen and (max-width: 64.0626em){
     .medium-11-customer{
