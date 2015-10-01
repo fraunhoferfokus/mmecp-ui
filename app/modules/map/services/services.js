@@ -10,6 +10,9 @@ angular.module('app.dashboard.map.services', ['app.config', 'app.dashboard.map.d
 
 
 
+
+
+
         this.accessToCities = [];
 
         //needed because only "dev" should see all cities
@@ -42,7 +45,7 @@ angular.module('app.dashboard.map.services', ['app.config', 'app.dashboard.map.d
             }
 
 
-        }
+        };
 
         this.setStreetlifeInstance();
 
@@ -53,6 +56,14 @@ angular.module('app.dashboard.map.services', ['app.config', 'app.dashboard.map.d
         this.actualUseCase = {};
         this.actualUsecaseOptions = [];
         this.charts = [];
+
+
+        this.deactivateCharts = function()
+        {
+            this.charts = [];
+            $rootScope.$broadcast('chartUpdate');
+
+        }
 
 
 
@@ -71,7 +82,7 @@ angular.module('app.dashboard.map.services', ['app.config', 'app.dashboard.map.d
             console.log("Update Charts here");
             $rootScope.$broadcast('chartUpdate');
 
-        }
+        };
 
 
 
@@ -112,6 +123,7 @@ angular.module('app.dashboard.map.services', ['app.config', 'app.dashboard.map.d
 
             }
 
+            defaultUseCase = this.city.defaultUseCase;
 
 
 
