@@ -10,6 +10,9 @@ angular.module('app.dashboard.map.services', ['app.config', 'app.dashboard.map.d
 
 
 
+
+
+
         this.accessToCities = [];
 
         //needed because only "dev" should see all cities
@@ -53,6 +56,14 @@ angular.module('app.dashboard.map.services', ['app.config', 'app.dashboard.map.d
         this.actualUseCase = {};
         this.actualUsecaseOptions = [];
         this.charts = [];
+
+
+        this.deactivateCharts = function()
+        {
+            this.charts = [];
+            $rootScope.$broadcast('chartUpdate');
+
+        }
 
 
 

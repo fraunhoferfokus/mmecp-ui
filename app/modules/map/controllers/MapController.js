@@ -81,23 +81,28 @@ angular.module('app.dashboard.map.controller', ['app.socket', 'app.config', 'app
         $scope.callFilter = function(filterOption, event){
 
             if (!filterOption.requested){
-                socketService.send(filterOption.requestActivated);
-                console.log("send requestActivated: " + filterOption.requestActivated);
+
+                //FILTER ACTIVATE
 
                if(filterOption.requestChart !== undefined)
                {
                    console.log("send chart request Option level");
                    socketService.send(filterOption.requestChart);
                }
-
+                socketService.send(filterOption.requestActivated);
+                console.log("send requestActivated: " + filterOption.requestActivated);
 
             }else {
 
+
+                //FILTER DEACTIVATE
                 if(filterOption.requestDeactivated  !== undefined)
                 {
                     socketService.send(filterOption.requestDeactivated);
                     console.log("send requestDeactivated: " + filterOption.requestDeactivated);
                 }
+
+                mapService.deactivateCharts();
 
                 $scope.$emit('removeMapObjects',
                     {

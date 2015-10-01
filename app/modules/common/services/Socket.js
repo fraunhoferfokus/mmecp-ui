@@ -81,45 +81,6 @@ angular.module('app.socket', ['ngWebsocket', 'app.config', 'app.dashboard.map.se
                     ws.$emit(JSON.stringify(message));
                     console.dir("send via socket: " + message);
                 }
-
-              /*  var sampleChart = {
-                    "title" : "chartTitle",
-                    "options" : {
-                        "chart" : {
-                            "type" : "discreteBarChart",
-                            "height" : 100,
-                            "width" : 200,
-                            "margin" : null,
-                            "showValues" : true,
-                            "showLabels" : false,
-                            "transitionDuration" : 10,
-                            "labelThreshold" : 0.01,
-                            "xAxis" : {
-                                "axisLabel" : "",
-                                "axisLabelDistance" : 0
-                            },
-                            "yAxis" : {
-                                "axisLabel" : "",
-                                "axisLabelDistance" : 0
-                            }
-                        }
-                    },
-                    "data" : [ {
-                        "key" : "chartKey",
-                        "values" : [ {
-                            "label" : "itemLabel1",
-                            "value" : 123456,
-                            "color" : "#ffffff"
-                        }, {
-                            "label" : "itemLabel2",
-                            "value" : 234567,
-                            "color" : "#000000"
-                        } ]
-                    } ]
-                };
-
-
-                mapService.updateCharts(sampleChart);*/
             }
 
             if(res.type === "charts")
