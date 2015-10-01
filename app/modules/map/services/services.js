@@ -42,7 +42,7 @@ angular.module('app.dashboard.map.services', ['app.config', 'app.dashboard.map.d
             }
 
 
-        }
+        };
 
         this.setStreetlifeInstance();
 
@@ -71,7 +71,7 @@ angular.module('app.dashboard.map.services', ['app.config', 'app.dashboard.map.d
             console.log("Update Charts here");
             $rootScope.$broadcast('chartUpdate');
 
-        }
+        };
 
 
 

@@ -85,7 +85,7 @@ angular.module('app.dashboard.map.controller', ['app.socket', 'app.config', 'app
                 console.log("send requestActivated: " + filterOption.requestActivated);
             }else {
 
-                if(filterOption.requestDeactivated  != undefined)
+                if(filterOption.requestDeactivated  !== undefined)
                 {
                     socketService.send(filterOption.requestDeactivated);
                     console.log("send requestDeactivated: " + filterOption.requestDeactivated);
