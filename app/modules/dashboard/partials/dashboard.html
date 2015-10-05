@@ -9,12 +9,12 @@
                     <div class="inner-wrap">
                         <nav class="tab-bar">
                             <section class="left-small">
-                                <a class="left-off-canvas-toggle"><i class="fi-list large" style="font-size: 26px;color:black;"></i></a>
+                                <a class="left-off-canvas-toggle"><i class="fi-widget" style="font-size: 20px;color:black;"></i></a>
                             </section>
                             <section ng-switch on="showBigMap" class="middle tab-bar-section tab-bar-section-map">
                                 <h1 class="title left" style="color: black !important;">Map</h1>
-                                <!--<a  ng-switch-when="true" class="right btn-showHideMap" ng-click="showHideMap()"><i class="fi-arrows-in large" style="color: black;"></i></a>
-                                <a  ng-switch-when="false" class="right btn-showHideMap" ng-click="showHideMap()"><i class="fi-arrows-out large" style="color: black;"></i></a>-->
+                                <a  ng-switch-when="true" class="right btn-showHideMap" ng-click="showHideMap()"><i class="fi-arrows-in large" style="color: black;"></i></a>
+                                <a  ng-switch-when="false" class="right btn-showHideMap" ng-click="showHideMap()"><i class="fi-arrows-out large" style="color: black;"></i></a>
                             </section>
                         </nav>
                         <!-- Filter -->
@@ -46,7 +46,7 @@
                                 </section>
 
                                 <section class="right-small">
-                                    <a class="right-off-canvas-toggle"><i class="fi-list large" style="font-size: 26px;color: black"></i></a>
+                                    <a class="right-off-canvas-toggle"><i class="fi-widget" style="font-size: 20px;color: black"></i></a>
                                 </section>
                             </nav>
                             <aside class="right-off-canvas-menu">
@@ -83,14 +83,13 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
                             </section>
                             <a class="exit-off-canvas"></a>
                         </div>
                     </div>
                 </div>
                 <!-- Map Obeject Info -->
-                <div ng-switch-when="false" class="panel callout map-object-info" ng-style="addStyleToInfoPanel()" resize style="margin-top: 45px!important;">
+                <div ng-switch-when="false" class="panel callout map-object-info" ng-style="addStyleToInfoPanel()" resize>
                     <map-Object-Information align="Vertical"></map-Object-Information>
                 </div>
             </div>

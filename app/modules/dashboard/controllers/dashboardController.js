@@ -68,7 +68,7 @@ angular.module('app.dashboard.controllers',['app.common', 'app.dashboard.map.con
             console.log("I am useCaseListChanged" +activeUseCaseName);
             $scope.useCaseList = mapService.city.useCases;
             $scope.highlightActiveUseCaseIcon(activeUseCaseName);
-            //workarround for firefox
+            //workaround for firefox
             if ($scope.$root.$$phase != '$apply' && $scope.$root.$$phase != '$digest') {
                 $scope.$apply();
             }
