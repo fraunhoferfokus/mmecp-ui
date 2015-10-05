@@ -53,13 +53,13 @@ Proj4js.Proj.vandg = {
 		if ((Math.abs(dlon) <= Proj4js.common.EPSLN) || (Math.abs(Math.abs(lat) - Proj4js.common.HALF_PI) <= Proj4js.common.EPSLN)) {
 			x = this.x0;
 			if (lat >= 0) {
-				y = this.y0 + Proj4js.common.PI * this.R * Math.tan(.5 * theta);
+				y = this.y0 + Proj4js.common.PI * this.R * Math.tan(0.5 * theta);
 			} else {
-				y = this.y0 + Proj4js.common.PI * this.R * - Math.tan(.5 * theta);
+				y = this.y0 + Proj4js.common.PI * this.R * - Math.tan(0.5 * theta);
 			}
 			//  return(OK);
 		}
-		var al = .5 * Math.abs((Proj4js.common.PI / dlon) - (dlon / Proj4js.common.PI));
+		var al = 0.5 * Math.abs((Proj4js.common.PI / dlon) - (dlon / Proj4js.common.PI));
 		var asq = al * al;
 		var sinth = Math.sin(theta);
 		var costh = Math.cos(theta);

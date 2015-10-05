@@ -66,8 +66,8 @@ Proj4js.Proj.omerc = {
 
     //this.longc=52.60353916666667;
 
-    if (this.mode != 0) {
-       this.g = .5 * (this.f - 1.0/this.f);
+    if (this.mode !== 0) {
+       this.g = 0.5 * (this.f - 1.0/this.f);
        this.gama = Proj4js.common.asinz(Math.sin(this.alpha) / this.d);
        this.longc= this.longc - Proj4js.common.asinz(this.g * Math.tan(this.gama))/this.bl;
 
@@ -101,14 +101,14 @@ Proj4js.Proj.omerc = {
        this.h = Math.pow(this.ts1,this.bl);
        this.l = Math.pow(this.ts2,this.bl);
        this.f = this.el/this.h;
-       this.g = .5 * (this.f - 1.0/this.f);
+       this.g = 0.5 * (this.f - 1.0/this.f);
        this.j = (this.el * this.el - this.l * this.h)/(this.el * this.el + this.l * this.h);
        this.p = (this.l - this.h) / (this.l + this.h);
        this.dlon = this.lon1 - this.lon2;
        if (this.dlon < -Proj4js.common.PI) this.lon2 = this.lon2 - 2.0 * Proj4js.common.PI;
        if (this.dlon > Proj4js.common.PI) this.lon2 = this.lon2 + 2.0 * Proj4js.common.PI;
        this.dlon = this.lon1 - this.lon2;
-       this.longc = .5 * (this.lon1 + this.lon2) -Math.atan(this.j * Math.tan(.5 * this.bl * this.dlon)/this.p)/this.bl;
+       this.longc = 0.5 * (this.lon1 + this.lon2) -Math.atan(this.j * Math.tan(0.5 * this.bl * this.dlon)/this.p)/this.bl;
        this.dlon  = Proj4js.common.adjust_lon(this.lon1 - this.longc);
        this.gama = Math.atan(Math.sin(this.bl * this.dlon)/this.g);
        this.alpha = Proj4js.common.asinz(this.d * Math.sin(this.gama));
@@ -172,11 +172,11 @@ Proj4js.Proj.omerc = {
     if (Math.abs(Math.abs(lat) - Proj4js.common.HALF_PI) > Proj4js.common.EPSLN) {
        ts1 = Proj4js.common.tsfnz(this.e,lat,sin_phi);
        q = this.el / (Math.pow(ts1,this.bl));
-       s = .5 * (q - 1.0 / q);
-       t = .5 * (q + 1.0/ q);
+       s = 0.5 * (q - 1.0 / q);
+       t = 0.5 * (q + 1.0/ q);
        ul = (s * this.singam - vl * this.cosgam) / t;
        con = Math.cos(this.bl * dlon);
-       if (Math.abs(con) < .0000001) {
+       if (Math.abs(con) < 0.0000001) {
           us = this.al * this.bl * dlon;
        } else {
           us = this.al * Math.atan((s * this.cosgam + vl * this.singam) / con)/this.bl;
@@ -195,7 +195,7 @@ Proj4js.Proj.omerc = {
        Proj4js.reportError("omercFwdInfinity");
        //return(205);
     }
-    vs = .5 * this.al * Math.log((1.0 - ul)/(1.0 + ul)) / this.bl;
+    vs = 0.5 * this.al * Math.log((1.0 - ul)/(1.0 + ul)) / this.bl;
     us = us - this.u;
     var x = this.x0 + vs * this.cosaz + us * this.sinaz;
     var y = this.y0 + us * this.cosaz - vs * this.sinaz;
@@ -227,8 +227,8 @@ Proj4js.Proj.omerc = {
     us = p.y * this.cosaz + p.x * this.sinaz;
     us = us + this.u;
     q = Math.exp(-this.bl * vs / this.al);
-    s = .5 * (q - 1.0/q);
-    t = .5 * (q + 1.0/q);
+    s = 0.5 * (q - 1.0/q);
+    t = 0.5 * (q + 1.0/q);
     vl = Math.sin(this.bl * us / this.al);
     ul = (vl * this.cosgam + s * this.singam)/t;
     if (Math.abs(Math.abs(ul) - 1.0) <= Proj4js.common.EPSLN)

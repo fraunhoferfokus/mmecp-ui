@@ -17,12 +17,12 @@ angular.module('app.dashboard.controllers',['app.common', 'app.dashboard.map.con
             console.log("Information: Clicked on UseCase:" + useCaseID);
             mapService.updateUseCase(useCaseID);
 
-            if(mapService.actualUseCase.requestChart != undefined)
+            if(mapService.actualUseCase.requestChart !== undefined)
             {
                 socketService.send(mapService.actualUseCase.requestChart);
-                console.log("Chart Request send for Usecase")
+                console.log("Chart Request send for Usecase");
             }
-        }
+        };
 
 
         $scope.highlightActiveUseCaseIcon = function(activeUseCase)
@@ -196,10 +196,10 @@ angular.module('app.dashboard.controllers',['app.common', 'app.dashboard.map.con
             //socketService.send("{'context':{'select': 'Filter'}}");
             console.log("new City: " + newCity);
             mapService.updateSelectedCity(newCity);
-            if(mapService.actualUseCase.requestChart != undefined)
+            if(mapService.actualUseCase.requestChart !== undefined)
             {
                 socketService.send(mapService.actualUseCase.requestChart);
-                console.log("Chart Request send for Usecase")
+                console.log("Chart Request send for Usecase");
             }
 
 
@@ -233,8 +233,8 @@ angular.module('app.dashboard.controllers',['app.common', 'app.dashboard.map.con
         $scope.appendXYAndColor = function(options,data)
         {
             console.log(options);
-                options.chart['x'] = function(d){ return d.label; };
-                options.chart['y'] = function(d){ return d.value; };
+                options.chart.x = function(d){ return d.label; };
+                options.chart.y = function(d){ return d.value; };
             //    options.chart['color'] = function(d){ return d.color; };
 
             var colors = [];
@@ -244,11 +244,11 @@ angular.module('app.dashboard.controllers',['app.common', 'app.dashboard.map.con
                 colors.push(data[i].color);
             }
 
-            options.chart['color'] = colors;
+            options.chart.color = colors;
 
             return options;
 
-        }
+        };
 
 
 

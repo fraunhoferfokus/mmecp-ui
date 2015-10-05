@@ -36,11 +36,11 @@ Proj4js.Proj.sinu = {
 		if (!this.sphere) {
 		  this.en = Proj4js.common.pj_enfn(this.es);
     } else {
-      this.n = 1.;
-      this.m = 0.;
+      this.n = 1.0;
+      this.m = 0.0;
       this.es = 0;
-      this.C_y = Math.sqrt((this.m + 1.) / this.n);
-      this.C_x = this.C_y/(this.m + 1.);
+      this.C_y = Math.sqrt((this.m + 1.0) / this.n);
+      this.C_x = this.C_y/(this.m + 1.0);
     }
 		  
 	},
@@ -57,7 +57,7 @@ Proj4js.Proj.sinu = {
 		
 		if (this.sphere) {
       if (!this.m) {
-        lat = this.n != 1. ? Math.asin(this.n * Math.sin(lat)): lat;
+        lat = this.n != 1.0 ? Math.asin(this.n * Math.sin(lat)): lat;
       } else {
         var k = this.n * Math.sin(lat);
         for (var i = Proj4js.common.MAX_ITER; i ; --i) {
@@ -74,7 +74,7 @@ Proj4js.Proj.sinu = {
 		  var s = Math.sin(lat);
 		  var c = Math.cos(lat);
       y = this.a * Proj4js.common.pj_mlfn(lat, s, c, this.en);
-      x = this.a * lon * c / Math.sqrt(1. - this.es * s * s);
+      x = this.a * lon * c / Math.sqrt(1.0 - this.es * s * s);
 		}
 
 		p.x=x;
@@ -95,15 +95,15 @@ Proj4js.Proj.sinu = {
 		  
       p.y /= this.C_y;
       lat = this.m ? Math.asin((this.m * p.y + Math.sin(p.y)) / this.n) :
-        ( this.n != 1. ? Math.asin(Math.sin(p.y) / this.n) : p.y );
+        ( this.n != 1.0 ? Math.asin(Math.sin(p.y) / this.n) : p.y );
       lon = p.x / (this.C_x * (this.m + Math.cos(p.y)));
 		  
 		} else {
-		  lat = Proj4js.common.pj_inv_mlfn(p.y/this.a, this.es, this.en)
+		  lat = Proj4js.common.pj_inv_mlfn(p.y/this.a, this.es, this.en);
 		  var s = Math.abs(lat);
       if (s < Proj4js.common.HALF_PI) {
         s = Math.sin(lat);
-        temp = this.long0 + p.x * Math.sqrt(1. - this.es * s * s) /(this.a * Math.cos(lat));
+        temp = this.long0 + p.x * Math.sqrt(1.0 - this.es * s * s) /(this.a * Math.cos(lat));
         //temp = this.long0 + p.x / (this.a * Math.cos(lat));
         lon = Proj4js.common.adjust_lon(temp);
       } else if ((s - Proj4js.common.EPSLN) < Proj4js.common.HALF_PI) {

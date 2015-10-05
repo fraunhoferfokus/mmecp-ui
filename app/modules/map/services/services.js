@@ -63,7 +63,7 @@ angular.module('app.dashboard.map.services', ['app.config', 'app.dashboard.map.d
             this.charts = [];
             $rootScope.$broadcast('chartUpdate');
 
-        }
+        };
 
 
 
