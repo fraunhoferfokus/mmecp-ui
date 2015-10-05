@@ -90,23 +90,23 @@ angular.module('app.dashboard.map.services', ['app.config', 'app.dashboard.map.d
             var city = cityName;
             var cityID = "";
             var cityOLMapID = "";
-            var defaultUseCase = "";
+
             if (city == "ROV"){
                 cityID = "Rovereto";
                 cityOLMapID = "ROVERETO";
-                defaultUseCase = "ParkAndRide@Rovereto";
+
 
 
             }else if (city == "BER"){
                 cityID = "Berlin";
                 cityOLMapID = "BERLIN";
-                defaultUseCase = "CO2Emissions@Berlin";
+
 
 
             }else if (city == "TRE"){
                 cityID = "Tampere";
                 cityOLMapID = "TAMPERE";
-                defaultUseCase = "ParkAndRide@Tampere";
+
 
             }
 
@@ -123,12 +123,10 @@ angular.module('app.dashboard.map.services', ['app.config', 'app.dashboard.map.d
 
             }
 
-            defaultUseCase = this.city.defaultUseCase;
-
 
 
             //set default usecase for city
-            this.updateUseCase(defaultUseCase);
+            this.updateUseCase(this.city.defaultUseCase);
 
 
             //update map position
