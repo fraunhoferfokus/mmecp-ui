@@ -47,11 +47,11 @@ Proj4js.Proj.tmerc = {
 
     if (this.sphere) {  /* spherical form */
       var b = cos_phi * Math.sin(delta_lon);
-      if ((Math.abs(Math.abs(b) - 1.0)) < .0000000001)  {
+      if ((Math.abs(Math.abs(b) - 1.0)) < 0.0000000001)  {
         Proj4js.reportError("tmerc:forward: Point projects into infinity");
         return(93);
       } else {
-        x = .5 * this.a * this.k0 * Math.log((1.0 + b)/(1.0 - b));
+        x = 0.5 * this.a * this.k0 * Math.log((1.0 + b)/(1.0 - b));
         con = Math.acos(cos_phi * Math.cos(delta_lon)/Math.sqrt(1.0 - b*b));
         if (lat < 0) con = - con;
         y = this.a * this.k0 * (con - this.lat0);
@@ -86,14 +86,14 @@ Proj4js.Proj.tmerc = {
 
     if (this.sphere) {   /* spherical form */
       var f = Math.exp(p.x/(this.a * this.k0));
-      var g = .5 * (f - 1/f);
+      var g = 0.5 * (f - 1/f);
       var temp = this.lat0 + p.y/(this.a * this.k0);
       var h = Math.cos(temp);
       con = Math.sqrt((1.0 - h * h)/(1.0 + g * g));
       lat = Proj4js.common.asinz(con);
       if (temp < 0)
         lat = -lat;
-      if ((g == 0) && (h == 0)) {
+      if ((g === 0) && (h === 0)) {
         lon = this.long0;
       } else {
         lon = Proj4js.common.adjust_lon(Math.atan2(g,h) + this.long0);

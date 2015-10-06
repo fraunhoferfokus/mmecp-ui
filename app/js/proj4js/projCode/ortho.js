@@ -29,7 +29,7 @@ Proj4js.Proj.ortho = {
     //double temp;			/* temporary variable		*/
 
     /* Place parameters in static storage for common use
-      -------------------------------------------------*/;
+      -------------------------------------------------*/
     this.sin_p14=Math.sin(this.lat0);
     this.cos_p14=Math.cos(this.lat0);	
   },
@@ -79,7 +79,7 @@ Proj4js.Proj.ortho = {
     p.x -= this.x0;
     p.y -= this.y0;
     rh = Math.sqrt(p.x * p.x + p.y * p.y);
-    if (rh > this.a + .0000001) {
+    if (rh > this.a + 0.0000001) {
       Proj4js.reportError("orthoInvDataError");
     }
     z = Proj4js.common.asinz(rh / this.a);

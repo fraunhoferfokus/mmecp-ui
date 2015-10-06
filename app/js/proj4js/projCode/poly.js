@@ -21,7 +21,7 @@ function phi4z (eccent,e0,e1,e2,e3,a,b,c,phi) {
 		con3 = 2.0 * (a - ml) * (c * mlp - 2.0 / sin2ph) - 2.0 * mlp;
 		dphi = con1 / (con2 + con3);
 		phi += dphi;
-		if (Math.abs(dphi) <= .0000000001 ) return(phi);   
+		if (Math.abs(dphi) <= 0.0000000001 ) return(phi);   
 	}
 	Proj4js.reportError("phi4z: No convergence");
 	return null;
@@ -72,7 +72,7 @@ Proj4js.Proj.poly = {
 	  ----------------------------------*/
 	init: function() {
 		var temp;			/* temporary variable		*/
-		if (this.lat0 == 0) this.lat0 = 90;//this.lat0 ca
+		if (this.lat0 === 0) this.lat0 = 90;//this.lat0 ca
 
 		/* Place parameters in static storage for common use
 		  -------------------------------------------------*/
@@ -102,7 +102,7 @@ Proj4js.Proj.poly = {
 		var lat=p.y;	
 
 		con = Proj4js.common.adjust_lon(lon - this.long0);
-		if (Math.abs(lat) <= .0000001) {
+		if (Math.abs(lat) <= 0.0000001) {
 			x = this.x0 + this.a * con;
 			y = this.y0 - this.a * this.ml0;
 		} else {
@@ -137,7 +137,7 @@ Proj4js.Proj.poly = {
 		al = this.ml0 + p.y/this.a;
 		iflg = 0;
 
-		if (Math.abs(al) <= .0000001) {
+		if (Math.abs(al) <= 0.0000001) {
 			lon = p.x/this.a + this.long0;
 			lat = 0.0;
 		} else {

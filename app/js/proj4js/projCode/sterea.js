@@ -3,7 +3,7 @@ Proj4js.Proj.sterea = {
   dependsOn : 'gauss',
 
   init : function() {
-    Proj4js.Proj['gauss'].init.apply(this);
+    Proj4js.Proj.gauss.init.apply(this);
     if (!this.rc) {
       Proj4js.reportError("sterea:init:E_ERROR_0");
       return;
@@ -17,7 +17,7 @@ Proj4js.Proj.sterea = {
   forward : function(p) {
     var sinc, cosc, cosl, k;
     p.x = Proj4js.common.adjust_lon(p.x-this.long0); /* adjust del longitude */
-    Proj4js.Proj['gauss'].forward.apply(this, [p]);
+    Proj4js.Proj.gauss.forward.apply(this, [p]);
     sinc = Math.sin(p.y);
     cosc = Math.cos(p.y);
     cosl = Math.cos(p.x);
@@ -44,12 +44,12 @@ Proj4js.Proj.sterea = {
       lon = Math.atan2(p.x * sinc, rho * this.cosc0 * cosc - p.y * this.sinc0 * sinc);
     } else {
       lat = this.phic0;
-      lon = 0.;
+      lon = 0.0;
     }
 
     p.x = lon;
     p.y = lat;
-    Proj4js.Proj['gauss'].inverse.apply(this,[p]);
+    Proj4js.Proj.gauss.inverse.apply(this,[p]);
     p.x = Proj4js.common.adjust_lon(p.x + this.long0); /* adjust longitude to CM */
     return p;
   }

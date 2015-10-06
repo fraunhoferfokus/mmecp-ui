@@ -36,8 +36,8 @@ Proj4js.Proj.utm = {
     this.y0 = this.utmSouth ? 10000000.0 : 0.0;
     this.k0 = 0.9996;
 
-    Proj4js.Proj['tmerc'].init.apply(this);
-    this.forward = Proj4js.Proj['tmerc'].forward;
-    this.inverse = Proj4js.Proj['tmerc'].inverse;
+    Proj4js.Proj.tmerc.init.apply(this);
+    this.forward = Proj4js.Proj.tmerc.forward;
+    this.inverse = Proj4js.Proj.tmerc.inverse;
   }
 };

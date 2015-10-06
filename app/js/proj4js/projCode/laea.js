@@ -39,7 +39,7 @@ Proj4js.Proj.laea = {
   init: function() {
     var t = Math.abs(this.lat0);
     if (Math.abs(t - Proj4js.common.HALF_PI) < Proj4js.common.EPSLN) {
-      this.mode = this.lat0 < 0. ? this.S_POLE : this.N_POLE;
+      this.mode = this.lat0 < 0.0 ? this.S_POLE : this.N_POLE;
     } else if (Math.abs(t) < Proj4js.common.EPSLN) {
       this.mode = this.EQUIT;
     } else {
@@ -54,20 +54,20 @@ Proj4js.Proj.laea = {
       switch (this.mode) {
         case this.N_POLE:
         case this.S_POLE:
-          this.dd = 1.;
+          this.dd = 1.0;
           break;
         case this.EQUIT:
           this.rq = Math.sqrt(.5 * this.qp);
           this.dd = 1. / this.rq;
-          this.xmf = 1.;
-          this.ymf = .5 * this.qp;
+          this.xmf = 1.0;
+          this.ymf = 0.5 * this.qp;
           break;
         case this.OBLIQ:
           this.rq = Math.sqrt(.5 * this.qp);
           sinphi = Math.sin(this.lat0);
           this.sinb1 = Proj4js.common.qsfnz(this.e, sinphi) / this.qp;
-          this.cosb1 = Math.sqrt(1. - this.sinb1 * this.sinb1);
-          this.dd = Math.cos(this.lat0) / (Math.sqrt(1. - this.es * sinphi * sinphi) * this.rq * this.cosb1);
+          this.cosb1 = Math.sqrt(1.0 - this.sinb1 * this.sinb1);
+          this.dd = Math.cos(this.lat0) / (Math.sqrt(1.0 - this.es * sinphi * sinphi) * this.rq * this.cosb1);
           this.ymf = (this.xmf = this.rq) / this.dd;
           this.xmf *= this.dd;
           break;
@@ -100,12 +100,12 @@ Proj4js.Proj.laea = {
         switch (this.mode) {
           case this.OBLIQ:
           case this.EQUIT:
-            y = (this.mode == this.EQUIT) ? 1. + cosphi * coslam : 1. + this.sinph0 * sinphi + this.cosph0 * cosphi * coslam;
+            y = (this.mode == this.EQUIT) ? 1.0 + cosphi * coslam : 1.0 + this.sinph0 * sinphi + this.cosph0 * cosphi * coslam;
             if (y <= Proj4js.common.EPSLN) {
               Proj4js.reportError("laea:fwd:y less than eps");
               return null;
             }
-            y = Math.sqrt(2. / y);
+            y = Math.sqrt(2.0 / y);
             x = y * cosphi * Math.sin(lam);
             y *= (this.mode == this.EQUIT) ? sinphi : this.cosph0 * sinphi - this.sinph0 * cosphi * coslam;
             break;
@@ -116,8 +116,8 @@ Proj4js.Proj.laea = {
               Proj4js.reportError("laea:fwd:phi < eps");
               return null;
             }
-            y = Proj4js.common.FORTPI - phi * .5;
-            y = 2. * ((this.mode == this.S_POLE) ? Math.cos(y) : Math.sin(y));
+            y = Proj4js.common.FORTPI - phi * 0.5;
+            y = 2.0 * ((this.mode == this.S_POLE) ? Math.cos(y) : Math.sin(y));
             x = y * Math.sin(lam);
             y *= coslam;
             break;
@@ -131,14 +131,14 @@ Proj4js.Proj.laea = {
         q = Proj4js.common.qsfnz(this.e, sinphi);
         if (this.mode == this.OBLIQ || this.mode == this.EQUIT) {
           sinb = q / this.qp;
-          cosb = Math.sqrt(1. - sinb * sinb);
+          cosb = Math.sqrt(1.0 - sinb * sinb);
         }
         switch (this.mode) {
           case this.OBLIQ:
-            b = 1. + this.sinb1 * sinb + this.cosb1 * cosb * coslam;
+            b = 1.0 + this.sinb1 * sinb + this.cosb1 * cosb * coslam;
             break;
           case this.EQUIT:
-            b = 1. + cosb * coslam;
+            b = 1.0 + cosb * coslam;
             break;
           case this.N_POLE:
             b = Proj4js.common.HALF_PI + phi;
@@ -160,17 +160,17 @@ Proj4js.Proj.laea = {
             if (this.mode == this.OBLIQ) {
               y = this.ymf * b * (this.cosb1 * sinb - this.sinb1 * cosb * coslam);
             } else {
-              y = (b = Math.sqrt(2. / (1. + cosb * coslam))) * sinb * this.ymf;
+              y = (b = Math.sqrt(2.0 / (1.0 + cosb * coslam))) * sinb * this.ymf;
             }
             x = this.xmf * b * cosb * sinlam;
             break;
           case this.N_POLE:
           case this.S_POLE:
-            if (q >= 0.) {
+            if (q >= 0.0) {
               x = (b = Math.sqrt(q)) * sinlam;
               y = coslam * ((this.mode == this.S_POLE) ? b : -b);
             } else {
-              x = y = 0.;
+              x = y = 0.0;
             }
             break;
         }

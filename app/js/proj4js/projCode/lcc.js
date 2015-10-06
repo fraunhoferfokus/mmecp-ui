@@ -124,10 +124,10 @@ Proj4js.Proj.lcc = {
       con = -1.0;
     }
     var theta = 0.0;
-    if (rh1 != 0) {
+    if (rh1 !== 0) {
       theta = Math.atan2((con * x),(con * y));
     }
-    if ((rh1 != 0) || (this.ns > 0.0)) {
+    if ((rh1 !== 0) || (this.ns > 0.0)) {
       con = 1.0/this.ns;
       ts = Math.pow((rh1/(this.a * this.f0)), con);
       lat = Proj4js.common.phi2z(this.e, ts);
