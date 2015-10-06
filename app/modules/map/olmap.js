@@ -56,7 +56,7 @@ function OLMap(config, rootboadcastEvent, mapService){
             },
 
             featureclick: function(e) {
-                console.log("feature click");
+                //console.log("feature click");
                 if (selectedfeature == e.feature){
                     setSelected(selectedfeature, false);
                     rootboadcastEvent('closeMapObjectInformationPanel', null);
@@ -143,7 +143,7 @@ OLMap.prototype.prepareMapData = function (mapObject){
         key  = orginalKey.toLowerCase();
         if(key.indexOf("attribute") > -1 && key != "attribute")
         {
-            console.log(orginalKey);
+            //console.log(orginalKey);
             mapObject.elements[i].attribute = mapObject.elements[i][orginalKey];
             delete mapObject.elements[i][orginalKey];
         }
@@ -166,7 +166,7 @@ OLMap.prototype.generateMapObjectFeature = function (mapObjectTyp,mapObjectEleme
     {
         case "arrowedCircle":
         {
-            console.log("draw arrowCircle " + i);
+            //console.log("draw arrowCircle " + i);
             var arrowCircle =  this.getCircleArrowOfMapObject(mapObjectElement);
             feature = this.createArrowCircleFeature(arrowCircle, fid);
             break;
@@ -176,11 +176,11 @@ OLMap.prototype.generateMapObjectFeature = function (mapObjectTyp,mapObjectEleme
 
             var mapArea = this.getmapAreaofMapObject(mapObjectElement);
             if(mapArea.area.coordinateType == "UTM") {
-                console.log("draw polygon utm");
+                //console.log("draw polygon utm");
                 feature = this.createPolygonFromUTMFeature(mapArea, fid);
             }
             else{
-                console.log("draw polygon normal");
+                //console.log("draw polygon normal");
                 feature = this.createPolygonFeature(mapArea, fid);
             }
 
@@ -223,7 +223,7 @@ OLMap.prototype.addMapObjectToMap = function (mapObjectElement){
 OLMap.prototype.addObjects = function (mapObjectList){
 
 
-    console.log("start drawing map objects");
+    //console.log("start drawing map objects");
 
     if (this.vector === undefined) return;
     for (i = 0;i<mapObjectList.length; i++){
@@ -264,7 +264,7 @@ OLMap.prototype.createPolygonFeature = function(area, id){
 
 
     var polygon = new OpenLayers.Geometry.Polygon([linearRing]);
-    console.log(polygon);
+    //console.log(polygon);
     var newVector = this.addPolygon(area,polygon,id);
 
     return newVector;
@@ -313,8 +313,8 @@ OLMap.prototype.addPolygon = function(area,polygon, id){
 OLMap.prototype.createPolygonFromUTMFeature = function(area, id){
 
 
-    console.log("create with UTM");
-    console.log(area);
+    //console.log("create with UTM");
+    //console.log(area);
     var pointList = [],
         polygonGeometry,
         vector = new OpenLayers.Layer.Vector('polygonLayerVector');
@@ -330,10 +330,10 @@ OLMap.prototype.createPolygonFromUTMFeature = function(area, id){
         var point = new OpenLayers.Geometry.Point(coords[i].e, coords[i].n);
         //transform point into EPSG:900913
 
-        console.log(point);
+        //console.log(point);
         point =Proj4js.transform(sourceCoords, destCoords, point);
-        console.log("transform");
-        console.log(point);
+        //console.log("transform");
+        //console.log(point);
 
   /*  var iconPng = "img/"+"icon_red_arrow_straight" + ".png";
         var featureNewVector = new OpenLayers.Feature.Vector(
@@ -350,8 +350,8 @@ OLMap.prototype.createPolygonFromUTMFeature = function(area, id){
 
 
     var polygon = new OpenLayers.Geometry.Polygon([linearRing]);
-    console.log("polygon");
-    console.log(polygon);
+    //console.log("polygon");
+    //console.log(polygon);
     var newVector = this.addPolygon(area,polygon,id);
     return newVector;
 };

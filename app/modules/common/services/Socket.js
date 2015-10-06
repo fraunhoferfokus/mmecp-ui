@@ -91,10 +91,20 @@ angular.module('app.socket', ['ngWebsocket', 'app.config', 'app.dashboard.map.se
                mapService.updateCharts(res);
             }
 
+
+            //Mapobjects
             if(res[0].type == "mapobject") {
                 console.log("New Message from Backend: mapobject");
                 mapObjects.push(res);
                 console.log(res);
+                for (var i = 0;i<subject.length;i++){
+                    subject[i].notify();
+                }
+            }
+            var responseParsed = JSON.parse(res);
+            if(responseParsed.mapobjects !== undefined) {
+                console.log("New Message from Backend: mapobject");
+                mapObjects.push(responseParsed.mapobjects);
                 for (var i = 0;i<subject.length;i++){
                     subject[i].notify();
                 }
