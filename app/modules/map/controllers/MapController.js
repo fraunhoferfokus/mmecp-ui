@@ -157,7 +157,6 @@ angular.module('app.dashboard.map.controller', ['app.socket', 'app.config', 'app
             if (!filterOption.requested){
 
                 //FILTER ACTIVATE
-
                 filterOption.requested = !filterOption.requested;
                 console.log("----------------------------------- Filter active");
                if(filterOption.requestChart !== undefined)
@@ -165,11 +164,10 @@ angular.module('app.dashboard.map.controller', ['app.socket', 'app.config', 'app
                    console.log("send chart request Option level");
                    socketService.send(filterOption.requestChart);
                }
+
                 socketService.send(filterOption.requestActivated);
                 console.log("send requestActivated: " + filterOption.requestActivated);
-
             }else {
-
 
                 filterOption.requested = !filterOption.requested;
                 console.log("----------------------------------- Filter deactive");
