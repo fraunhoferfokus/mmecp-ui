@@ -20,14 +20,13 @@ angular.module('app.dashboard.map.controller', ['app.socket', 'app.config', 'app
 
         //Events:
         //******************
-        $scope.$on('removeMapObjects', function(event, args){
+        $scope.$on('removeAllMapObjects', function(event, args){
             console.log("MAP remove all ");
             removeAllMapObjects(args.layer);
 
         })
 
-
-        $scope.$on('removeAllMapObjects', function(event, args){
+        $scope.$on('removeMapObjects', function(event, args){
             console.log("args layer");
             console.log(args.layer);
             removeMapObjects(args.layer, args.subType);
