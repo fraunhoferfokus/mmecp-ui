@@ -16,25 +16,25 @@ angular.module('app.dashboard.map.directives', ['app.socket', 'app.config'])
 
                 scope.addStyleToMap = function () {
                     return {
-                        'height': (newValue.h - 150) + 'px'
+                        'height': (newValue.h - 120) + 'px',
                     };
                 };
                 scope.addStyleToOlMap = function () {
                     return {
-                        'height': (newValue.h - 170) + 'px'
+                        'height': (newValue.h - 140) + 'px'
                     };
                 };
                 scope.addStyleToInfoPanel = function () {
                     return {
-                        'height': (newValue.h - 150) + 'px'
+                        'height': (newValue.h - 120) + 'px'
                     };
                 };
 
-                var mapContainerWidth = angular.element("#mapContainer").width();
+                var mapContainerWidth = angular.element("#mapContainer").offsetWidth;
                 var mapContainerHeight = angular.element("#mapContainer").height();
                 angular.element('#OpenLayers_Map_6_OpenLayers_ViewPort').css('width', mapContainerWidth + "px");
                 angular.element('#OpenLayers_Map_6_OpenLayers_ViewPort').css('height', mapContainerHeight + "px");
-                angular.element('#map').css('width', mapContainerWidth + "px");
+                angular.element('#map').css('width', mapContainerWidth + "px !important");
                 angular.element('#map').css('height', mapContainerHeight + "px");
 
             }, true);
@@ -48,13 +48,13 @@ angular.module('app.dashboard.map.directives', ['app.socket', 'app.config'])
     .directive('olMap', function(){
         return {
             restrict: 'E',
-            template: ' <div id="map" ng-style="addStyleToOlMap()"  style="height: 600px;" resize></div> ',
+            template: ' <div id="map"></div> ',
             controller: 'mapController'
         };
     }).directive('filter', function(){
         return{
             restrict: 'E',
-            template: '<ul class="off-canvas-list">' +
+            template: '<ul class="off-canvas-list" style="margin-top: 15px">' +
             '<filterentry ng-repeat="cityEntry in actualUsecaseOptions"></filterentry>' +
             '</ul>',
             controller: 'filterController'
@@ -62,7 +62,7 @@ angular.module('app.dashboard.map.directives', ['app.socket', 'app.config'])
     }).directive('filterentry', function(){
         return{
             restrict: 'E',
-            template: '<li><label>{{cityEntry.title}}</label></li>' +
+            template:
             '<li class="filterEntry" ng-repeat="option in cityEntry">' +
             '<a ng-class="{filterActive: option.requested}" id="{{option.id}}" ng-click="callFilter(option, $event)">{{option.value}}</a>' +
             '</li>'
