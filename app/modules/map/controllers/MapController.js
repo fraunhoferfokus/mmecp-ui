@@ -21,10 +21,18 @@ angular.module('app.dashboard.map.controller', ['app.socket', 'app.config', 'app
         //Events:
         //******************
         $scope.$on('removeMapObjects', function(event, args){
+            console.log("MAP remove all ");
+            removeAllMapObjects(args.layer);
+
+        })
+
+
+        $scope.$on('removeAllMapObjects', function(event, args){
             console.log("args layer");
             console.log(args.layer);
             removeMapObjects(args.layer, args.subType);
-        });
+        })
+
         $scope.$on('switchLayer', function(event, args){
             switchLayer(args);
         });
@@ -46,13 +54,18 @@ angular.module('app.dashboard.map.controller', ['app.socket', 'app.config', 'app
             var ollayer = map.olMap.getLayersByName(layer)[0];
             var featuresToRemove = [];
             for (i = 0;i<ollayer.features.length;i++){
-                console.log("remove");
-                console.log("json-subType:"+subType);
-                console.log("mapobject-subType:"+ollayer.features[i].mapObject.objectSubtype);
                if (ollayer.features[i].mapObject.objectSubtype == subType){
                     featuresToRemove.push(ollayer.features[i]);
 
                }
+            }
+            ollayer.removeFeatures(featuresToRemove);
+        };
+        var removeAllMapObjects = function(layer){
+            var ollayer = map.olMap.getLayersByName(layer)[0];
+            var featuresToRemove = [];
+            for (i = 0;i<ollayer.features.length;i++){
+                featuresToRemove.push(ollayer.features[i]);
             }
             ollayer.removeFeatures(featuresToRemove);
         };
@@ -82,12 +95,71 @@ angular.module('app.dashboard.map.controller', ['app.socket', 'app.config', 'app
         $scope.actualUsecaseOptions =mapService.actualUsecaseOptions;
 
 
+
+        var deactivateAllActiveFilters = function(){
+
+            for(var i = 0;i<mapService.actualUsecaseOptions[0].length;i++)
+            {
+                if(mapService.actualUsecaseOptions[0][i].requested == true)
+                {
+                    console.log("--- Deactivate Filter");
+                    deactivateFilter(mapService.actualUsecaseOptions[0][i]);
+                    mapService.actualUsecaseOptions[0][i].requested = false;
+                }
+            }
+
+            //remove all objectes /just to be save
+            $scope.$emit('removeAllMapObjects',
+                {
+                    layer: "mapObjectsLayer"
+
+                }
+            );
+
+        }
+
+
+        var deactivateFilter = function(filterOption){
+
+            //FILTER DEACTIVATE
+            if(filterOption.requestDeactivated  !== undefined)
+
+            {
+                socketService.send(filterOption.requestDeactivated);
+                console.log("send requestDeactivated: " + filterOption.requestDeactivated);
+            }
+
+
+            mapService.deactivateCharts();
+
+            $scope.$emit('removeMapObjects',
+                {
+                    layer: "mapObjectsLayer",
+                    subType: filterOption.subType
+                }
+            );
+
+        }
+
+
+
+        $scope.$on('deactivateAllActiveFilters', function(event) {
+
+            console.log("Deactivate All Active Filters");
+            deactivateAllActiveFilters();
+
+        });
+
+
+
         $scope.callFilter = function(filterOption, event){
 
             if (!filterOption.requested){
 
                 //FILTER ACTIVATE
 
+                filterOption.requested = !filterOption.requested;
+                console.log("----------------------------------- Filter active");
                if(filterOption.requestChart !== undefined)
                {
                    console.log("send chart request Option level");
@@ -99,28 +171,12 @@ angular.module('app.dashboard.map.controller', ['app.socket', 'app.config', 'app
             }else {
 
 
+                filterOption.requested = !filterOption.requested;
+                console.log("----------------------------------- Filter deactive");
+                deactivateFilter(filterOption);
 
-
-                //FILTER DEACTIVATE
-                if(filterOption.requestDeactivated  !== undefined)
-
-                {
-                    socketService.send(filterOption.requestDeactivated);
-                    console.log("send requestDeactivated: " + filterOption.requestDeactivated);
-                }
-
-
-                mapService.deactivateCharts();
-
-                $scope.$emit('removeMapObjects',
-                    {
-                        layer: "mapObjectsLayer",
-                        subType: filterOption.subType
-                    }
-                );
             }
 
-            filterOption.requested = !filterOption.requested;
 
             //because jsquery close the aside panel, we have to stop the event propagation!
             if (window.event) window.event.stopPropagation();

@@ -14,6 +14,12 @@ angular.module('app.dashboard.controllers',['app.common', 'app.dashboard.map.con
 
         $scope.useCaseClicked = function(useCaseID)
         {
+            //remove old
+            console.log("### deactivate old usecase");
+            $scope.$broadcast('deactivateAllActiveFilters');
+
+
+
             console.log("Information: Clicked on UseCase:" + useCaseID);
             mapService.updateUseCase(useCaseID);
 
@@ -230,8 +236,9 @@ angular.module('app.dashboard.controllers',['app.common', 'app.dashboard.map.con
         $scope.$on('chartUpdate', function(event, options){
 
             $scope.charts = mapService.charts;
-            $scope.$apply();
-
+            if ($scope.$root.$$phase != '$apply' && $scope.$root.$$phase != '$digest') {
+                $scope.$apply();
+            }
         });
 
         $scope.appendXYAndColor = function(options,data)

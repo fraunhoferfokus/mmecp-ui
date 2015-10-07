@@ -58,7 +58,7 @@ angular.module('app.socket', ['ngWebsocket', 'app.config', 'app.dashboard.map.se
             }
 
             console.log("Message from Backend##############################################");
-            console.log(res);
+         //   console.log(res);
 
             //interpret message
             if (res.options !== undefined) {
