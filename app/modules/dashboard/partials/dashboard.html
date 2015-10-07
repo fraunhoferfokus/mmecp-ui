@@ -100,10 +100,11 @@
     <div class="medium-1-customer columns use-case-menu" ng-class="kipsCSS" style="padding: 5px;border-top: solid 1px whitesmoke;" ng-style="addStyle()" resize-menu>
         <div class="row full-width" style="margin-top: 50px">
 
+
             <div class="medium-12-customer padding-none columns">
                 <ul ng-repeat="useCase in useCaseList" class="side-nav">
 
-                    <a ng-click="useCaseClicked(useCase.useCaseID)"><img src="{{'img/'+useCase.icon}}" style="height:32px;width:32px"></a>
+                    <span data-tooltip aria-haspopup="true" class="has-tip" title="{{useCase.title}}"><a  ng-click="useCaseClicked(useCase.useCaseID)"><img src="{{'img/'+useCase.icon}}" style="height:32px;width:32px"></a></span>
 
                 </ul>
             </div>
