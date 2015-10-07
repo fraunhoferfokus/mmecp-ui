@@ -382,8 +382,7 @@ OLMap.prototype.createArrowCircleFeature = function(arrowCircle, id){
 
 
     //TAMPERE tranform
-
-    Proj4js.defs["EPSG:2393"] = "+title= KKJ +proj=tmerc +lat_0=0 +lon_0=27 +k=1 +x_0=3500000 +y_0=0 +ellps=intl +units=m +no_defs";
+    Proj4js.defs["EPSG:2393"] = "+title= KKJ +proj=tmerc +lat_0=0 +lon_0=27 +k=1 +x_0=3500000 +y_0=0 +ellps=intl +towgs84=-96.062,-82.428,-121.753,4.801,0.345,-1.376,1.496 +units=m +no_defs";
 
     var sourceCoords = new Proj4js.Proj("EPSG:2393");
     var destCoords = new Proj4js.Proj("EPSG:900913");
