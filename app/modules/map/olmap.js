@@ -135,7 +135,7 @@ OLMap.prototype.prepareMapData = function (mapObject){
 
     // sometimes elements contains "text$attribute" instead of "attribute"
 
-    if(mapObject.elements === undefined)
+    if(mapObject.elements == undefined)
     return mapObject;
     for (var i = 0;i<mapObject.elements.length;i++){
 
@@ -189,7 +189,7 @@ OLMap.prototype.generateMapObjectFeature = function (mapObjectTyp,mapObjectEleme
     }
     return feature;
 
-};
+}
 
 
 
@@ -359,7 +359,7 @@ OLMap.prototype.createPolygonFromUTMFeature = function(area, id){
 
 OLMap.prototype.getMapObjectTyp = function (mapObject)
 {
-    if(mapObject.elements === undefined)
+    if(mapObject.elements == undefined)
         return "unkown";
     for (var i = 0;i<mapObject.elements.length;i++){
         if (mapObject.elements[i].maparea !== undefined){
