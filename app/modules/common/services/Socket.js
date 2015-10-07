@@ -83,6 +83,7 @@ angular.module('app.socket', ['ngWebsocket', 'app.config', 'app.dashboard.map.se
                     console.dir("send via socket: " + message);
                 }
 
+
             }
 
             if(res.type === "charts")

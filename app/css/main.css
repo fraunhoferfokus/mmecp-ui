@@ -346,3 +346,7 @@ input[type="search"],input[type="search"]:focus {
         width: 92%;
     }
 }
+.chart
+{
+    margin-top: 50px;
+}

@@ -73,11 +73,12 @@
                                     <div class="row">
                                         <div class="columns" ng-class="singleDiagramCSS">
                                             <div class=" callout">
-                                                <h3>Overview</h3>
+                                                <h2>Overview</h2>
                                                 <div ng-controller="StatusPanelMainChartController">
-                                                    <div ng-repeat="chart in charts">
-                                                        {{chart.chart.title}}
+                                                    <div class="chart" ng-repeat="chart in charts">
+                                                        <h3>{{chart.chart.title}}</h3>
                                                         <nvd3 options="chart.chart.options" data="chart.chart.data" api="api"></nvd3>
+                                                        {{chart.chart.description}}
                                                     </div>
                                                 </div>
                                             </div>
