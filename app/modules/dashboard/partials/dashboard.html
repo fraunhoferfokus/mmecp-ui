@@ -73,8 +73,15 @@
                                     <div class="row">
                                         <div class="columns" ng-class="singleDiagramCSS">
                                             <div class=" callout">
-                                                <h2>Overview</h2>
-                                                <div ng-controller="StatusPanelMainChartController">
+                                                <h2>{{  useCaseTitle }}</h2>
+
+
+                                                <div ng-if="showUseCaseDescription"> Usecase Beschreibung {{  useCaseDescription }} </div>
+
+                                                    <map-Object-Information ng-if="showDetailView"  align="Vertical"></map-Object-Information>
+
+
+                                                <div ng-controller="StatusPanelMainChartController" ng-if="showCharts">
                                                     <div class="chart" ng-repeat="chart in charts">
                                                         <h3>{{chart.chart.title}}</h3>
                                                         <nvd3 options="chart.chart.options" data="chart.chart.data" api="api"></nvd3>
@@ -84,15 +91,13 @@
                                             </div>
                                         </div>
                                     </div>
+                                    </div>
                             </section>
                             <a class="exit-off-canvas"></a>
                         </div>
                     </div>
                 </div>
-                <!-- Map Obeject Info -->
-                <div ng-switch-when="false" class="panel callout map-object-info" ng-style="addStyleToInfoPanel()" resize>
-                    <map-Object-Information align="Vertical"></map-Object-Information>
-                </div>
+
             </div>
         </div>
     </div>

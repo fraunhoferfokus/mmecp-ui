@@ -12,12 +12,26 @@ angular.module('app.dashboard.controllers',['app.common', 'app.dashboard.map.con
         console.log(mapService.city);
 
 
+        //VIEW FLAGS
+        $rootScope.showDetailView = false;
+        $rootScope.showUseCaseDescription = true;
+        $rootScope.showCharts = true;
+
+
+        $scope.useCaseDescription = mapService.actualUseCase.title;
+        $scope.useCaseTitle = mapService.actualUseCase.title;
+
+
+
         $scope.useCaseClicked = function(useCaseID)
         {
             //remove old
             console.log("### deactivate old usecase");
             $scope.$broadcast('deactivateAllActiveFilters');
 
+            //activate default usecase views
+            $rootScope.showDetailView = false;
+            $rootScope.showUseCaseDescription = true;
 
 
             console.log("Information: Clicked on UseCase:" + useCaseID);
@@ -76,6 +90,10 @@ angular.module('app.dashboard.controllers',['app.common', 'app.dashboard.map.con
             console.log("I am useCaseListChanged" +activeUseCaseName);
             $scope.useCaseList = mapService.city.useCases;
             $scope.highlightActiveUseCaseIcon(activeUseCaseName);
+
+            //desc dummy
+            $scope.useCaseDescription = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.";
+            $scope.useCaseTitle = mapService.actualUseCase.title;
             //workaround for firefox
             if ($scope.$root.$$phase != '$apply' && $scope.$root.$$phase != '$digest') {
                 $scope.$apply();
@@ -150,35 +168,22 @@ angular.module('app.dashboard.controllers',['app.common', 'app.dashboard.map.con
         };
 
         $scope.$on('openMapObjectInformationPanel', function(event, args){
-            //if closed, then open!
-            if (!mapObjectInformationPanelisOpen()){
-                $scope.$apply(function(){
-                    $scope.switchBetweenDiagrammsAndMapInfo();
-                });
-            }
+            $rootScope.showDetailView = true;
+            $rootScope.showUseCaseDescription = false;
 
         });
         $scope.$on('closeMapObjectInformationPanel', function(event, args){
-            //if opened, then close!
-            if (mapObjectInformationPanelisOpen()){
-                $scope.$apply(function(){
-                    $scope.switchBetweenDiagrammsAndMapInfo();
-                });
-            }
+            $rootScope.showDetailView = false;
+            $rootScope.showUseCaseDescription = true;
+            $scope.$apply();
+
         });
 
+
+        //old needs to be removed
         $scope.showDiagrams=true;
         $scope.showOverlayMapInfo=false;
-        $scope.switchBetweenDiagrammsAndMapInfo=function(){
 
-            if($scope.showBigMap===false){
-                $scope.showDiagrams = !$scope.showDiagrams;
-                $scope.showOverlayMapInfo=false;
-            }else{
-                $scope.showDiagrams = true;
-                $scope.showOverlayMapInfo=!$scope.showOverlayMapInfo;
-            }
-        };
 
     }]).controller('impressumnController', function mainController ($scope, $modal, $http) {
         $scope.items = ['item1', 'item2', 'item3'];

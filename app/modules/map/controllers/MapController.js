@@ -84,13 +84,10 @@ angular.module('app.dashboard.map.controller', ['app.socket', 'app.config', 'app
 
         socketService.send(initialRequest);
 
-        //angular.element('#OpenLayers_Map_6_OpenLayers_ViewPort').css('width', "100%");
-        //angular.element('#OpenLayers_Map_6_OpenLayers_ViewPort').css('height', "100%");
     }])
 
-    .controller('filterController', ['$scope', 'mapService', 'socketService', function($scope, mapService, socketService){
+    .controller('filterController', ['$scope','$rootScope', 'mapService', 'socketService',function($scope,$rootScope, mapService,socketService){
 
-        //Testvalues
         $scope.city = mapService.city;
         $scope.actualUsecaseOptions =mapService.actualUsecaseOptions;
 
@@ -107,6 +104,9 @@ angular.module('app.dashboard.map.controller', ['app.socket', 'app.config', 'app
                     mapService.actualUsecaseOptions[0][i].requested = false;
                 }
             }
+
+
+
 
             //remove all objectes /just to be save
             $scope.$emit('removeAllMapObjects',
@@ -138,6 +138,9 @@ angular.module('app.dashboard.map.controller', ['app.socket', 'app.config', 'app
                     subType: filterOption.subType
                 }
             );
+
+            $rootScope.showDetailView = false;
+            $rootScope.showUseCaseDescription = true;
 
         }
 
@@ -184,9 +187,7 @@ angular.module('app.dashboard.map.controller', ['app.socket', 'app.config', 'app
 
     .controller('mapObjectInformationController', ['$scope', 'mapService', '$timeout', function($scope, mapService, $timeout){
 
-        //$scope.headline = "Modal Split";
         $scope.elements = [];
-
         $scope.$on('updateMapObject', function(event, mapObject){
             if(!$scope.$$phase) {
                 $scope.$apply(function(){
@@ -197,20 +198,6 @@ angular.module('app.dashboard.map.controller', ['app.socket', 'app.config', 'app
             }
         });
 
-        $scope.xAxisTickFormatFunction = function(){
-            return function(d){
-                return "sun";
-            };
-        };
-
-        $scope.exampleData = [
-            {
-                "key": "Series 1",
-                "values": [
-                ]
-            }
-        ];
-
         var updateMapObject = function(){
             var mapObject = mapService.mapObjectForInformationPanel;
             $scope.elements = [];
@@ -219,23 +206,6 @@ angular.module('app.dashboard.map.controller', ['app.socket', 'app.config', 'app
 
                 if (mapObject.elements[i].attribute) {
                     $scope.elements.push(mapObject.elements[i].attribute);
-                }else if (mapObject.elements[i].chart){
-                    var chartObject = mapObject.elements[i].chart;
-
-                    var values = [];
-                    for (x = 0; x<chartObject.data.length;x++){
-                        values[x] = [
-                            chartObject.data[x].label,
-                            chartObject.data[x].value
-                        ];
-                    }
-
-                    $scope.exampleData = [
-                        {
-                            "key": chartObject.valuedescription,
-                            "values": values
-                        }
-                    ];
                 }
             }
         };
