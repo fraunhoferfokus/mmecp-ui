@@ -1,8 +1,7 @@
 /**
  * Created by Aminskee on 10.03.15.
  */
-angular.module('app.dashboard.controllers',['app.common', 'app.dashboard.map.controller'])
-
+var mainControllers = angular.module('app.dashboard.controllers',['app.common', 'app.dashboard.map.controller'])
 
     .controller('dashboardController', ['$scope','$log', '$rootScope','mapService','socketService', function($scope,$log, $rootScope,mapService,socketService) {
 
@@ -199,77 +198,7 @@ angular.module('app.dashboard.controllers',['app.common', 'app.dashboard.map.con
         $scope.ok = function () {
             $modalInstance.close();
         };
-    }).controller('citySelectionController',['$scope', 'socketService', 'mapService', '$rootScope', function citySelectionController ($scope, socketService, mapService, $rootScope) {
-        $scope.asd = function(city){
-            $scope.citySelection.id = city;
-            $scope.changeCity(city);
-        };
-        $scope.cities = mapService.accessToCities;
-        $scope.citySelection = {};
-        $scope.citySelection.id = $scope.cities[0];
-
-        $scope.changeCity = function(newCity){
-
-            //socketService.send("{'context':{'select': 'Filter'}}");
-            console.log("new City: " + newCity);
-            mapService.updateSelectedCity(newCity);
-
-            if(mapService.actualUseCase.requestChart !== undefined)
-            {
-                socketService.send(mapService.actualUseCase.requestChart);
-                console.log("Chart Request send for Usecase");
-            }
-
-
-
-        };
-
-    }]).controller('StatusPanelMainChartController', ['$scope','mapService', function($scope,mapService){
-
-        console.log("loading Diagrams Controller");
-
-        $scope.charts = mapService.charts;
-
-        $scope.$watch("charts", function(newValue, oldValue) {
-
-            for(var i = 0;i<$scope.charts.length;i++)
-            {
-                $scope.charts[i].chart.options = $scope.appendXYAndColor($scope.charts[i].chart.options,$scope.charts[i].chart.data);
-            }
-
-        });
-
-        $scope.$on('chartUpdate', function(event, options){
-
-            $scope.charts = mapService.charts;
-            if ($scope.$root.$$phase != '$apply' && $scope.$root.$$phase != '$digest') {
-                $scope.$apply();
-            }
-        });
-
-        $scope.appendXYAndColor = function(options,data)
-        {
-            console.log(options);
-                options.chart.x = function(d){ return d.label; };
-                options.chart.y = function(d){ return d.value; };
-            //    options.chart['color'] = function(d){ return d.color; };
-
-            var colors = [];
-
-            for(var i = 0;i<data.length;i++)
-            {
-                colors.push(data[i].color);
-            }
-
-            options.chart.color = colors;
-
-            return options;
-
-        };
-
-
-
-    }]);
+    })
 
 
 

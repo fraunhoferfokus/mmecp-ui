@@ -47,12 +47,18 @@ angular.module('app.dashboard.map.services', ['app.config', 'app.dashboard.map.d
         this.setStreetlifeInstance();
 
 
-
         this.city = [];
         this.allCities = [];
         this.actualUseCase = {};
         this.actualUsecaseOptions = [];
         this.charts = [];
+        this.mapLegend = {};
+
+
+        this.setMapLegend = function(legend)
+        {
+            this.mapLegend = legend;
+        }
 
 
 

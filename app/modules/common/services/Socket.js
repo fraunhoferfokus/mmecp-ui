@@ -59,7 +59,7 @@ angular.module('app.socket', ['ngWebsocket', 'app.config', 'app.dashboard.map.se
 
 
             console.log("Message from Backend##############################################");
-         //   console.log(res);
+           //console.log(res);
 
             //interpret message
             if (res.options != undefined) {
@@ -91,6 +91,17 @@ angular.module('app.socket', ['ngWebsocket', 'app.config', 'app.dashboard.map.se
             if(responseParsed.mapobjects !== undefined) {
                 console.log("New Message from Backend: mapobject");
                 mapObjects.push(responseParsed.mapobjects);
+
+
+                //if legend was send
+                if(responseParsed.legend !== undefined) {
+                    console.log("legend");
+                    console.log(responseParsed.legend);
+                    mapService.setMapLegend(responseParsed);
+
+                }
+
+
                 for (var i = 0;i<subject.length;i++){
                     subject[i].notify();
                 }

@@ -350,3 +350,15 @@ input[type="search"],input[type="search"]:focus {
 {
     margin-top: 50px;
 }
+#mapLegend{
+    bottom: 0;
+padding: 15px;
+display: block;
+left: 0px;
+position: absolute;
+bottom: 0%;
+z-index: 10000;
+width: 200px;
+height: 105px;
+background: rgba(255, 255, 255, 0.72);
+}
