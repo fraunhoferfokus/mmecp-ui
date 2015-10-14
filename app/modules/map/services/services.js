@@ -57,7 +57,15 @@ angular.module('app.dashboard.map.services', ['app.config', 'app.dashboard.map.d
 
         this.setMapLegend = function(legend)
         {
-            this.mapLegend = legend;
+            this.mapLegend = legend.values;
+            $rootScope.showLegend = true;
+
+            $rootScope.$broadcast('legendChanged');
+            console.log("broadcast legend changed");
+        }
+        this.getMapLegend = function()
+        {
+            return this.mapLegend;
         }
 
 

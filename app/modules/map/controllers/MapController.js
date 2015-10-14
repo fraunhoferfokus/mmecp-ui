@@ -140,6 +140,7 @@ angular.module('app.dashboard.map.controller', ['app.socket', 'app.config', 'app
 
             $rootScope.showDetailView = false;
             $rootScope.showUseCaseDescription = true;
+            $rootScope.showLegend = false;
 
         }
 

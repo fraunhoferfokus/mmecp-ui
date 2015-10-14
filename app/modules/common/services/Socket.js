@@ -97,7 +97,7 @@ angular.module('app.socket', ['ngWebsocket', 'app.config', 'app.dashboard.map.se
                 if(responseParsed.legend !== undefined) {
                     console.log("legend");
                     console.log(responseParsed.legend);
-                    mapService.setMapLegend(responseParsed);
+                    mapService.setMapLegend(responseParsed.legend);
 
                 }
 

@@ -9,7 +9,11 @@ mainControllers.controller('citySelectionController',['$scope', 'socketService',
 
     $scope.changeCity = function(newCity){
 
-        //socketService.send("{'context':{'select': 'Filter'}}");
+        //deactivate filters for city change
+        console.log("Information: Change City");
+        $rootScope.$broadcast('deactivateAllActiveFilters');
+
+
         console.log("new City: " + newCity);
         mapService.updateSelectedCity(newCity);
 

@@ -350,15 +350,40 @@ input[type="search"],input[type="search"]:focus {
 {
     margin-top: 50px;
 }
-#mapLegend{
+#mapLegendContent
+{
     bottom: 0;
-padding: 15px;
-display: block;
-left: 0px;
-position: absolute;
-bottom: 0%;
-z-index: 10000;
-width: 200px;
-height: 105px;
-background: rgba(255, 255, 255, 0.72);
+    padding: 15px;
+    display: block;
+    left: 0px;
+    position: absolute;
+    bottom: 0%;
+    z-index: 10000;
+    width: 85px;
+    background: rgba(255, 255, 255, 0.72);
+    font-size: 75%;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #008CBA !important;
 }
+.colorLegendBox {
+    height: 15px;
+    width: 15px;
+    float: left;
+
+
+}
+#mapHeadlineLegend
+{
+    position: relative;
+    top: -8px;
+
+}
+.labelLegendBox{
+
+}
+#mapLegend table
+{
+    background: rgba(255, 255, 255, 0);
+}
+

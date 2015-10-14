@@ -15,9 +15,10 @@ var mainControllers = angular.module('app.dashboard.controllers',['app.common', 
         $rootScope.showDetailView = false;
         $rootScope.showUseCaseDescription = true;
         $rootScope.showCharts = true;
+        $rootScope.showLegend = false;
 
 
-        $scope.useCaseDescription = mapService.actualUseCase.title;
+        $scope.useCaseDescription = mapService.actualUseCase.description;
         $scope.useCaseTitle = mapService.actualUseCase.title;
 
 
@@ -90,8 +91,8 @@ var mainControllers = angular.module('app.dashboard.controllers',['app.common', 
             $scope.useCaseList = mapService.city.useCases;
             $scope.highlightActiveUseCaseIcon(activeUseCaseName);
 
-            //desc dummy
-            $scope.useCaseDescription = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.";
+
+            $scope.useCaseDescription = mapService.actualUseCase.description;
             $scope.useCaseTitle = mapService.actualUseCase.title;
             //workaround for firefox
             if ($scope.$root.$$phase != '$apply' && $scope.$root.$$phase != '$digest') {
