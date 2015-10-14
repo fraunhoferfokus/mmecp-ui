@@ -24,4 +24,6 @@ var app = angular.module('app', streetlifeDependencies)
 
 angular.element(document).ready(function() {
     angular.bootstrap(document, ['app']);
+    $(document).foundation();
 });
+

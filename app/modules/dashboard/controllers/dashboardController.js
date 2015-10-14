@@ -15,11 +15,18 @@ var mainControllers = angular.module('app.dashboard.controllers',['app.common', 
         $rootScope.showDetailView = false;
         $rootScope.showUseCaseDescription = true;
         $rootScope.showCharts = true;
+        $rootScope.showInformation = false;
         $rootScope.showLegend = false;
 
 
+        //usecase description
         $scope.useCaseDescription = mapService.actualUseCase.description;
         $scope.useCaseTitle = mapService.actualUseCase.title;
+
+
+        //option description
+        $scopeOptionTitle = mapService.acut
+
 
 
 

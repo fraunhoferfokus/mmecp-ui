@@ -141,6 +141,7 @@ angular.module('app.dashboard.map.controller', ['app.socket', 'app.config', 'app
             $rootScope.showDetailView = false;
             $rootScope.showUseCaseDescription = true;
             $rootScope.showLegend = false;
+            $rootScope.showInformation = false;
 
         }
 
@@ -169,7 +170,8 @@ angular.module('app.dashboard.map.controller', ['app.socket', 'app.config', 'app
                }
 
                 socketService.send(filterOption.requestActivated);
-                console.log("send requestActivated: " + filterOption.requestActivated);
+                console.log("send requestActivated: " + filterOption.requestActivated)
+                $rootScope.showInformation = true;
             }else {
 
                 filterOption.requested = !filterOption.requested;
