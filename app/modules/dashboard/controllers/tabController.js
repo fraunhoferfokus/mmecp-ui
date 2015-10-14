@@ -19,6 +19,28 @@ mainControllers.controller('tabController', ['$scope','mapService','$rootScope',
 
 
 
+    $scope.optionHeadline = "";
+    $scope.optionDescription = "";
+
+
+
+    $scope.$on('optionActivated', function(event,option) {
+
+
+        console.log(">>>>>>>>>>>>>><<<<<<<<<<<<<<<<<");
+        console.log(option);
+        $scope.optionHeadline = option.value;
+        $scope.optionDescription = option.description;
+
+        //workaround for firefox
+        if ($scope.$root.$$phase != '$apply' && $scope.$root.$$phase != '$digest') {
+            $scope.$apply();
+        }
+
+
+    });
+
+
 
     $scope.$on('useCaseListChanged', function(event,activeUseCaseName) {
 

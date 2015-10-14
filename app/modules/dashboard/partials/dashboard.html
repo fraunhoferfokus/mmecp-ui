@@ -92,7 +92,13 @@
                                                 <tabset>
 
                                                     <tab heading="Scenario">{{  useCaseDescription }}</tab>
-                                                    <tab heading="Information" ng-if="showInformation" active="showInformation">               <div ng-controller="StatusPanelMainChartController" ng-if="showCharts">
+                                                    <tab heading="Information" ng-if="showInformation" active="showInformation">
+
+
+                                                        <h3>{{optionHeadline}}</h3>
+                                                        {{optionDescription}}
+
+                                                        <div ng-controller="StatusPanelMainChartController" ng-if="showCharts">
                                                         <div class="chart" ng-repeat="chart in charts">
                                                             <h3>{{chart.chart.title}}</h3>
                                                             <nvd3 options="chart.chart.options" data="chart.chart.data" api="api"></nvd3>

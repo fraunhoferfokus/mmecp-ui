@@ -172,6 +172,11 @@ angular.module('app.dashboard.map.controller', ['app.socket', 'app.config', 'app
                 socketService.send(filterOption.requestActivated);
                 console.log("send requestActivated: " + filterOption.requestActivated)
                 $rootScope.showInformation = true;
+                $rootScope.$broadcast("optionActivated", filterOption);
+
+
+
+
             }else {
 
                 filterOption.requested = !filterOption.requested;
