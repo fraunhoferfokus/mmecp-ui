@@ -72,9 +72,9 @@ module.exports = function(grunt) {
 	            relative: true,
 	            addRootSlash: false
             },
-            prod: {
+            /*prod: {
                 src: ['<%= bower_concat.all.dest %>', '<%= bower_concat.all.cssDest %>', '<%= concat.js.dest %>', '<%= concat.css.dest %>']
-            },
+            }, */
             dev: {
                 src: ['bower.json', '<%= concat.js.src %>', '<%= concat.css.src %>']
             }
