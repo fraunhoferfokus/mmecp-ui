@@ -5,7 +5,7 @@
 angular.module('app.dashboard.map.controller', ['app.socket', 'app.config', 'app.dashboard.map.directives', 'nvd3ChartDirectives', 'app.dashboard.map.services'])
 
     .controller('mapController', ['$scope', 'mapService', 'configService', 'socketService', '$rootScope', function($scope, mapService, configService, socketService, $rootScope){
-        this.map = new OLMap(configService, function(broadcastmessage){
+        this.map = new OpenLayer3Map(configService, function(broadcastmessage){
             $rootScope.$broadcast(broadcastmessage, null);
         }, mapService);
         var map = this.map;
@@ -40,13 +40,13 @@ angular.module('app.dashboard.map.controller', ['app.socket', 'app.config', 'app
         });
         $scope.$on('changeCityOnMap', function(event, city){
 
-            map.setCenter(city);
+        //3    map.setCenter(city);
 
 
         });
 
         $scope.updateMap = function(){
-            map.olMap.updateSize();
+         //3   map.olMap.updateSize();
             console.log("updated map");
         };
         var removeMapObjects = function(layer, subType){
