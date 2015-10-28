@@ -4,13 +4,13 @@
 
 angular.module('app.dashboard.map.directives', ['app.socket', 'app.config'])
 
-    .directive('resize', ['$window', function ($window) {
+   /* .directive('resize', ['$window', function ($window) {
         return function (scope, element) {
             var w = angular.element(window);
             scope.getWindowDimensions = function () {
                 return { 'h': $(window).height(), 'w': $(window).width() };
             };
-            scope.$watch(scope.getWindowDimensions, function (newValue, oldValue) {
+           scope.$watch(scope.getWindowDimensions, function (newValue, oldValue) {
                 scope.windowHeight = newValue.h;
                 scope.windowWidth = newValue.w;
 
@@ -44,11 +44,11 @@ angular.module('app.dashboard.map.directives', ['app.socket', 'app.config'])
             });
             scope.$emit('updateMap', null);
         };
-    }])
+    }]) */
     .directive('olMap', function(){
         return {
             restrict: 'E',
-            template: ' <div id="map" ng-style="addStyleToOlMap()"  style="height: 600px;" resize></div> ',
+            template: ' <div id="map"></div> ',
             controller: 'mapController'
         };
     }).directive('filter', function(){
