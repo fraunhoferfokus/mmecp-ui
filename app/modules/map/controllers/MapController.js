@@ -40,7 +40,7 @@ angular.module('app.dashboard.map.controller', ['app.socket', 'app.config', 'app
         });
         $scope.$on('changeCityOnMap', function(event, city){
 
-        //3    map.setCenter(city);
+          map.setCenter(city);
 
 
         });
@@ -61,12 +61,15 @@ angular.module('app.dashboard.map.controller', ['app.socket', 'app.config', 'app
             ollayer.removeFeatures(featuresToRemove);
         };
         var removeAllMapObjects = function(layer){
+            /*
+            TODO: OL3 implementation
+
             var ollayer = map.olMap.getLayersByName(layer)[0];
             var featuresToRemove = [];
             for (i = 0;i<ollayer.features.length;i++){
                 featuresToRemove.push(ollayer.features[i]);
             }
-            ollayer.removeFeatures(featuresToRemove);
+            ollayer.removeFeatures(featuresToRemove); */
         };
         var switchLayer = function(){
             //toggle the OpenStreet and Google Layer
