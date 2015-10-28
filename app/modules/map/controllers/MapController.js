@@ -50,6 +50,8 @@ angular.module('app.dashboard.map.controller', ['app.socket', 'app.config', 'app
             console.log("updated map");
         };
         var removeMapObjects = function(layer, subType){
+            /*
+             TODO: OL3 implementation
             var ollayer = map.olMap.getLayersByName(layer)[0];
             var featuresToRemove = [];
             for (i = 0;i<ollayer.features.length;i++){
@@ -58,7 +60,7 @@ angular.module('app.dashboard.map.controller', ['app.socket', 'app.config', 'app
 
                }
             }
-            ollayer.removeFeatures(featuresToRemove);
+            ollayer.removeFeatures(featuresToRemove); */
         };
         var removeAllMapObjects = function(layer){
             /*
