@@ -19,6 +19,22 @@ function OpenLayer3Map(config, rootbroadcastEvent, mapService){
 
     this.config = config;
 
+
+    var blur = 20;
+    var radius = 30
+
+    this.vectorOfHeatMapObjects= new ol.source.Vector({
+        features: [ ]
+    });
+
+     this.heatmapLayer = new ol.layer.Heatmap({
+        source: this.vectorOfHeatMapObjects}
+
+     );
+       // blur: parseInt(blur.value, 10),
+       // radius: parseInt(radius.value, 10)
+
+
     this.map = new ol.Map({
         view: new ol.View({
             center: ol.proj.fromLonLat([37.41, 8.82]),
@@ -37,6 +53,7 @@ function OpenLayer3Map(config, rootbroadcastEvent, mapService){
     var osmLayer = new ol.layer.Tile({source: osmSource});
     this.map.addLayer(osmLayer);
     this.map.addLayer(vectorLayer);
+    this.map.addLayer(this.heatmapLayer);
 
 
 
@@ -58,6 +75,7 @@ function OpenLayer3Map(config, rootbroadcastEvent, mapService){
                 //unselect previous selected feature
                 if(selectedFeature !== undefined)
                 {
+                    if(selectedFeature.parentLayer !== 'heatmap')
                     selectedFeature.setStyle(selectedFeature.unSelectedStyle);
                 }
 
@@ -65,11 +83,13 @@ function OpenLayer3Map(config, rootbroadcastEvent, mapService){
 
                 if(feature.highlightStyle !== undefined)
                 {
+                    if(selectedFeature.parentLayer !== 'heatmap')
                     feature.setStyle(feature.highlightStyle);
 
                 }
                 else
                 {
+                    if(selectedFeature.parentLayer !== 'heatmap')
                     feature.setStyle(defaultHighlightStyle);
                 }
 
@@ -139,6 +159,26 @@ OpenLayer3Map.prototype.getmapAreaofMapObject = function(mapObject){
     }
     return null;
 };
+
+
+
+OpenLayer3Map.prototype.getHeatMapWeight = function(mapObject){
+    var weight = 0;
+    for (var i = 0;i<mapObject.elements.length;i++){
+        if(mapObject.elements[i].attribute !== undefined)
+        {
+
+            if(mapObject.elements[i].attribute.label == "traffic_rate")
+            {
+                var weight = mapObject.elements[i].attribute.value;
+            }
+        }
+    }
+    return weight;
+};
+
+
+
 OpenLayer3Map.prototype.getCircleArrowOfMapObject = function(mapObject){
     for (var i = 0;i<mapObject.elements.length;i++){
         if (mapObject.elements[i].arrowedCircle !== undefined){
@@ -194,15 +234,19 @@ OpenLayer3Map.prototype.generateMapObjectFeature = function (mapObjectTyp,mapObj
             var mapArea = this.getmapAreaofMapObject(mapObjectElement);
             if(mapArea.area.coordinateType == "UTM") {
                 //console.log("draw polygon utm");
+
+                var weight = this.getHeatMapWeight(mapObjectElement);
+                mapArea.weight = weight;
                 feature = this.createPolygonFromUTMFeature(mapArea, fid);
             }
             else{
-                //console.log("draw polygon normal");
+
                 feature = this.createPolygonFeature(mapArea, fid,'EPSG:4326');
             }
 
             break;
         }
+
     }
     return feature;
 
@@ -218,13 +262,22 @@ OpenLayer3Map.prototype.addMapObjectToMap = function (mapObjectElement){
 
 
 
+
     var feature = this.generateMapObjectFeature(mapObjectTyp,mapObjectElement,fid);
 
     feature.mapObject = mapObjectElement;
 
     this.removeFeatureIfExisting(fid);
 
-    this.vectorOfMapObjects.addFeatures([feature]);
+    if(feature.parentLayer == 'mapObjects' || feature.parentLayer == undefined)
+    {
+        this.vectorOfMapObjects.addFeatures([feature]);
+    }
+    if(feature.parentLayer == 'heatmap')
+    {
+        this.vectorOfHeatMapObjects.addFeature(feature);
+    }
+
 
 
 };
@@ -250,8 +303,16 @@ OpenLayer3Map.prototype.removeAllFeatures = function()
 }
 
 
+OpenLayer3Map.prototype.removeHeatMapFeatures = function()
+{
+    this.vectorOfHeatMapObjects.clear();
+}
+
+
+
 OpenLayer3Map.prototype.removeFeaturesWithSubType = function(subType)
 {
+    //search feature in mapObjects
     var features = this.vectorOfMapObjects.getFeatures();
     for(var i = 0;i<features.length;i++)
     {
@@ -259,6 +320,19 @@ OpenLayer3Map.prototype.removeFeaturesWithSubType = function(subType)
         if(feature.mapObject.objectSubtype == subType)
         {
             this.vectorOfMapObjects.removeFeature(feature);
+        }
+    }
+
+    //search feature in heatmap
+    var features = this.vectorOfHeatMapObjects.getFeatures();
+    for(var i = 0;i<features.length;i++)
+    {
+        var feature = features[i];
+       // console.log(feature.mapObject.objectSubtype);
+        console.log(subType);
+        if(feature.mapObject.objectSubtype == subType)
+        {
+            this.vectorOfHeatMapObjects.removeFeature(feature);
         }
     }
 }
@@ -280,45 +354,65 @@ OpenLayer3Map.prototype.addObjects = function (mapObjectList){
 
 OpenLayer3Map.prototype.createPolygonFeature = function(area, id,sourceCoordSystem){
 
-
     var coords = area.area.coordinates[0];
+    var type =  area.area.type;
+    var feature;
+    if(type === "heatmap")
+    {
+         feature = new ol.Feature({
+            geometry: new ol.geom.Point(coords[0])
+        });
+        feature.parentLayer = "heatmap";
+        var maxWeight = 99999.00;
 
-    var feature = new ol.Feature({
-        geometry: new ol.geom.Polygon([coords])
-    });
-
-    var polyStyle = new ol.style.Style({
-
-        fill: new ol.style.Fill({
-            color: "rgba(" + area.color.red + ", " + area.color.green + ", " + area.color.blue + ", " + area.color.alpha + ")"
-        }),
-        stroke: new ol.style.Stroke({
-            color: "rgba(" + area.color.red + ", " + area.color.green + ", " + area.color.blue + ", " + area.color.alpha + ")",
-            width: 1
-        }),
-    });
-
-    var highlightStyle = new ol.style.Style({
-
-        fill: new ol.style.Fill({
-            color: "rgba(" + area.color.red + ", " + area.color.green + ", " + area.color.blue + ", " + area.color.alpha + ")"
-        }),
-        stroke: new ol.style.Stroke({
-            color: "rgba(0,0,0,1)",
-            width: 3
-        }),
-    });
-
-    feature.highlightStyle =  highlightStyle;
-    feature.unSelectedStyle = polyStyle;
+      feature.set('weight',area.weight/maxWeight);
 
 
-    feature.setStyle(polyStyle);
+    }
+    else
+    {
+
+
+         feature = new ol.Feature({
+            geometry: new ol.geom.Polygon([coords])
+        });
+
+        var polyStyle = new ol.style.Style({
+
+            fill: new ol.style.Fill({
+                color: "rgba(" + area.color.red + ", " + area.color.green + ", " + area.color.blue + ", " + area.color.alpha + ")"
+            }),
+            stroke: new ol.style.Stroke({
+                color: "rgba(" + area.color.red + ", " + area.color.green + ", " + area.color.blue + ", " + area.color.alpha + ")",
+                width: 1
+            }),
+        });
+
+        var highlightStyle = new ol.style.Style({
+
+            fill: new ol.style.Fill({
+                color: "rgba(" + area.color.red + ", " + area.color.green + ", " + area.color.blue + ", " + area.color.alpha + ")"
+            }),
+            stroke: new ol.style.Stroke({
+                color: "rgba(0,0,0,1)",
+                width: 3
+            }),
+        });
+
+        feature.highlightStyle =  highlightStyle;
+        feature.unSelectedStyle = polyStyle;
+
+        feature.setStyle(polyStyle);
+        feature.parentLayer = "mapObjects";
+
+    }
+
     if(sourceCoordSystem !== undefined)
     {
         feature.getGeometry().transform(sourceCoordSystem, 'EPSG:900913');
     }
     feature.id = id;
+
     return feature;
 
 

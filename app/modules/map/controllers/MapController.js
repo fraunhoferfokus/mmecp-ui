@@ -30,6 +30,9 @@ angular.module('app.dashboard.map.controller', ['app.socket', 'app.config', 'app
             console.log("args layer");
             console.log(args.layer);
             removeMapObjects(args.layer, args.subType);
+
+
+
         })
 
         $scope.$on('switchLayer', function(event, args){
@@ -51,7 +54,15 @@ angular.module('app.dashboard.map.controller', ['app.socket', 'app.config', 'app
         };
         var removeMapObjects = function(layer, subType){
 
-            map.removeFeaturesWithSubType(subType);
+            if(layer == "ber_traffic_heatmap_full")
+            {
+                map.removeHeatMapFeatures();
+            }
+            else
+            {
+                map.removeFeaturesWithSubType(subType);
+            }
+
 
         };
         var removeAllMapObjects = function(layer){
@@ -117,7 +128,7 @@ angular.module('app.dashboard.map.controller', ['app.socket', 'app.config', 'app
 
             $scope.$emit('removeMapObjects',
                 {
-                    layer: "mapObjectsLayer",
+                    layer: filterOption.id,
                     subType: filterOption.subType
                 }
             );
