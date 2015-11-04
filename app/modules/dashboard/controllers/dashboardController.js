@@ -111,7 +111,6 @@ var mainControllers = angular.module('app.dashboard.controllers',['app.common', 
 
 
 
-
         $scope.test = "1";
         $scope.showBigMap=false;
         $scope.mapCSS='medium-7-customer ';
@@ -122,6 +121,37 @@ var mainControllers = angular.module('app.dashboard.controllers',['app.common', 
         $scope.kipsCSS='medium-1-customer ';
 
         $scope.singleDiagramCSS='medium-10-customer';
+
+
+
+
+        $scope.$on('closeBigMap', function(event) {
+
+            console.log("close bigMap");
+            $scope.showBigMap = false;
+
+            $scope.closeBigMap();
+            $scope.$apply();
+
+
+        });
+
+
+
+        $scope.closeBigMap  = function()
+        {
+            $scope.mapCSS='medium-7-customer medium-animate';
+            $scope.diagramCSS='medium-5-customer medium-animate';
+            $scope.singleDiagramCSS='medium-10-customer medium-animate';
+            if($scope.showOverlayMapInfo===true){
+                $scope.showOverlayMapInfo=false;
+                $scope.showDiagrams=false;
+            }
+        };
+
+
+
+
         $scope.showHideMap=function(){
 
             $scope.showBigMap = !$scope.showBigMap;
@@ -135,13 +165,8 @@ var mainControllers = angular.module('app.dashboard.controllers',['app.common', 
                     $scope.showDiagrams=true;
                 }
             }else{
-                $scope.mapCSS='medium-7-customer medium-animate';
-                $scope.diagramCSS='medium-5-customer medium-animate';
-                $scope.singleDiagramCSS='medium-10-customer medium-animate';
-                if($scope.showOverlayMapInfo===true){
-                    $scope.showOverlayMapInfo=false;
-                    $scope.showDiagrams=false;
-                }
+
+                $scope.closeBigMap();
             }
 
             $scope.$emit('updateMap', null);

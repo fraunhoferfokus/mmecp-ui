@@ -78,6 +78,7 @@ function OpenLayer3Map(config, rootbroadcastEvent, mapService){
                 mapService.mapObjectForInformationPanel = feature.mapObject;
                 rootbroadcastEvent('openMapObjectInformationPanel',null);
                 rootbroadcastEvent('updateMapObject');
+                rootbroadcastEvent('closeBigMap');
 
 
                 return [feature, layer];
@@ -99,14 +100,7 @@ function OpenLayer3Map(config, rootbroadcastEvent, mapService){
 
     });
 
-
-
     this.setCenter(this.config.default.city);
-
-
-
-
-
 
 };
 
@@ -276,12 +270,8 @@ OpenLayer3Map.prototype.addObjects = function (mapObjectList){
 
     for (i = 0;i<mapObjectList.length; i++){
 
-        console.log(".......x");
         mapObjectList[i] = this.prepareMapData(mapObjectList[i]);
         this.addMapObjectToMap(mapObjectList[i]);
-
-
-
 
     }
 
