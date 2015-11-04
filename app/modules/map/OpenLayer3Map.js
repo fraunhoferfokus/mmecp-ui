@@ -2,38 +2,10 @@
  * Created by lwi on 19.03.2015.
  */
 
-function OpenLayer3Map(config, rootboadcastEvent, mapService){
+function OpenLayer3Map(config, rootbroadcastEvent, mapService){
 
-
-
-
-
-
-
-    var feature = new ol.Feature({
-       geometry: new ol.geom.Polygon([[[11.033717556725508,45.88931544565038],[11.033700302151367,45.88933143170906],[11.033627267150878,45.889376438324135],[11.033615127432812,45.889376834429946],[11.033600647101757,45.889369603757586],[11.033598941674041,45.889363135741355],[11.033657530847403,45.8893210234473],[11.033655999118114,45.889312473560516],[11.033647235877954,45.88926355839159],[11.033587547093187,45.88930661730763],[11.03358123673667,45.88930886387999],[11.033561680256534,45.88931582624807],[11.033550705273157,45.8893152925623],[11.033515317634828,45.88931013512677],[11.033501119849959,45.88930499561801],[11.03347216275377,45.8892945133229],[11.033468098736426,45.889272156369685],[11.033450627288742,45.8892737274214],[11.033407765812095,45.889278855564726],[11.033401200343771,45.889286838874675],[11.033382033534613,45.88928996768699],[11.033383869018813,45.889299334325415],[11.033589402953112,45.89037867977304],[11.03379429863476,45.89035912953168],[11.033810801753473,45.89036209392568],[11.033907799134488,45.8903401409583],[11.033897273776002,45.89031511988216],[11.033889891079298,45.89029522951364],[11.033875891941616,45.89025748666589],[11.03386637347071,45.89022715468659],[11.033856337234903,45.89019094300711],[11.033846689058354,45.890148466585025],[11.033842021413069,45.89012702968189],[11.033815296242578,45.890006679585234],[11.033823138627843,45.89000098058764],[11.033829494848298,45.88999397303531],[11.033829646932677,45.88998225165491],[11.03380742450093,45.88985015965884],[11.033768488919552,45.8896168393497],[11.033717556725508,45.88931544565038]]])
-
-    });
-
-
-    var polyStyle = new ol.style.Style({
-        fill: new ol.style.Fill({
-            color: 'blue'
-        }),
-        stroke: new ol.style.Stroke({
-            color: 'red',
-            width: 2
-        })
-    });
-
-
-    feature.setStyle(polyStyle);
-
-
-
-    feature.getGeometry().transform('EPSG:4326', 'EPSG:900913');
     this.vectorOfMapObjects= new ol.source.Vector({
-        features: [feature ]
+        features: [ ]
     });
 
 
@@ -43,6 +15,7 @@ function OpenLayer3Map(config, rootboadcastEvent, mapService){
 
 
 
+    var selectedFeature = undefined;
 
     this.config = config;
 
@@ -68,9 +41,6 @@ function OpenLayer3Map(config, rootboadcastEvent, mapService){
 
 
     var defaultHighlightStyle =  new ol.style.Style({
-      /*  fill: new ol.style.Fill({
-            color: "rgba(" + area.color.red + ", " + area.color.green + ", " + area.color.blue + ", " + 0.9 + ")"
-        }),*/
         stroke: new ol.style.Stroke({
             color: "rgba(255,0,0,1)",
             width: 3
@@ -85,18 +55,48 @@ function OpenLayer3Map(config, rootboadcastEvent, mapService){
         var feature = this.forEachFeatureAtPixel(evt.pixel,
             function(feature, layer) {
 
+                //unselect previous selected feature
+                if(selectedFeature !== undefined)
+                {
+                    selectedFeature.setStyle(selectedFeature.unSelectedStyle);
+                }
+
+                selectedFeature = feature;
+
                 if(feature.highlightStyle !== undefined)
                 {
                     feature.setStyle(feature.highlightStyle);
+
                 }
                 else
                 {
                     feature.setStyle(defaultHighlightStyle);
                 }
 
-                console.log(feature);
+
+
+                mapService.mapObjectForInformationPanel = feature.mapObject;
+                rootbroadcastEvent('openMapObjectInformationPanel',null);
+                rootbroadcastEvent('updateMapObject');
+
+
                 return [feature, layer];
             });
+
+        console.log(selectedFeature);
+        if(feature === undefined)
+        {
+            //no feature selected, close detail view
+            rootbroadcastEvent('closeMapObjectInformationPanel', null);
+
+            //unselect previous selected feature
+            if(selectedFeature !== undefined)
+            {
+                selectedFeature.setStyle(selectedFeature.unSelectedStyle);
+            }
+        }
+
+
     });
 
 
@@ -204,7 +204,7 @@ OpenLayer3Map.prototype.generateMapObjectFeature = function (mapObjectTyp,mapObj
             }
             else{
                 //console.log("draw polygon normal");
-                feature = this.createPolygonFeature(mapArea, fid);
+                feature = this.createPolygonFeature(mapArea, fid,'EPSG:4326');
             }
 
             break;
@@ -215,7 +215,6 @@ OpenLayer3Map.prototype.generateMapObjectFeature = function (mapObjectTyp,mapObj
 }
 
 
-
 OpenLayer3Map.prototype.addMapObjectToMap = function (mapObjectElement){
 
     var mapObjectTyp = this.getMapObjectTyp(mapObjectElement);
@@ -224,25 +223,51 @@ OpenLayer3Map.prototype.addMapObjectToMap = function (mapObjectElement){
         mapObjectElement.objectSubtype;
 
 
-    console.log("addMapObjectsToMap................");
 
     var feature = this.generateMapObjectFeature(mapObjectTyp,mapObjectElement,fid);
 
     feature.mapObject = mapObjectElement;
 
-    //TODO remove old mapobject with same fid if existing
-   /* var existingMapObject = this.vectorOfMapObjects.getFeatureBy('fid', fid);
-    if(existingMapObject)
-    {
-        this.vectorOfMapObjects.removeFeatures(existingMapObject);
-    } */
-
+    this.removeFeatureIfExisting(fid);
 
     this.vectorOfMapObjects.addFeatures([feature]);
 
 
 };
 
+
+OpenLayer3Map.prototype.removeFeatureIfExisting = function(fid)
+{
+    var features = this.vectorOfMapObjects.getFeatures();
+    for(var i = 0;i<features.length;i++)
+    {
+        var feature = features[i];
+        if(feature.id == fid)
+        {
+            this.vectorOfMapObjects.removeFeature(feature);
+        }
+    }
+}
+
+
+OpenLayer3Map.prototype.removeAllFeatures = function()
+{
+    this.vectorOfMapObjects.clear();
+}
+
+
+OpenLayer3Map.prototype.removeFeaturesWithSubType = function(subType)
+{
+    var features = this.vectorOfMapObjects.getFeatures();
+    for(var i = 0;i<features.length;i++)
+    {
+        var feature = features[i];
+        if(feature.mapObject.objectSubtype == subType)
+        {
+            this.vectorOfMapObjects.removeFeature(feature);
+        }
+    }
+}
 
 
 OpenLayer3Map.prototype.addObjects = function (mapObjectList){
@@ -263,18 +288,14 @@ OpenLayer3Map.prototype.addObjects = function (mapObjectList){
 };
 
 
-OpenLayer3Map.prototype.createPolygonFeature = function(area, id){
+OpenLayer3Map.prototype.createPolygonFeature = function(area, id,sourceCoordSystem){
 
-
-    console.log("DRAW Polygon!.....................");
 
     var coords = area.area.coordinates[0];
 
     var feature = new ol.Feature({
         geometry: new ol.geom.Polygon([coords])
     });
-
-
 
     var polyStyle = new ol.style.Style({
 
@@ -287,8 +308,6 @@ OpenLayer3Map.prototype.createPolygonFeature = function(area, id){
         }),
     });
 
-
-
     var highlightStyle = new ol.style.Style({
 
         fill: new ol.style.Fill({
@@ -300,100 +319,25 @@ OpenLayer3Map.prototype.createPolygonFeature = function(area, id){
         }),
     });
 
-
     feature.highlightStyle =  highlightStyle;
-
-
-
+    feature.unSelectedStyle = polyStyle;
 
 
     feature.setStyle(polyStyle);
-
-
-
-    feature.getGeometry().transform('EPSG:4326', 'EPSG:900913');
+    if(sourceCoordSystem !== undefined)
+    {
+        feature.getGeometry().transform(sourceCoordSystem, 'EPSG:900913');
+    }
+    feature.id = id;
     return feature;
 
 
-   /* var pointList = [],
-        polygonGeometry,
-        polygonFeature,
-        vector = new ol.Layer.Vector('polygonLayerVector');
-
-    var coords = area.area.coordinates[0];
-    for (var i=0; i<coords.length; i++) {
-
-        var point = new ol.Geometry.Point(coords[i][0], coords[i][1]);
-        pointList.push(point);
-    }
-
-    var linearRing = new ol.Geometry.LinearRing(pointList).transform(
-        new ol.Projection("EPSG:4326"),
-        new ol.Projection("EPSG:900913"));
-
-
-
-    var polygon = new ol.Geometry.Polygon([linearRing]);
-    //console.log(polygon);
-    var newVector = this.addPolygon(area,polygon,id);
-
-    return newVector;
-
-
-
-    */
 
 };
-
-OpenLayer3Map.prototype.addPolygon = function(area,polygon, id){
-
-
-    var style=  {
-        fillColor: "rgba(" + area.color.red + ", " + area.color.green + ", " + area.color.blue + ", " + area.color.alpha + ")",
-        strokeColor: "rgba(" + area.color.red + ", " + area.color.green + ", " + area.color.blue + ", " + area.color.alpha + ")",
-        strokeWidth: 1
-    };
-
-    var newVector = new ol.Feature.Vector(polygon, null, style);
-
-    newVector.fid = id;
-    newVector.defaultStyle = {
-        fillColor : {
-            string : "rgba(" + area.color.red + ", " + area.color.green + ", " + area.color.blue + ", " + area.color.alpha + ")",
-            red : area.color.red,
-            green : area.color.green,
-            blue : area.color.blue,
-            alpha : area.color.alpha
-        },
-        strokeColor : {
-            string : "rgba(" + area.color.red + ", " + area.color.green + ", " + area.color.blue + ", " + area.color.alpha + ")",
-            red : area.color.red,
-            green : area.color.green,
-            blue : area.color.blue,
-            alpha : area.color.alpha
-        },
-        select: {
-            strokeColor: "rgba(0, 0, 0, 1)",
-            fillColor: "rgba(" + area.color.red + ", " + area.color.green + ", " + area.color.blue + ", " + 0.9 + ")",
-            strokeWidth: 2,
-        },
-        strokeWidth: 1
-    };
-
-    return newVector;
-};
-
-
 
 OpenLayer3Map.prototype.createPolygonFromUTMFeature = function(area, id){
 
-
-    //console.log("create with UTM");
-    //console.log(area);
-    var pointList = [],
-        polygonGeometry,
-        vector = new OpenLayers.Layer.Vector('polygonLayerVector');
-
+    var pointList = [];
     var coords = area.area.coordinates;
     Proj4js.defs["EPSG:32633"] = "+title= WGS 84 +proj=utm +zone=33 +ellps=WGS84 +datum=WGS84 +units=m +no_defs";
     var sourceCoords = new Proj4js.Proj("EPSG:32633");
@@ -402,33 +346,17 @@ OpenLayer3Map.prototype.createPolygonFromUTMFeature = function(area, id){
 
     for (var i=0; i<coords.length; i++) {
 
-        var point = new OpenLayers.Geometry.Point(coords[i].e, coords[i].n);
-        //transform point into EPSG:900913
 
-        //console.log(point);
+        var point = new Proj4js.Point(coords[i].e, coords[i].n);
         point =Proj4js.transform(sourceCoords, destCoords, point);
-        //console.log("transform");
-        //console.log(point);
 
-        /*  var iconPng = "img/"+"icon_red_arrow_straight" + ".png";
-         var featureNewVector = new OpenLayers.Feature.Vector(
-         point,
-         {some:'data'},
-         {externalGraphic: iconPng, graphicHeight: 28, graphicWidth: 47})
-         return featureNewVector;
-         */
-
-        pointList.push(point);
+        pointList.push([point.x,point.y]);
     }
 
-    var linearRing = new OpenLayers.Geometry.LinearRing(pointList);
+    area.area.coordinates = [pointList];
+     return this.createPolygonFeature(area,id,undefined);
 
 
-    var polygon = new OpenLayers.Geometry.Polygon([linearRing]);
-    //console.log("polygon");
-    //console.log(polygon);
-    var newVector = this.addPolygon(area,polygon,id);
-    return newVector;
 };
 
 
@@ -448,8 +376,10 @@ OpenLayer3Map.prototype.getMapObjectTyp = function (mapObject)
 };
 
 
-OpenLayer3Map.prototype.createArrowCircleFeature = function(arrowCircle, id){
+OpenLayer3Map.prototype.createArrowCircleFeature = function(arrowCircle, id) {
 
+
+    console.log("Draw icons");
 
     var coords = arrowCircle.circle;
     var x = coords.x;
@@ -466,53 +396,64 @@ OpenLayer3Map.prototype.createArrowCircleFeature = function(arrowCircle, id){
 
     result = Proj4js.transform(sourceCoords, destCoords, p);
 
-    x= result.x;
-    y= result.y;
-
-    var point = new OpenLayers.Geometry.Point(x, y,0);
-
-    var iconPng = "img/"+arrowCircle.icon + ".png";
+    x = result.x;
+    y = result.y;
 
 
-    var scaleFactor = 0.6;
-    var featureNewVector = new OpenLayers.Feature.Vector(
-        point,
-        {some:'data'},
-        {externalGraphic: iconPng, graphicHeight: 100*scaleFactor, graphicWidth: 75*scaleFactor});
+    var iconPng = "img/" + arrowCircle.icon + ".png";
+
+    var scaleFactor = 0.3;
+
+    var iconFeature = new ol.Feature({
+        geometry: new ol.geom.Point([x, y])
+
+    });
+
+    var iconStyle = new ol.style.Style({
+        image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
+            anchor: [0.5, 46],
+            anchorXUnits: 'fraction',
+            anchorYUnits: 'pixels',
+            opacity: 0.75,
+            scale: scaleFactor,
+            src: iconPng
+        }))
+    });
 
 
-    /* var featureNewVector = new OpenLayers.Feature.Vector(
-     point,
-     {some:'data'}); */
+    var highlightStyle = new ol.style.Style({
+        image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
+            anchor: [0.5, 46],
+            anchorXUnits: 'fraction',
+            anchorYUnits: 'pixels',
+            opacity: 1,
+            scale: scaleFactor*1.33, //make it 33% bigger if clicked
+            src: iconPng
+        }))
+    });
+
+
+    iconFeature.setStyle(iconStyle);
+    iconFeature.id = id;
+
+    iconFeature.highlightStyle =  highlightStyle;
+    iconFeature.unSelectedStyle = iconStyle;
+
+    return iconFeature;
+
+}
 
 
 
-    featureNewVector.fid = id;
 
 
-    featureNewVector.defaultStyle = {
-        fillColor : {
-            string : "rgba(" + arrowCircle.color.red + ", " + arrowCircle.color.green + ", " + arrowCircle.color.blue + ", " + arrowCircle.color.alpha + ")",
-            red : arrowCircle.color.red,
-            green : arrowCircle.color.green,
-            blue : arrowCircle.color.blue,
-            alpha : arrowCircle.color.alpha
-        },
-        strokeColor : {
-            string : "rgba(" + arrowCircle.color.red + ", " + arrowCircle.color.green + ", " + arrowCircle.color.blue + ", " + arrowCircle.color.alpha + ")",
-            red : arrowCircle.color.red,
-            green : arrowCircle.color.green,
-            blue : arrowCircle.color.blue,
-            alpha : arrowCircle.color.alpha
-        },
-        select: {
-            strokeColor: "rgba(0, 0, 0, 1)",
-            fillColor: "rgba(" + arrowCircle.color.red + ", " + arrowCircle.color.green + ", " + arrowCircle.color.blue + ", " + 0.9 + ")",
-            strokeWidth: 2
-        },
-        strokeWidth: 1
-    };
 
 
-    return featureNewVector;
-};
+
+
+
+
+
+
+
+

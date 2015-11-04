@@ -50,28 +50,13 @@ angular.module('app.dashboard.map.controller', ['app.socket', 'app.config', 'app
             console.log("updated map");
         };
         var removeMapObjects = function(layer, subType){
-            /*
-             TODO: OL3 implementation
-            var ollayer = map.olMap.getLayersByName(layer)[0];
-            var featuresToRemove = [];
-            for (i = 0;i<ollayer.features.length;i++){
-               if (ollayer.features[i].mapObject.objectSubtype == subType){
-                    featuresToRemove.push(ollayer.features[i]);
 
-               }
-            }
-            ollayer.removeFeatures(featuresToRemove); */
+            map.removeFeaturesWithSubType(subType);
+
         };
         var removeAllMapObjects = function(layer){
-            /*
-            TODO: OL3 implementation
 
-            var ollayer = map.olMap.getLayersByName(layer)[0];
-            var featuresToRemove = [];
-            for (i = 0;i<ollayer.features.length;i++){
-                featuresToRemove.push(ollayer.features[i]);
-            }
-            ollayer.removeFeatures(featuresToRemove); */
+            map.removeAllFeatures();
         };
         var switchLayer = function(){
             //toggle the OpenStreet and Google Layer
@@ -95,8 +80,6 @@ angular.module('app.dashboard.map.controller', ['app.socket', 'app.config', 'app
         $scope.city = mapService.city;
         $scope.actualUsecaseOptions =mapService.actualUsecaseOptions;
 
-
-
         var deactivateAllActiveFilters = function(){
 
             for(var i = 0;i<mapService.actualUsecaseOptions[0].length;i++)
@@ -109,9 +92,6 @@ angular.module('app.dashboard.map.controller', ['app.socket', 'app.config', 'app
                 }
             }
 
-
-
-
             //remove all objectes /just to be save
             $scope.$emit('removeAllMapObjects',
                 {
@@ -121,7 +101,6 @@ angular.module('app.dashboard.map.controller', ['app.socket', 'app.config', 'app
             );
 
         }
-
 
         var deactivateFilter = function(filterOption){
 
@@ -160,7 +139,6 @@ angular.module('app.dashboard.map.controller', ['app.socket', 'app.config', 'app
         });
 
 
-
         $scope.callFilter = function(filterOption, event){
 
             if (!filterOption.requested){
@@ -178,8 +156,6 @@ angular.module('app.dashboard.map.controller', ['app.socket', 'app.config', 'app
                 console.log("send requestActivated: " + filterOption.requestActivated)
                 $rootScope.showInformation = true;
                 $rootScope.$broadcast("optionActivated", filterOption);
-
-
 
 
             }else {
