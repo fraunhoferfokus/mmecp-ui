@@ -14,6 +14,12 @@ angular.module('app.dashboard.map.controller', ['app.socket', 'app.config', 'app
             notify : function(){
                 var mo = socketService.getLastRecievedMapObject();
                 map.addObjects(mo);
+                //deactivate loading
+                console.log("ggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg");
+                $rootScope.$broadcast('deactivateLoadingIcon');
+
+
+
             }
         };
         socketService.addObserver(newObserver);
@@ -161,12 +167,14 @@ angular.module('app.dashboard.map.controller', ['app.socket', 'app.config', 'app
                {
                    console.log("send chart request Option level");
                    socketService.send(filterOption.requestChart);
+
                }
 
                 socketService.send(filterOption.requestActivated);
-                console.log("send requestActivated: " + filterOption.requestActivated)
+                console.log("send requestActivated: " + filterOption.requestActivated);
                 $rootScope.showInformation = true;
                 $rootScope.$broadcast("optionActivated", filterOption);
+                $rootScope.$broadcast('activateLoadingIcon');
 
 
             }else {

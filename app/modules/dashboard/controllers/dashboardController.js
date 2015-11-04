@@ -1,9 +1,9 @@
 /**
  * Created by Aminskee on 10.03.15.
  */
-var mainControllers = angular.module('app.dashboard.controllers',['app.common', 'app.dashboard.map.controller'])
+var mainControllers = angular.module('app.dashboard.controllers',['app.common', 'app.dashboard.map.controller','angular-loading-bar', 'ngAnimate'])
 
-    .controller('dashboardController', ['$scope','$log', '$rootScope','mapService','socketService', function($scope,$log, $rootScope,mapService,socketService) {
+    .controller('dashboardController', ['$scope','$log', '$rootScope','mapService','socketService','cfpLoadingBar', function($scope,$log, $rootScope,mapService,socketService,cfpLoadingBar) {
 
         console.log("DashboardController loaded");
         console.log(mapService.allCities);
@@ -25,8 +25,18 @@ var mainControllers = angular.module('app.dashboard.controllers',['app.common', 
 
 
         //option description
-        $scopeOptionTitle = mapService.acut
+        $scope.OptionTitle = mapService.actualUseCase.title;
 
+        $scope.activateLoading = false;
+
+        $scope.$on('activateLoadingIcon', function(event) {
+            cfpLoadingBar.start();
+        });
+        $scope.$on('deactivateLoadingIcon', function(event) {
+
+            cfpLoadingBar.complete();
+
+        });
 
 
 
