@@ -418,7 +418,7 @@ input[type="search"],input[type="search"]:focus {
     -o-transition: width 350ms;
     transition: width 350ms;
 
-    background: #113346;
+    background: green;
     position: fixed;
     z-index: 10002;
     top: 0;
