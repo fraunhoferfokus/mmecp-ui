@@ -424,18 +424,16 @@ OpenLayer3Map.prototype.createPolygonFromUTMFeature = function(area, id){
 
     var pointList = [];
     var coords = area.area.coordinates;
-    Proj4js.defs["EPSG:32633"] = "+title= WGS 84 +proj=utm +zone=33 +ellps=WGS84 +datum=WGS84 +units=m +no_defs";
-    var sourceCoords = new Proj4js.Proj("EPSG:32633");
-    var destCoords = new Proj4js.Proj("EPSG:900913");
 
+    proj4.defs('EPSG:32633', "+title= WGS 84 +proj=utm +zone=33 +ellps=WGS84 +datum=WGS84 +units=m +no_defs");
 
     for (var i=0; i<coords.length; i++) {
 
 
-        var point = new Proj4js.Point(coords[i].e, coords[i].n);
-        point =Proj4js.transform(sourceCoords, destCoords, point);
+        var point = [coords[i].e, coords[i].n];
+        point = proj4('EPSG:32633','EPSG:900913',point);
 
-        pointList.push([point.x,point.y]);
+        pointList.push([point[0],point[1]]);
     }
 
     area.area.coordinates = [pointList];
