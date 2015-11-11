@@ -469,18 +469,15 @@ OpenLayer3Map.prototype.createArrowCircleFeature = function(arrowCircle, id) {
     var y = coords.y;
 
 
-    //TAMPERE tranform
-    Proj4js.defs["EPSG:2393"] = "+title= KKJ +proj=tmerc +lat_0=0 +lon_0=27 +k=1 +x_0=3500000 +y_0=0 +ellps=intl +towgs84=-96.062,-82.428,-121.753,4.801,0.345,-1.376,1.496 +units=m +no_defs";
+    proj4.defs('EPSG:2393',"+title= KKJ +proj=tmerc +lat_0=0 +lon_0=27 +k=1 +x_0=3500000 +y_0=0 +ellps=intl +towgs84=-96.062,-82.428,-121.753,4.801,0.345,-1.376,1.496 +units=m +no_defs");
 
-    var sourceCoords = new Proj4js.Proj("EPSG:2393");
-    var destCoords = new Proj4js.Proj("EPSG:900913");
-    destCoords.readyToUse = true;
-    var p = new Proj4js.Point(x, y);
 
-    result = Proj4js.transform(sourceCoords, destCoords, p);
+    var point = [x, y];
+    point = proj4('EPSG:2393','EPSG:900913',point);
 
-    x = result.x;
-    y = result.y;
+
+    x = point[0];
+    y = point[1];
 
 
     var iconPng = "img/" + arrowCircle.icon + ".png";
