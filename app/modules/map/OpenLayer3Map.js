@@ -136,11 +136,11 @@ OpenLayer3Map.prototype.setCenter = function(city) {
     }else if (city == this.config.coordinate.BER.name) {
         lon = this.config.coordinate.BER.lon;
         lat = this.config.coordinate.BER.lat;
-        zoom = this.config.coordinate.ROV.zoom;
+        zoom = this.config.coordinate.BER.zoom;
     }else if (city == this.config.coordinate.TAM.name) {
         lon = this.config.coordinate.TAM.lon;
         lat = this.config.coordinate.TAM.lat;
-        zoom = this.config.coordinate.ROV.zoom;
+        zoom = this.config.coordinate.TAM.zoom;
     }
 
     console.log("OpenLayers Action: change center");
