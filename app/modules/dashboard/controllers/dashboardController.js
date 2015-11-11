@@ -241,7 +241,7 @@ var mainControllers = angular.module('app.dashboard.controllers',['app.common', 
         $scope.ok = function () {
             $modalInstance.close();
         };
-    })
+    });
 
 
 

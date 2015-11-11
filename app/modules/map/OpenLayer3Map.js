@@ -15,13 +15,13 @@ function OpenLayer3Map(config, rootbroadcastEvent, mapService){
 
 
 
-    var selectedFeature = undefined;
+    var selectedFeature;
 
     this.config = config;
 
 
     var blur = 20;
-    var radius = 30
+    var radius = 30;
 
     this.vectorOfHeatMapObjects= new ol.source.Vector({
         features: [ ]
@@ -122,7 +122,7 @@ function OpenLayer3Map(config, rootbroadcastEvent, mapService){
 
     this.setCenter(this.config.default.city);
 
-};
+}
 
 OpenLayer3Map.prototype.setCenter = function(city) {
     if (this.olMap === null) return;
@@ -170,7 +170,7 @@ OpenLayer3Map.prototype.getHeatMapWeight = function(mapObject){
 
             if(mapObject.elements[i].attribute.label == "traffic_rate")
             {
-                var weight = mapObject.elements[i].attribute.value;
+                weight = mapObject.elements[i].attribute.value;
             }
         }
     }
@@ -192,7 +192,7 @@ OpenLayer3Map.prototype.prepareMapData = function (mapObject){
 
     // sometimes elements contains "text$attribute" instead of "attribute"
 
-    if(mapObject.elements == undefined)
+    if(mapObject.elements === undefined)
         return mapObject;
     for (var i = 0;i<mapObject.elements.length;i++){
 
@@ -250,7 +250,7 @@ OpenLayer3Map.prototype.generateMapObjectFeature = function (mapObjectTyp,mapObj
     }
     return feature;
 
-}
+};
 
 
 OpenLayer3Map.prototype.addMapObjectToMap = function (mapObjectElement){
@@ -269,7 +269,7 @@ OpenLayer3Map.prototype.addMapObjectToMap = function (mapObjectElement){
 
     this.removeFeatureIfExisting(fid);
 
-    if(feature.parentLayer == 'mapObjects' || feature.parentLayer == undefined)
+    if(feature.parentLayer == 'mapObjects' || feature.parentLayer === undefined)
     {
         this.vectorOfMapObjects.addFeatures([feature]);
     }
@@ -294,19 +294,19 @@ OpenLayer3Map.prototype.removeFeatureIfExisting = function(fid)
             this.vectorOfMapObjects.removeFeature(feature);
         }
     }
-}
+};
 
 
 OpenLayer3Map.prototype.removeAllFeatures = function()
 {
     this.vectorOfMapObjects.clear();
-}
+};
 
 
 OpenLayer3Map.prototype.removeHeatMapFeatures = function()
 {
     this.vectorOfHeatMapObjects.clear();
-}
+};
 
 
 
@@ -314,9 +314,10 @@ OpenLayer3Map.prototype.removeFeaturesWithSubType = function(subType)
 {
     //search feature in mapObjects
     var features = this.vectorOfMapObjects.getFeatures();
+    var feature;
     for(var i = 0;i<features.length;i++)
     {
-        var feature = features[i];
+         feature = features[i];
         if(feature.mapObject.objectSubtype == subType)
         {
             this.vectorOfMapObjects.removeFeature(feature);
@@ -324,10 +325,10 @@ OpenLayer3Map.prototype.removeFeaturesWithSubType = function(subType)
     }
 
     //search feature in heatmap
-    var features = this.vectorOfHeatMapObjects.getFeatures();
-    for(var i = 0;i<features.length;i++)
+     features = this.vectorOfHeatMapObjects.getFeatures();
+    for(i = 0;i<features.length;i++)
     {
-        var feature = features[i];
+         feature = features[i];
        // console.log(feature.mapObject.objectSubtype);
         console.log(subType);
         if(feature.mapObject.objectSubtype == subType)
@@ -335,7 +336,7 @@ OpenLayer3Map.prototype.removeFeaturesWithSubType = function(subType)
             this.vectorOfHeatMapObjects.removeFeature(feature);
         }
     }
-}
+};
 
 
 OpenLayer3Map.prototype.addObjects = function (mapObjectList){
@@ -446,7 +447,7 @@ OpenLayer3Map.prototype.createPolygonFromUTMFeature = function(area, id){
 
 OpenLayer3Map.prototype.getMapObjectTyp = function (mapObject)
 {
-    if(mapObject.elements == undefined)
+    if(mapObject.elements === undefined)
         return "unkown";
     for (var i = 0;i<mapObject.elements.length;i++){
         if (mapObject.elements[i].maparea !== undefined){
@@ -525,7 +526,7 @@ OpenLayer3Map.prototype.createArrowCircleFeature = function(arrowCircle, id) {
 
     return iconFeature;
 
-}
+};
 
 
 

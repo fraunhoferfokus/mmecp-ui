@@ -42,7 +42,7 @@ angular.module('app.dashboard.map.services', ['app.config', 'app.dashboard.map.d
             }
 
 
-        }
+        };
 
         this.setStreetlifeInstance();
 
@@ -62,11 +62,11 @@ angular.module('app.dashboard.map.services', ['app.config', 'app.dashboard.map.d
 
             $rootScope.$broadcast('legendChanged');
             console.log("broadcast legend changed");
-        }
+        };
         this.getMapLegend = function()
         {
             return this.mapLegend;
-        }
+        };
 
 
 
@@ -95,7 +95,7 @@ angular.module('app.dashboard.map.services', ['app.config', 'app.dashboard.map.d
             console.log("Update Charts here");
             $rootScope.$broadcast('chartUpdate');
 
-        }
+        };
 
 
 

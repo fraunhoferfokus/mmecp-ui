@@ -14,13 +14,13 @@ mainControllers.controller('mapLegendController', ['$scope','mapService','$rootS
     {
         for(var i = 0;i<legendList.length;i++)
         {
-            if(legendList[i].label == "")
+            if(legendList[i].label === "")
             {
                 legendList[i].label = ".";
             }
         }
         return legendList;
-    }
+    };
 
 
     $scope.$on('legendChanged', function(event, options){
