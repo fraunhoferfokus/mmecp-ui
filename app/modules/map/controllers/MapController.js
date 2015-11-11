@@ -15,7 +15,7 @@ angular.module('app.dashboard.map.controller', ['app.socket', 'app.config', 'app
                 var mo = socketService.getLastRecievedMapObject();
                 map.addObjects(mo);
                 //deactivate loading
-                console.log("ggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg");
+
                 $rootScope.$broadcast('deactivateLoadingIcon');
 
 

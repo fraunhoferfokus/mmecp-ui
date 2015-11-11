@@ -156,6 +156,9 @@ OpenLayer3Map.prototype.getmapAreaofMapObject = function(mapObject){
         if (mapObject.elements[i].maparea !== undefined){
             return mapObject.elements[i].maparea;
         }
+        if (mapObject.elements[i].MapArea !== undefined){
+            return mapObject.elements[i].MapArea;
+        }
     }
     return null;
 };
@@ -219,6 +222,8 @@ OpenLayer3Map.prototype.prepareMapData = function (mapObject){
 OpenLayer3Map.prototype.generateMapObjectFeature = function (mapObjectTyp,mapObjectElement,fid){
 
     var feature;
+    console.log("----------------------------------------------------------------------------------------------------");
+    console.log(mapObjectTyp);
     switch(mapObjectTyp)
     {
         case "arrowedCircle":
@@ -232,6 +237,10 @@ OpenLayer3Map.prototype.generateMapObjectFeature = function (mapObjectTyp,mapObj
         {
 
             var mapArea = this.getmapAreaofMapObject(mapObjectElement);
+
+       //     console.log("............................................................................................");
+       //     console.log(mapArea);
+
             if(mapArea.area.coordinateType == "UTM") {
                 //console.log("draw polygon utm");
 
@@ -255,10 +264,16 @@ OpenLayer3Map.prototype.generateMapObjectFeature = function (mapObjectTyp,mapObj
 
 OpenLayer3Map.prototype.addMapObjectToMap = function (mapObjectElement){
 
+
+
+
     var mapObjectTyp = this.getMapObjectTyp(mapObjectElement);
     var fid = mapObjectElement.objectID + ":" +
         mapObjectElement.objectType + ":" +
         mapObjectElement.objectSubtype;
+
+
+
 
 
 
@@ -422,15 +437,19 @@ OpenLayer3Map.prototype.createPolygonFeature = function(area, id,sourceCoordSyst
 OpenLayer3Map.prototype.createPolygonFromUTMFeature = function(area, id){
 
     var pointList = [];
-    var coords = area.area.coordinates;
+    var coords = area.area.coordinates[0]; //only first polygon other elements would be for wholes inside the first polygon
+
     Proj4js.defs["EPSG:32633"] = "+title= WGS 84 +proj=utm +zone=33 +ellps=WGS84 +datum=WGS84 +units=m +no_defs";
     var sourceCoords = new Proj4js.Proj("EPSG:32633");
     var destCoords = new Proj4js.Proj("EPSG:900913");
 
 
+
+
     for (var i=0; i<coords.length; i++) {
 
-
+        //console.log("..........>>");
+        //console.log(coords[i]);
         var point = new Proj4js.Point(coords[i].e, coords[i].n);
         point =Proj4js.transform(sourceCoords, destCoords, point);
 
@@ -447,9 +466,9 @@ OpenLayer3Map.prototype.createPolygonFromUTMFeature = function(area, id){
 OpenLayer3Map.prototype.getMapObjectTyp = function (mapObject)
 {
     if(mapObject.elements == undefined)
-        return "unkown";
+        return "unknown";
     for (var i = 0;i<mapObject.elements.length;i++){
-        if (mapObject.elements[i].maparea !== undefined){
+        if (mapObject.elements[i].maparea !== undefined || mapObject.elements[i].MapArea !== undefined){
             return "mapArea";
         }
         if (mapObject.elements[i].arrowedCircle !== undefined){

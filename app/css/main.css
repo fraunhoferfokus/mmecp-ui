@@ -391,25 +391,7 @@ input[type="search"],input[type="search"]:focus {
     height:830px;
     width:1617px;
 }
-#loadingIconDiv
-{
 
-    width: 1617px;
-    height: 830px;
-    position: relative;
-    left: 0px;
-    bottom: 830px;
-    background: rgba(255, 255, 255, 1);
-
-}
-#loadingIcon {
-    margin: auto;
-    position: absolute;
-    top: 0;
-    left: -800px;
-    bottom: 0;
-    right: 0
-}
 
 
 #loading-bar .bar {
