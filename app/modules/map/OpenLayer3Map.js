@@ -4,6 +4,8 @@
 
 function OpenLayer3Map(config, rootbroadcastEvent, mapService){
 
+
+    this.mapService = mapService;
     this.vectorOfMapObjects= new ol.source.Vector({
         features: [ ]
     });
@@ -19,9 +21,6 @@ function OpenLayer3Map(config, rootbroadcastEvent, mapService){
 
     this.config = config;
 
-
-    var blur = 20;
-    var radius = 30;
 
     this.vectorOfHeatMapObjects= new ol.source.Vector({
         features: [ ]
@@ -120,7 +119,7 @@ function OpenLayer3Map(config, rootbroadcastEvent, mapService){
 
     });
 
-    this.setCenter(this.config.default.city);
+
 
 }
 
@@ -129,20 +128,9 @@ OpenLayer3Map.prototype.setCenter = function(city) {
     if (this.config === null) return;
 
     var lon, lat, zoom;
-    if (city == this.config.coordinate.ROV.name) {
-        lon = this.config.coordinate.ROV.lon;
-        lat = this.config.coordinate.ROV.lat;
-        zoom = this.config.coordinate.ROV.zoom;
-    }else if (city == this.config.coordinate.BER.name) {
-        lon = this.config.coordinate.BER.lon;
-        lat = this.config.coordinate.BER.lat;
-        zoom = this.config.coordinate.BER.zoom;
-    }else if (city == this.config.coordinate.TAM.name) {
-        lon = this.config.coordinate.TAM.lon;
-        lat = this.config.coordinate.TAM.lat;
-        zoom = this.config.coordinate.TAM.zoom;
-    }
-
+    lat = this.mapService.citiesDefaults.mapView[city].center.lat;
+    lon = this.mapService.citiesDefaults.mapView[city].center.lon;
+    zoom = this.mapService.citiesDefaults.mapView[city].zoom;
     console.log("OpenLayers Action: change center");
     console.log("Long: " + lon + " Lat: " + lat);
     this.map.getView().setCenter(ol.proj.transform([lon, lat], 'EPSG:4326', 'EPSG:900913'));
