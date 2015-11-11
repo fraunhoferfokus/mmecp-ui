@@ -30,7 +30,7 @@ angular.module('app.dashboard.map.controller', ['app.socket', 'app.config', 'app
             console.log("MAP remove all ");
             removeAllMapObjects(args.layer);
 
-        })
+        });
 
         $scope.$on('removeMapObjects', function(event, args){
             console.log("args layer");
@@ -39,7 +39,7 @@ angular.module('app.dashboard.map.controller', ['app.socket', 'app.config', 'app
 
 
 
-        })
+        });
 
         $scope.$on('switchLayer', function(event, args){
             switchLayer(args);
@@ -101,7 +101,7 @@ angular.module('app.dashboard.map.controller', ['app.socket', 'app.config', 'app
 
             for(var i = 0;i<mapService.actualUsecaseOptions[0].length;i++)
             {
-                if(mapService.actualUsecaseOptions[0][i].requested == true)
+                if(mapService.actualUsecaseOptions[0][i].requested === true)
                 {
                     console.log("--- Deactivate Filter");
                     deactivateFilter(mapService.actualUsecaseOptions[0][i]);
@@ -117,7 +117,7 @@ angular.module('app.dashboard.map.controller', ['app.socket', 'app.config', 'app
                 }
             );
 
-        }
+        };
 
         var deactivateFilter = function(filterOption){
 
@@ -144,7 +144,7 @@ angular.module('app.dashboard.map.controller', ['app.socket', 'app.config', 'app
             $rootScope.showLegend = false;
             $rootScope.showInformation = false;
 
-        }
+        };
 
 
 

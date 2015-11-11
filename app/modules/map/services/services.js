@@ -20,7 +20,7 @@ angular.module('app.dashboard.map.services', ['app.config', 'app.dashboard.map.d
             {
                 this.streetlifeInstance = "dev";
                 this.defaultCity = "ROV";
-                this.accessToCities = ["ROV","BER","TRE"];
+                this.accessToCities = ["BER","ROV","TRE"];
             }
             if(this.streetlifeInstance.indexOf("berlin") > -1)
             {
@@ -42,7 +42,7 @@ angular.module('app.dashboard.map.services', ['app.config', 'app.dashboard.map.d
             }
 
 
-        }
+        };
 
         this.setStreetlifeInstance();
 
@@ -53,6 +53,26 @@ angular.module('app.dashboard.map.services', ['app.config', 'app.dashboard.map.d
         this.actualUsecaseOptions = [];
         this.charts = [];
         this.mapLegend = {};
+        this.citiesDefaults = {};
+
+
+        this.setCitiesDefaults=  function(citiesDefaults)
+        {
+            this.citiesDefaults = citiesDefaults;
+
+        };
+
+        this.putDefaultCityFirstInSelectionCombobox = function()
+        {
+            this.accessToCities = ["BER","ROV","TRE"];
+            var indexOfDefaultCity = this.accessToCities.indexOf(this.defaultCity);
+            if (indexOfDefaultCity > -1) {
+                this.accessToCities.splice(index, 1);
+            }
+            this.accessToCities.unshift(this.defaultCity);
+
+        }
+
 
 
         this.setMapLegend = function(legend)
@@ -62,11 +82,11 @@ angular.module('app.dashboard.map.services', ['app.config', 'app.dashboard.map.d
 
             $rootScope.$broadcast('legendChanged');
             console.log("broadcast legend changed");
-        }
+        };
         this.getMapLegend = function()
         {
             return this.mapLegend;
-        }
+        };
 
 
 
@@ -82,9 +102,12 @@ angular.module('app.dashboard.map.services', ['app.config', 'app.dashboard.map.d
 
         this.setAllCityObject = function(allCityObject){
             this.allCities[0] = allCityObject;
-            console.log("set initial city");
-            this.updateSelectedCity(this.defaultCity);
+            this.setCitiesDefaults(allCityObject.defaults);
+            console.log(allCityObject.defaults);
 
+            this.defaultCity = "BER"; //TODO: replace it with allCityObject.defaults.city
+          //  this.putDefaultCityFirstInSelectionCombobox();
+            this.updateSelectedCity(this.defaultCity);
         };
 
 
@@ -95,35 +118,20 @@ angular.module('app.dashboard.map.services', ['app.config', 'app.dashboard.map.d
             console.log("Update Charts here");
             $rootScope.$broadcast('chartUpdate');
 
-        }
+        };
 
 
 
         this.updateSelectedCity = function(cityName){
             var city = cityName;
             var cityID = "";
-            var cityOLMapID = "";
-
             if (city == "ROV"){
                 cityID = "Rovereto";
-                cityOLMapID = "ROVERETO";
-
-
-
             }else if (city == "BER"){
                 cityID = "Berlin";
-                cityOLMapID = "BERLIN";
-
-
-
             }else if (city == "TRE"){
                 cityID = "Tampere";
-                cityOLMapID = "TAMPERE";
-
-
             }
-
-
 
 
             for(var i = 0;i < this.allCities[0].options.length;i++) {
@@ -144,10 +152,9 @@ angular.module('app.dashboard.map.services', ['app.config', 'app.dashboard.map.d
 
 
             //update map position
-            $rootScope.$broadcast("changeCityOnMap",cityOLMapID);
+            $rootScope.$broadcast("changeCityOnMap",cityName);
 
             //load new filters
-
             console.log("update city");
             console.log(city);
 

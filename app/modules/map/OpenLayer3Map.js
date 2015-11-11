@@ -4,6 +4,8 @@
 
 function OpenLayer3Map(config, rootbroadcastEvent, mapService){
 
+
+    this.mapService = mapService;
     this.vectorOfMapObjects= new ol.source.Vector({
         features: [ ]
     });
@@ -15,13 +17,10 @@ function OpenLayer3Map(config, rootbroadcastEvent, mapService){
 
 
 
-    var selectedFeature = undefined;
+    var selectedFeature;
 
     this.config = config;
 
-
-    var blur = 20;
-    var radius = 30
 
     this.vectorOfHeatMapObjects= new ol.source.Vector({
         features: [ ]
@@ -120,29 +119,18 @@ function OpenLayer3Map(config, rootbroadcastEvent, mapService){
 
     });
 
-    this.setCenter(this.config.default.city);
 
-};
+
+}
 
 OpenLayer3Map.prototype.setCenter = function(city) {
     if (this.olMap === null) return;
     if (this.config === null) return;
 
     var lon, lat, zoom;
-    if (city == this.config.coordinate.ROV.name) {
-        lon = this.config.coordinate.ROV.lon;
-        lat = this.config.coordinate.ROV.lat;
-        zoom = this.config.coordinate.ROV.zoom;
-    }else if (city == this.config.coordinate.BER.name) {
-        lon = this.config.coordinate.BER.lon;
-        lat = this.config.coordinate.BER.lat;
-        zoom = this.config.coordinate.ROV.zoom;
-    }else if (city == this.config.coordinate.TAM.name) {
-        lon = this.config.coordinate.TAM.lon;
-        lat = this.config.coordinate.TAM.lat;
-        zoom = this.config.coordinate.ROV.zoom;
-    }
-
+    lat = this.mapService.citiesDefaults.mapView[city].center.lat;
+    lon = this.mapService.citiesDefaults.mapView[city].center.lon;
+    zoom = this.mapService.citiesDefaults.mapView[city].zoom;
     console.log("OpenLayers Action: change center");
     console.log("Long: " + lon + " Lat: " + lat);
     this.map.getView().setCenter(ol.proj.transform([lon, lat], 'EPSG:4326', 'EPSG:900913'));
@@ -173,7 +161,7 @@ OpenLayer3Map.prototype.getHeatMapWeight = function(mapObject){
 
             if(mapObject.elements[i].attribute.label == "traffic_rate")
             {
-                var weight = mapObject.elements[i].attribute.value;
+                weight = mapObject.elements[i].attribute.value;
             }
         }
     }
@@ -195,7 +183,7 @@ OpenLayer3Map.prototype.prepareMapData = function (mapObject){
 
     // sometimes elements contains "text$attribute" instead of "attribute"
 
-    if(mapObject.elements == undefined)
+    if(mapObject.elements === undefined)
         return mapObject;
     for (var i = 0;i<mapObject.elements.length;i++){
 
@@ -259,7 +247,7 @@ OpenLayer3Map.prototype.generateMapObjectFeature = function (mapObjectTyp,mapObj
     }
     return feature;
 
-}
+};
 
 
 OpenLayer3Map.prototype.addMapObjectToMap = function (mapObjectElement){
@@ -284,7 +272,7 @@ OpenLayer3Map.prototype.addMapObjectToMap = function (mapObjectElement){
 
     this.removeFeatureIfExisting(fid);
 
-    if(feature.parentLayer == 'mapObjects' || feature.parentLayer == undefined)
+    if(feature.parentLayer == 'mapObjects' || feature.parentLayer === undefined)
     {
         this.vectorOfMapObjects.addFeatures([feature]);
     }
@@ -309,19 +297,19 @@ OpenLayer3Map.prototype.removeFeatureIfExisting = function(fid)
             this.vectorOfMapObjects.removeFeature(feature);
         }
     }
-}
+};
 
 
 OpenLayer3Map.prototype.removeAllFeatures = function()
 {
     this.vectorOfMapObjects.clear();
-}
+};
 
 
 OpenLayer3Map.prototype.removeHeatMapFeatures = function()
 {
     this.vectorOfHeatMapObjects.clear();
-}
+};
 
 
 
@@ -329,9 +317,10 @@ OpenLayer3Map.prototype.removeFeaturesWithSubType = function(subType)
 {
     //search feature in mapObjects
     var features = this.vectorOfMapObjects.getFeatures();
+    var feature;
     for(var i = 0;i<features.length;i++)
     {
-        var feature = features[i];
+         feature = features[i];
         if(feature.mapObject.objectSubtype == subType)
         {
             this.vectorOfMapObjects.removeFeature(feature);
@@ -339,10 +328,10 @@ OpenLayer3Map.prototype.removeFeaturesWithSubType = function(subType)
     }
 
     //search feature in heatmap
-    var features = this.vectorOfHeatMapObjects.getFeatures();
-    for(var i = 0;i<features.length;i++)
+     features = this.vectorOfHeatMapObjects.getFeatures();
+    for(i = 0;i<features.length;i++)
     {
-        var feature = features[i];
+         feature = features[i];
        // console.log(feature.mapObject.objectSubtype);
         console.log(subType);
         if(feature.mapObject.objectSubtype == subType)
@@ -350,7 +339,7 @@ OpenLayer3Map.prototype.removeFeaturesWithSubType = function(subType)
             this.vectorOfHeatMapObjects.removeFeature(feature);
         }
     }
-}
+};
 
 
 OpenLayer3Map.prototype.addObjects = function (mapObjectList){
@@ -437,23 +426,20 @@ OpenLayer3Map.prototype.createPolygonFeature = function(area, id,sourceCoordSyst
 OpenLayer3Map.prototype.createPolygonFromUTMFeature = function(area, id){
 
     var pointList = [];
-    var coords = area.area.coordinates[0]; //only first polygon other elements would be for wholes inside the first polygon
+    var coords = area.area.coordinates;
 
-    Proj4js.defs["EPSG:32633"] = "+title= WGS 84 +proj=utm +zone=33 +ellps=WGS84 +datum=WGS84 +units=m +no_defs";
-    var sourceCoords = new Proj4js.Proj("EPSG:32633");
-    var destCoords = new Proj4js.Proj("EPSG:900913");
+
+    proj4.defs('EPSG:32633', "+title= WGS 84 +proj=utm +zone=33 +ellps=WGS84 +datum=WGS84 +units=m +no_defs");
 
 
 
 
     for (var i=0; i<coords.length; i++) {
 
-        //console.log("..........>>");
-        //console.log(coords[i]);
-        var point = new Proj4js.Point(coords[i].e, coords[i].n);
-        point =Proj4js.transform(sourceCoords, destCoords, point);
+        var point = [coords[i].e, coords[i].n];
+        point = proj4('EPSG:32633','EPSG:900913',point);
 
-        pointList.push([point.x,point.y]);
+        pointList.push([point[0],point[1]]);
     }
 
     area.area.coordinates = [pointList];
@@ -465,8 +451,10 @@ OpenLayer3Map.prototype.createPolygonFromUTMFeature = function(area, id){
 
 OpenLayer3Map.prototype.getMapObjectTyp = function (mapObject)
 {
-    if(mapObject.elements == undefined)
-        return "unknown";
+
+    if(mapObject.elements === undefined)
+        return "unkown";
+
     for (var i = 0;i<mapObject.elements.length;i++){
         if (mapObject.elements[i].maparea !== undefined || mapObject.elements[i].MapArea !== undefined){
             return "mapArea";
@@ -489,18 +477,15 @@ OpenLayer3Map.prototype.createArrowCircleFeature = function(arrowCircle, id) {
     var y = coords.y;
 
 
-    //TAMPERE tranform
-    Proj4js.defs["EPSG:2393"] = "+title= KKJ +proj=tmerc +lat_0=0 +lon_0=27 +k=1 +x_0=3500000 +y_0=0 +ellps=intl +towgs84=-96.062,-82.428,-121.753,4.801,0.345,-1.376,1.496 +units=m +no_defs";
+    proj4.defs('EPSG:2393',"+title= KKJ +proj=tmerc +lat_0=0 +lon_0=27 +k=1 +x_0=3500000 +y_0=0 +ellps=intl +towgs84=-96.062,-82.428,-121.753,4.801,0.345,-1.376,1.496 +units=m +no_defs");
 
-    var sourceCoords = new Proj4js.Proj("EPSG:2393");
-    var destCoords = new Proj4js.Proj("EPSG:900913");
-    destCoords.readyToUse = true;
-    var p = new Proj4js.Point(x, y);
 
-    result = Proj4js.transform(sourceCoords, destCoords, p);
+    var point = [x, y];
+    point = proj4('EPSG:2393','EPSG:900913',point);
 
-    x = result.x;
-    y = result.y;
+
+    x = point[0];
+    y = point[1];
 
 
     var iconPng = "img/" + arrowCircle.icon + ".png";
@@ -544,7 +529,7 @@ OpenLayer3Map.prototype.createArrowCircleFeature = function(arrowCircle, id) {
 
     return iconFeature;
 
-}
+};
 
 
 
