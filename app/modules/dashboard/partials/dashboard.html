@@ -79,13 +79,13 @@
                                     <a href="#" class="button">Request</a>
                                 </div>
                             </aside>
-                            <section class="main-section diagrams-section panel" ng-style="addStyleToMap()" resize>
+                            <section class="main-section diagrams-section panel">
                                 <div class="medium-12 columns">
                                     <div class="row">
                                         <div class="columns" ng-class="singleDiagramCSS">
                                             <div class=" callout">
                                                 <h2>{{  useCaseTitle }}</h2>
-
+                                                <br>
 
 
                                                 <div ng-controller="tabController">
@@ -141,7 +141,7 @@
         </div>
     </div>
     <!-- Kpis-->
-    <div class="medium-1-customer columns use-case-menu" ng-class="kipsCSS" style="padding: 5px;border-top: solid 1px whitesmoke;" ng-style="addStyle()" resize-menu>
+    <div class="medium-1-customer columns use-case-menu" ng-class="kipsCSS"  id = "scenarioBar">
         <div class="row full-width" style="margin-top: 50px">
 
 
