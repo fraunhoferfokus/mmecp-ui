@@ -1,0 +1,420 @@
+[4mRunning "jshint:files" (jshint) task[24m
+
+[1m   app/js/proj4js/proj4js.js[22m
+    152 |[90m          || dest.datum_type == Proj4js.common.PJD_NODATUM) {[39m
+                   ^ Bad line breaking before '||'.
+    158 |[90m          || source.datum_type == Proj4js.common.PJD_3PARAM[39m
+                   ^ Bad line breaking before '||'.
+    159 |[90m          || source.datum_type == Proj4js.common.PJD_7PARAM[39m
+                   ^ Bad line breaking before '||'.
+    160 |[90m          || dest.datum_type == Proj4js.common.PJD_3PARAM[39m
+                   ^ Bad line breaking before '||'.
+    161 |[90m          || dest.datum_type == Proj4js.common.PJD_7PARAM)[39m
+                   ^ Bad line breaking before '||'.
+    201 |[90m                 if (i==0) { v= xin; t= 'x'; }[39m
+                               ^ Use '===' to compare with '0'.
+    520 |[90m      if (srsCode.indexOf('urn:') == 0) {[39m
+                                           ^ Use '===' to compare with '0'.
+    528 |[90m      } else if (srsCode.indexOf('http://') == 0) {[39m
+                                                     ^ Use '===' to compare with '0'.
+    541 |[90m      if (this.srsCode.indexOf("EPSG") == 0) {[39m
+                                                ^ Use '===' to compare with '0'.
+    546 |[90m      } else if (this.srsCode.indexOf("IGNF") == 0) {[39m
+                                                       ^ Use '===' to compare with '0'.
+    551 |[90m      } else if (this.srsCode.indexOf("CRS") == 0) {[39m
+                                                      ^ Use '===' to compare with '0'.
+    632 |[90m      Proj4js.defs[this.srsCode] = Proj4js.defs['WGS84'];  //set it to something so it can at least continue[39m
+                                                        ^ ['WGS84'] is better written in dot notation.
+    740 |[90m    var wktArray = new Array();[39m
+                                     ^ The array literal notation [] is preferable.
+    762 |[90m        this.projName = 'identity'[39m
+                                           ^ Missing semicolon.
+    767 |[90m        this.projName = 'longlat'[39m
+                                          ^ Missing semicolon.
+    777 |[90m        this.projName = Proj4js.wktProjections[wktName][39m
+                                                                ^ Missing semicolon.
+    829 |[90m        var name= wktName.toLowerCase();[39m
+                         ^ 'name' is already defined.
+    830 |[90m        var value= wktArray.shift();[39m
+                          ^ 'value' is already defined.
+    838 |[90m          case 'OTHER':[39m
+                               ^ Expected a 'break' statement before 'default'.
+    847 |[90m        }[39m
+                 ^ Expected a 'break' statement before 'case'.
+    853 |[90m    for (var i=0; i<wktArray.length; ++i) {[39m
+                       ^ 'i' is already defined.
+    921 |[90m                             break[39m
+                                      ^ Line breaking error 'break'.
+    921 |[90m                             break[39m
+                                           ^ Missing semicolon.
+    946 |[90m          var ellipse = Proj4js.Ellipsoid[this.ellps] ? Proj4js.Ellipsoid[this.ellps] : Proj4js.Ellipsoid['WGS84'];[39m
+                                                                                                                  ^ ['WGS84'] is better written in dot notation.
+    959 |[90m        this.a *= 1. - this.es * (Proj4js.common.SIXTH + this.es * (Proj4js.common.RA4 + this.es * Proj4js.common.RA6));[39m
+                             ^ A trailing decimal point can be confused with a dot: '1.'.
+    962 |[90m        this.es = 0.;[39m
+                             ^ A trailing decimal point can be confused with a dot: '0.'.
+   1011 |[90mProj4js.defs['GOOGLE'] = Proj4js.defs['EPSG:3875'];[39m
+                     ^ ['GOOGLE'] is better written in dot notation.
+   1039 |[90m  SIXTH : .1666666666666666667, /* 1/6 */[39m
+                                       ^ A leading decimal point can be confused with a dot: '.1666666666666666667'.
+   1040 |[90m  RA4   : .04722222222222222222, /* 17/360 */[39m
+                                        ^ A leading decimal point can be confused with a dot: '.04722222222222222222'.
+   1041 |[90m  RA6   : .02215608465608465608, /* 67/3024 */[39m
+                                        ^ A leading decimal point can be confused with a dot: '.02215608465608465608'.
+   1042 |[90m  RV4   : .06944444444444444444, /* 5/72 */[39m
+                                        ^ A leading decimal point can be confused with a dot: '.06944444444444444444'.
+   1043 |[90m  RV6   : .04243827160493827160, /* 55/1296 */[39m
+                                        ^ A leading decimal point can be confused with a dot: '.04243827160493827160'.
+   1059 |[90m    var com = .5 * eccent;[39m
+                         ^ A leading decimal point can be confused with a dot: '.5'.
+   1061 |[90m    return (Math.tan(.5 * (this.HALF_PI - phi))/con);[39m
+                                ^ A leading decimal point can be confused with a dot: '.5'.
+   1068 |[90m    var eccnth = .5 * eccent;[39m
+                            ^ A leading decimal point can be confused with a dot: '.5'.
+   1075 |[90m      if (Math.abs(dphi) <= .0000000001) return phi;[39m
+                                                ^ A leading decimal point can be confused with a dot: '.0000000001'.
+   1088 |[90m      return (( 1.0- eccent * eccent) * (sinphi /(1.0 - con * con) - (.5/eccent)*Math.log((1.0 - con)/(1.0 + con))));[39m
+                                                                                 ^ A leading decimal point can be confused with a dot: '.5'.
+   1153 |[90m      phi= this.fL(Math.exp(eccent*Math.log((1.0+con)/(1.0-con))/2.0),ts)[39m
+                                                                                  ^ Missing semicolon.
+   1207 |[90m    var en = new Array();[39m
+                               ^ The array literal notation [] is preferable.
+   1225 |[90m    var k = 1./(1.-es);[39m
+                       ^ A trailing decimal point can be confused with a dot: '1.'.
+   1225 |[90m    var k = 1./(1.-es);[39m
+                           ^ A trailing decimal point can be confused with a dot: '1.'.
+   1229 |[90m      var t = 1. - es * s * s;[39m
+                         ^ A trailing decimal point can be confused with a dot: '1.'.
+   1247 |[90m  C02: .25,[39m
+                   ^ A leading decimal point can be confused with a dot: '.25'.
+   1248 |[90m  C04: .046875,[39m
+                       ^ A leading decimal point can be confused with a dot: '.046875'.
+   1249 |[90m  C06: .01953125,[39m
+                         ^ A leading decimal point can be confused with a dot: '.01953125'.
+   1250 |[90m  C08: .01068115234375,[39m
+                               ^ A leading decimal point can be confused with a dot: '.01068115234375'.
+   1251 |[90m  C22: .75,[39m
+                   ^ A leading decimal point can be confused with a dot: '.75'.
+   1252 |[90m  C44: .46875,[39m
+                      ^ A leading decimal point can be confused with a dot: '.46875'.
+   1253 |[90m  C46: .01302083333333333333,[39m
+                                     ^ A leading decimal point can be confused with a dot: '.01302083333333333333'.
+   1254 |[90m  C48: .00712076822916666666,[39m
+                                     ^ A leading decimal point can be confused with a dot: '.00712076822916666666'.
+[31m>> [39mToo many errors. (69% scanned).
+[1m   app/js/proj4js/projCode/aea.js[22m
+     98 |[90m    if (rh1 != 0.0) {[39m
+                     ^ Use '!==' to compare with '0.0'.
+    104 |[90m      con = 1 - .5 * (1.0 -this.es) * Math.log((1.0 - this.e3) / (1.0 + this.e3))/this.e3;[39m
+                           ^ A leading decimal point can be confused with a dot: '.5'.
+    105 |[90m      if (Math.abs(Math.abs(con) - Math.abs(qs)) > .0000000001 ) {[39m
+                                                                       ^ A leading decimal point can be confused with a dot: '.0000000001'.
+    109 |[90m             lat = .5 * Proj4js.common.PI;[39m
+                              ^ A leading decimal point can be confused with a dot: '.5'.
+    111 |[90m             lat = -.5 * Proj4js.common.PI;[39m
+                               ^ A leading decimal point can be confused with a dot: '.5'.
+    129 |[90m    var phi = Proj4js.common.asinz(.5 * qs);[39m
+                                              ^ A leading decimal point can be confused with a dot: '.5'.
+    138 |[90m        dphi = .5 * com * com / cosphi * (qs / (1.0 - eccnts) - sinphi / com + .5 / eccent * Math.log((1.0 - con) / (1.0 + con)));[39m
+                          ^ A leading decimal point can be confused with a dot: '.5'.
+    138 |[90m        dphi = .5 * com * com / cosphi * (qs / (1.0 - eccnts) - sinphi / com + .5 / eccent * Math.log((1.0 - con) / (1.0 + con)));[39m
+                                                                                          ^ A leading decimal point can be confused with a dot: '.5'.
+[1m   app/js/proj4js/projCode/cass.js[22m
+     30 |[90m      this.en = Proj4js.common.pj_enfn(this.es)[39m
+                                                        ^ Missing semicolon.
+     35 |[90m  C1:    .16666666666666666666,[39m
+                                       ^ A leading decimal point can be confused with a dot: '.16666666666666666666'.
+     36 |[90m  C2:    .00833333333333333333,[39m
+                                       ^ A leading decimal point can be confused with a dot: '.00833333333333333333'.
+     37 |[90m  C3:    .04166666666666666666,[39m
+                                       ^ A leading decimal point can be confused with a dot: '.04166666666666666666'.
+     38 |[90m  C4:    .33333333333333333333,[39m
+                                       ^ A leading decimal point can be confused with a dot: '.33333333333333333333'.
+     39 |[90m  C5:    .06666666666666666666,[39m
+                                       ^ A leading decimal point can be confused with a dot: '.06666666666666666666'.
+     61 |[90m      this.n = 1./Math.sqrt(1. - this.es * this.n * this.n);[39m
+                          ^ A trailing decimal point can be confused with a dot: '1.'.
+     61 |[90m      this.n = 1./Math.sqrt(1. - this.es * this.n * this.n);[39m
+                                       ^ A trailing decimal point can be confused with a dot: '1.'.
+     67 |[90m      x = this.n * this.a1 * (1. - this.a2 * this.t * (this.C1 - (8. - this.t + 8. * this.c) * this.a2 * this.C2));[39m
+                                         ^ A trailing decimal point can be confused with a dot: '1.'.
+     67 |[90m      x = this.n * this.a1 * (1. - this.a2 * this.t * (this.C1 - (8. - this.t + 8. * this.c) * this.a2 * this.C2));[39m
+                                                                             ^ A trailing decimal point can be confused with a dot: '8.'.
+     67 |[90m      x = this.n * this.a1 * (1. - this.a2 * this.t * (this.C1 - (8. - this.t + 8. * this.c) * this.a2 * this.C2));[39m
+                                                                                           ^ A trailing decimal point can be confused with a dot: '8.'.
+     68 |[90m      y -= this.m0 - this.n * this.tn * this.a2 * (.5 + (5. - this.t + 6. * this.c) * this.a2 * this.C3);[39m
+                                                              ^ A leading decimal point can be confused with a dot: '.5'.
+     68 |[90m      y -= this.m0 - this.n * this.tn * this.a2 * (.5 + (5. - this.t + 6. * this.c) * this.a2 * this.C3);[39m
+                                                                    ^ A trailing decimal point can be confused with a dot: '5.'.
+     68 |[90m      y -= this.m0 - this.n * this.tn * this.a2 * (.5 + (5. - this.t + 6. * this.c) * this.a2 * this.C3);[39m
+                                                                                  ^ A trailing decimal point can be confused with a dot: '6.'.
+     95 |[90m      this.r = 1. / (1. - this.es * this.n * this.n);[39m
+                          ^ A trailing decimal point can be confused with a dot: '1.'.
+     95 |[90m      this.r = 1. / (1. - this.es * this.n * this.n);[39m
+                                ^ A trailing decimal point can be confused with a dot: '1.'.
+     97 |[90m      this.r *= (1. - this.es) * this.n;[39m
+                            ^ A trailing decimal point can be confused with a dot: '1.'.
+    100 |[90m      phi = ph1 - (this.n * this.tn / this.r) * this.d2 * (.5 - (1. + 3. * this.t) * this.d2 * this.C3);[39m
+                                                                      ^ A leading decimal point can be confused with a dot: '.5'.
+    100 |[90m      phi = ph1 - (this.n * this.tn / this.r) * this.d2 * (.5 - (1. + 3. * this.t) * this.d2 * this.C3);[39m
+                                                                            ^ A trailing decimal point can be confused with a dot: '1.'.
+    100 |[90m      phi = ph1 - (this.n * this.tn / this.r) * this.d2 * (.5 - (1. + 3. * this.t) * this.d2 * this.C3);[39m
+                                                                                 ^ A trailing decimal point can be confused with a dot: '3.'.
+    101 |[90m      lam = this.dd * (1. + this.t * this.d2 * (-this.C4 + (1. + 3. * this.t) * this.d2 * this.C5)) / Math.cos(ph1);[39m
+                                  ^ A trailing decimal point can be confused with a dot: '1.'.
+    101 |[90m      lam = this.dd * (1. + this.t * this.d2 * (-this.C4 + (1. + 3. * this.t) * this.d2 * this.C5)) / Math.cos(ph1);[39m
+                                                                       ^ A trailing decimal point can be confused with a dot: '1.'.
+    101 |[90m      lam = this.dd * (1. + this.t * this.d2 * (-this.C4 + (1. + 3. * this.t) * this.d2 * this.C5)) / Math.cos(ph1);[39m
+                                                                            ^ A trailing decimal point can be confused with a dot: '3.'.
+    108 |[90m}[39m
+          ^ Missing semicolon.
+[1m   app/js/proj4js/projCode/eqdc.js[22m
+     53 |[90m    if (this.mode != 0) {[39m
+                           ^ Use '!==' to compare with '0'.
+    110 |[90m    if (rh1 != 0.0) theta = Math.atan2(con *p.x, con *p.y);[39m
+                     ^ Use '!==' to compare with '0.0'.
+    131 |[90m      if (Math.abs(dphi) <= .0000000001) {[39m
+                                                ^ A leading decimal point can be confused with a dot: '.0000000001'.
+[1m   app/js/proj4js/projCode/gauss.js[22m
+     28 |[90m    var num = Math.pow(Math.tan(0.5 * lat + Proj4js.common.FORTPI)/this.K, 1./this.C);[39m
+                                                                                      ^ A trailing decimal point can be confused with a dot: '1.'.
+[1m   app/js/proj4js/projCode/krovak.js[22m
+     42 |[90m        this.s45 = 0.785398163397448;    /* 45� */[39m
+                                                      ^ This character may get silently deleted by one or more browsers.
+     44 |[90m        this.fi0 = this.lat0;    /* Latitude of projection centre 49� 30' */[39m
+                                                                            ^ This character may get silently deleted by one or more browsers.
+     50 |[90m        this.alfa = Math.sqrt(1. + (this.e2 * Math.pow(Math.cos(this.fi0), 4)) / (1. - this.e2));[39m
+                                         ^ A trailing decimal point can be confused with a dot: '1.'.
+     50 |[90m        this.alfa = Math.sqrt(1. + (this.e2 * Math.pow(Math.cos(this.fi0), 4)) / (1. - this.e2));[39m
+                                                                                             ^ A trailing decimal point can be confused with a dot: '1.'.
+     53 |[90m        this.g = Math.pow(   (1. + this.e * Math.sin(this.fi0)) / (1. - this.e * Math.sin(this.fi0)) , this.alfa * this.e / 2.  );[39m
+                                         ^ A trailing decimal point can be confused with a dot: '1.'.
+     53 |[90m        this.g = Math.pow(   (1. + this.e * Math.sin(this.fi0)) / (1. - this.e * Math.sin(this.fi0)) , this.alfa * this.e / 2.  );[39m
+                                                                              ^ A trailing decimal point can be confused with a dot: '1.'.
+     53 |[90m        this.g = Math.pow(   (1. + this.e * Math.sin(this.fi0)) / (1. - this.e * Math.sin(this.fi0)) , this.alfa * this.e / 2.  );[39m
+                                                                                                                                       ^ A trailing decimal point can be confused with a dot: '2.'.
+     54 |[90m        this.k = Math.tan( this.u0 / 2. + this.s45) / Math.pow  (Math.tan(this.fi0 / 2. + this.s45) , this.alfa) * this.g;[39m
+                                                ^ A trailing decimal point can be confused with a dot: '2.'.
+     54 |[90m        this.k = Math.tan( this.u0 / 2. + this.s45) / Math.pow  (Math.tan(this.fi0 / 2. + this.s45) , this.alfa) * this.g;[39m
+                                                                                                ^ A trailing decimal point can be confused with a dot: '2.'.
+     56 |[90m        this.n0 = this.a * Math.sqrt(1. - this.e2) / (1. - this.e2 * Math.pow(Math.sin(this.fi0), 2));[39m
+                                                ^ A trailing decimal point can be confused with a dot: '1.'.
+     56 |[90m        this.n0 = this.a * Math.sqrt(1. - this.e2) / (1. - this.e2 * Math.pow(Math.sin(this.fi0), 2));[39m
+                                                                 ^ A trailing decimal point can be confused with a dot: '1.'.
+     57 |[90m        this.s0 = 1.37008346281555;       /* Latitude of pseudo standard parallel 78� 30'00" N */[39m
+                                                                                            ^ This character may get silently deleted by one or more browsers.
+     72 |[90m        gfi = Math.pow ( ((1. + this.e * Math.sin(lat)) / (1. - this.e * Math.sin(lat))) , (this.alfa * this.e / 2.));[39m
+                                      ^ A trailing decimal point can be confused with a dot: '1.'.
+     72 |[90m        gfi = Math.pow ( ((1. + this.e * Math.sin(lat)) / (1. - this.e * Math.sin(lat))) , (this.alfa * this.e / 2.));[39m
+                                                                      ^ A trailing decimal point can be confused with a dot: '1.'.
+     72 |[90m        gfi = Math.pow ( ((1. + this.e * Math.sin(lat)) / (1. - this.e * Math.sin(lat))) , (this.alfa * this.e / 2.));[39m
+                                                                                                                            ^ A trailing decimal point can be confused with a dot: '2.'.
+     73 |[90m        u= 2. * (Math.atan(this.k * Math.pow( Math.tan(lat / 2. + this.s45), this.alfa) / gfi)-this.s45);[39m
+                      ^ A trailing decimal point can be confused with a dot: '2.'.
+     73 |[90m        u= 2. * (Math.atan(this.k * Math.pow( Math.tan(lat / 2. + this.s45), this.alfa) / gfi)-this.s45);[39m
+                                                                        ^ A trailing decimal point can be confused with a dot: '2.'.
+     78 |[90m        ro = this.ro0 * Math.pow(Math.tan(this.s0 / 2. + this.s45) , this.n) / Math.pow(Math.tan(s / 2. + this.s45) , this.n);[39m
+                                                               ^ A trailing decimal point can be confused with a dot: '2.'.
+     78 |[90m        ro = this.ro0 * Math.pow(Math.tan(this.s0 / 2. + this.s45) , this.n) / Math.pow(Math.tan(s / 2. + this.s45) , this.n);[39m
+                                                                                                                ^ A trailing decimal point can be confused with a dot: '2.'.
+    110 |[90m        s = 2. * (Math.atan(  Math.pow(this.ro0 / ro, 1. / this.n) * Math.tan(this.s0 / 2. + this.s45)) - this.s45);[39m
+                       ^ A trailing decimal point can be confused with a dot: '2.'.
+    110 |[90m        s = 2. * (Math.atan(  Math.pow(this.ro0 / ro, 1. / this.n) * Math.tan(this.s0 / 2. + this.s45)) - this.s45);[39m
+                                                                 ^ A trailing decimal point can be confused with a dot: '1.'.
+    110 |[90m        s = 2. * (Math.atan(  Math.pow(this.ro0 / ro, 1. / this.n) * Math.tan(this.s0 / 2. + this.s45)) - this.s45);[39m
+                                                                                                   ^ A trailing decimal point can be confused with a dot: '2.'.
+    119 |[90m            p.y = 2. * ( Math.atan( Math.pow( this.k, -1. / this.alfa)  *[39m
+                             ^ A trailing decimal point can be confused with a dot: '2.'.
+    119 |[90m            p.y = 2. * ( Math.atan( Math.pow( this.k, -1. / this.alfa)  *[39m
+                                                                  ^ A trailing decimal point can be confused with a dot: '1.'.
+    120 |[90m                            Math.pow( Math.tan(u / 2. + this.s45) , 1. / this.alfa)  *[39m
+                                                              ^ A trailing decimal point can be confused with a dot: '2.'.
+    120 |[90m                            Math.pow( Math.tan(u / 2. + this.s45) , 1. / this.alfa)  *[39m
+                                                                               ^ A trailing decimal point can be confused with a dot: '1.'.
+    121 |[90m                            Math.pow( (1. + this.e * Math.sin(fi1)) / (1. - this.e * Math.sin(fi1)) , this.e / 2.)[39m
+                                                  ^ A trailing decimal point can be confused with a dot: '1.'.
+    121 |[90m                            Math.pow( (1. + this.e * Math.sin(fi1)) / (1. - this.e * Math.sin(fi1)) , this.e / 2.)[39m
+                                                                                  ^ A trailing decimal point can be confused with a dot: '1.'.
+    121 |[90m                            Math.pow( (1. + this.e * Math.sin(fi1)) / (1. - this.e * Math.sin(fi1)) , this.e / 2.)[39m
+                                                                                                                          ^ A trailing decimal point can be confused with a dot: '2.'.
+    126 |[90m        } while (ok==0 && iter < 15);[39m
+                            ^ Use '===' to compare with '0'.
+[1m   app/js/proj4js/projCode/laea.js[22m
+     52 |[90m      this.mmf = .5 / (1. - this.es);[39m
+                            ^ A leading decimal point can be confused with a dot: '.5'.
+     52 |[90m      this.mmf = .5 / (1. - this.es);[39m
+                                  ^ A trailing decimal point can be confused with a dot: '1.'.
+     60 |[90m          this.rq = Math.sqrt(.5 * this.qp);[39m
+                                         ^ A leading decimal point can be confused with a dot: '.5'.
+     61 |[90m          this.dd = 1. / this.rq;[39m
+                               ^ A trailing decimal point can be confused with a dot: '1.'.
+     66 |[90m          this.rq = Math.sqrt(.5 * this.qp);[39m
+                                         ^ A leading decimal point can be confused with a dot: '.5'.
+    113 |[90m            coslam = -coslam;[39m
+                                     ^ Expected a 'break' statement before 'case'.
+    126 |[90m        var coslam, sinlam, sinphi, q, sinb=0.0, cosb=0.0, b=0.0;[39m
+                           ^ 'coslam' is already defined.
+    126 |[90m        var coslam, sinlam, sinphi, q, sinb=0.0, cosb=0.0, b=0.0;[39m
+                                           ^ 'sinphi' is already defined.
+    159 |[90m            b = Math.sqrt(2. / b);[39m
+                                     ^ A trailing decimal point can be confused with a dot: '2.'.
+    214 |[90m        phi = rh * .5;[39m
+                              ^ A leading decimal point can be confused with a dot: '.5'.
+    215 |[90m        if (phi > 1.) {[39m
+                             ^ A trailing decimal point can be confused with a dot: '1.'.
+    219 |[90m        phi = 2. * Math.asin(phi);[39m
+                         ^ A trailing decimal point can be confused with a dot: '2.'.
+    226 |[90m          phi = (Math.abs(rh) <= Proj4js.common.EPSLN) ? 0. : Math.asin(y * sinz / rh);[39m
+                                                                    ^ A trailing decimal point can be confused with a dot: '0.'.
+    243 |[90m        lam = (y == 0. && (this.mode == this.EQUIT || this.mode == this.OBLIQ)) ? 0. : Math.atan2(x, y);[39m
+                               ^ A trailing decimal point can be confused with a dot: '0.'.
+    243 |[90m        lam = (y == 0. && (this.mode == this.EQUIT || this.mode == this.OBLIQ)) ? 0. : Math.atan2(x, y);[39m
+                          ^ Use '===' to compare with '0.'.
+    243 |[90m        lam = (y == 0. && (this.mode == this.EQUIT || this.mode == this.OBLIQ)) ? 0. : Math.atan2(x, y);[39m
+                                                                                             ^ A trailing decimal point can be confused with a dot: '0.'.
+    254 |[90m              p.x = 0.;[39m
+                               ^ A trailing decimal point can be confused with a dot: '0.'.
+    258 |[90m            sCe = 2. * Math.asin(.5 * rho / this.rq);[39m
+                             ^ A trailing decimal point can be confused with a dot: '2.'.
+    258 |[90m            sCe = 2. * Math.asin(.5 * rho / this.rq);[39m
+                                            ^ A leading decimal point can be confused with a dot: '.5'.
+    262 |[90m              ab = cCe * this.sinb1 + y * sCe * this.cosb1 / rho[39m
+                                                                         ^ Missing semicolon.
+    272 |[90m            y = -y;[39m
+                           ^ Expected a 'break' statement before 'case'.
+    276 |[90m              p.x = 0.;[39m
+                               ^ A trailing decimal point can be confused with a dot: '0.'.
+    283 |[90m            ab = 1. - q / this.qp;[39m
+                            ^ A trailing decimal point can be confused with a dot: '1.'.
+    329 |[90m  P00: .33333333333333333333,[39m
+                                     ^ A leading decimal point can be confused with a dot: '.33333333333333333333'.
+    330 |[90m  P01: .17222222222222222222,[39m
+                                     ^ A leading decimal point can be confused with a dot: '.17222222222222222222'.
+    331 |[90m  P02: .10257936507936507936,[39m
+                                     ^ A leading decimal point can be confused with a dot: '.10257936507936507936'.
+    332 |[90m  P10: .06388888888888888888,[39m
+                                     ^ A leading decimal point can be confused with a dot: '.06388888888888888888'.
+    333 |[90m  P11: .06640211640211640211,[39m
+                                     ^ A leading decimal point can be confused with a dot: '.06640211640211640211'.
+    334 |[90m  P20: .01641501294219154443,[39m
+                                     ^ A leading decimal point can be confused with a dot: '.01641501294219154443'.
+    338 |[90m    var APA = new Array();[39m
+                                ^ The array literal notation [] is preferable.
+[1m   app/js/proj4js/projCode/moll.js[22m
+     80 |[90m    var arg = p.y /  (1.4142135623731 * this.a);[39m
+                     ^ 'arg' is already defined.
+     86 |[90m    var theta =Math.asin(arg);[39m
+                       ^ 'theta' is already defined.
+[1m   app/js/proj4js/projCode/nzmg.js[22m
+    127 |[90m    this.A = new Array();[39m
+                               ^ The array literal notation [] is preferable.
+    139 |[90m    this.B_re = new Array();        this.B_im = new Array();[39m
+                                  ^ The array literal notation [] is preferable.
+    139 |[90m    this.B_re = new Array();        this.B_im = new Array();[39m
+                                                                  ^ The array literal notation [] is preferable.
+    147 |[90m    this.C_re = new Array();        this.C_im = new Array();[39m
+                                  ^ The array literal notation [] is preferable.
+    147 |[90m    this.C_re = new Array();        this.C_im = new Array();[39m
+                                                                  ^ The array literal notation [] is preferable.
+    155 |[90m    this.D = new Array();[39m
+                               ^ The array literal notation [] is preferable.
+    197 |[90m    for (var n = 1; n <= 6; n++) {[39m
+                        ^ 'n' is already defined.
+    245 |[90m       for (var n = 2; n <= 6; n++) {[39m
+                           ^ 'n' is already defined.
+    253 |[90m       for (var n = 2; n <= 6; n++) {[39m
+                           ^ 'n' is already defined.
+    269 |[90m    for (var n = 1; n <= 9; n++) {[39m
+                        ^ 'n' is already defined.
+[1m   app/js/proj4js/projCode/ortho.js[22m
+     64 |[90m    p.x=x;[39m
+                 ^ 'x' used out of scope.
+     65 |[90m    p.y=y;[39m
+                 ^ 'y' used out of scope.
+[1m   app/js/proj4js/projCode/somerc.js[22m
+     31 |[90m            - this.alpha[39m
+                     ^ Bad line breaking before '-'.
+     32 |[90m            * Math.log(Math.tan(Math.PI / 4.0 + phy0 / 2.0))[39m
+                     ^ Bad line breaking before '*'.
+     33 |[90m            + this.alpha[39m
+                     ^ Bad line breaking before '+'.
+     34 |[90m            * e / 2[39m
+                     ^ Bad line breaking before '*'.
+     35 |[90m            * Math.log((1 + e * sinPhy0)[39m
+                     ^ Bad line breaking before '*'.
+     36 |[90m            / (1 - e * sinPhy0));[39m
+                     ^ Bad line breaking before '/'.
+     43 |[90m            * Math.log((1 + this.e * Math.sin(p.y))[39m
+                     ^ Bad line breaking before '*'.
+     44 |[90m            / (1 - this.e * Math.sin(p.y)));[39m
+                     ^ Bad line breaking before '/'.
+     55 |[90m            / (Math.sin(this.b0) * Math.tan(b) +[39m
+                     ^ Bad line breaking before '/'.
+     62 |[90m            * Math.log((1 + Math.sin(rotB)) / (1 - Math.sin(rotB)))[39m
+                     ^ Bad line breaking before '*'.
+     63 |[90m            + this.y0;[39m
+                     ^ Bad line breaking before '+'.
+     76 |[90m            + Math.sin(this.b0) * Math.cos(rotB) * Math.cos(rotI));[39m
+                     ^ Bad line breaking before '+'.
+     78 |[90m            / (Math.cos(this.b0) * Math.cos(rotI) - Math.sin(this.b0)[39m
+                     ^ Bad line breaking before '/'.
+     79 |[90m            * Math.tan(rotB)));[39m
+                     ^ Bad line breaking before '*'.
+     96 |[90m              / this.alpha[39m
+                       ^ Bad line breaking before '/'.
+     97 |[90m              * (Math.log(Math.tan(Math.PI / 4.0 + b / 2.0)) - this.K)[39m
+                       ^ Bad line breaking before '*'.
+     98 |[90m              + this.e[39m
+                       ^ Bad line breaking before '+'.
+     99 |[90m              * Math.log(Math.tan(Math.PI / 4.0[39m
+                       ^ Bad line breaking before '*'.
+    100 |[90m              + Math.asin(this.e * Math.sin(phy))[39m
+                       ^ Bad line breaking before '+'.
+    101 |[90m              / 2.0));[39m
+                       ^ Bad line breaking before '/'.
+[1m   app/js/proj4js/projCode/stere.js[22m
+     57 |[90m              this.cosph0 = Math.cos(this.lat0);[39m
+                                                        ^ Expected a 'break' statement before 'case'.
+    106 |[90m            lat = -lat;[39m
+                               ^ Expected a 'break' statement before 'case'.
+    118 |[90m        coslam = Math.cos(lon);[39m
+                 ^ 'coslam' used out of scope.
+    119 |[90m        sinlam = Math.sin(lon);[39m
+                 ^ 'sinlam' used out of scope.
+    120 |[90m        sinphi = Math.sin(lat);[39m
+                 ^ 'sinphi' used out of scope.
+    123 |[90m          var Xt = 2.0* Math.atan(this.ssfn_(lat, sinphi, this.e));[39m
+                                                           ^ 'sinphi' used out of scope.
+    129 |[90m            var A = this.akm1 / (this.cosX1 * (1.0 + this.sinX1 * sinX + this.cosX1 * cosX * coslam));[39m
+                                                                                                      ^ 'coslam' used out of scope.
+    130 |[90m            y = A * (this.cosX1 * sinX - this.sinX1 * cosX * coslam);[39m
+                                                                      ^ 'coslam' used out of scope.
+    134 |[90m            var A = 2.0* this.akm1 / (1.0 + cosX * coslam);[39m
+                           ^ 'A' is already defined.
+    134 |[90m            var A = 2.0* this.akm1 / (1.0 + cosX * coslam);[39m
+                                                            ^ 'coslam' used out of scope.
+    140 |[90m            coslam = - coslam;[39m
+                     ^ 'coslam' used out of scope.
+    140 |[90m            coslam = - coslam;[39m
+                                ^ 'coslam' used out of scope.
+    141 |[90m            sinphi = -sinphi;[39m
+                     ^ 'sinphi' used out of scope.
+    141 |[90m            sinphi = -sinphi;[39m
+                               ^ 'sinphi' used out of scope.
+    141 |[90m            sinphi = -sinphi;[39m
+                                     ^ Expected a 'break' statement before 'case'.
+    143 |[90m            x = this.akm1 * Proj4js.common.tsfnz(this.e, lat, sinphi);[39m
+                                                                       ^ 'sinphi' used out of scope.
+    144 |[90m            y = - x * coslam;[39m
+                               ^ 'coslam' used out of scope.
+    147 |[90m        x = x * sinlam;[39m
+                         ^ 'sinlam' used out of scope.
+    193 |[90m            y = -y;[39m
+                           ^ Expected a 'break' statement before 'case'.
+    226 |[90m            y = -y;[39m
+                           ^ Expected a 'break' statement before 'case'.
+
+[31m>> [39m201 errors in 47 files
+[33mWarning: Task "jshint:files" failed. Use --force to continue.[39m
+
+[31mAborted due to warnings.[39m
