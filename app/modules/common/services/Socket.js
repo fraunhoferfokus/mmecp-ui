@@ -59,7 +59,7 @@ angular.module('app.socket', ['ngWebsocket', 'app.config', 'app.dashboard.map.se
 
 
             console.log("Message from Backend##############################################");
-           //console.log(res);
+         //  console.log(res);
 
             //interpret message
             if (res.options !== undefined) {
@@ -79,7 +79,8 @@ angular.module('app.socket', ['ngWebsocket', 'app.config', 'app.dashboard.map.se
             }
 
 
-            //Mapobjects
+
+
             if(res[0].type == "mapobject") {
                 console.log("New Message from Backend: mapobject");
                 mapObjects.push(res);
