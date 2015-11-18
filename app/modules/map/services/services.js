@@ -107,7 +107,7 @@ angular.module('app.dashboard.map.services', ['app.config', 'app.dashboard.map.d
             this.setCitiesDefaults(allCityObject.defaults);
             console.log(allCityObject.defaults);
 
-            this.defaultCity = "BER"; //TODO: replace it with allCityObject.defaults.city
+          //  this.defaultCity = "BER"; //TODO: replace it with allCityObject.defaults.city
           //  this.putDefaultCityFirstInSelectionCombobox();
             this.updateSelectedCity(this.defaultCity);
         };
