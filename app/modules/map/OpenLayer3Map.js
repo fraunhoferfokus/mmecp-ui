@@ -11,9 +11,6 @@ function OpenLayer3Map(config, rootbroadcastEvent, mapService){
     proj4.defs('EPSG:32633', "+title= WGS 84 +proj=utm +zone=33 +ellps=WGS84 +datum=WGS84 +units=m +no_defs");
     proj4.defs('EPSG:2393',"+title= KKJ +proj=tmerc +lat_0=0 +lon_0=27 +k=1 +x_0=3500000 +y_0=0 +ellps=intl +towgs84=-96.062,-82.428,-121.753,4.801,0.345,-1.376,1.496 +units=m +no_defs");
 
-
-
-
     this.vectorOfMapObjects= new ol.source.Vector({
         features: [ ]
     });
@@ -22,7 +19,6 @@ function OpenLayer3Map(config, rootbroadcastEvent, mapService){
     var vectorLayer = new ol.layer.Vector({
         source:  this.vectorOfMapObjects
     });
-
 
 
     var selectedFeature;
@@ -147,16 +143,21 @@ OpenLayer3Map.prototype.setCenter = function(city) {
 
 };
 
-OpenLayer3Map.prototype.getmapAreaofMapObject = function(mapObject){
+OpenLayer3Map.prototype.getmapAreasofMapObject = function(mapObject){
+    var mapArrayList = [];
+    var amountOfMapAreas = 0;
     for (var i = 0;i<mapObject.elements.length;i++){
         if (mapObject.elements[i].maparea !== undefined){
-            return mapObject.elements[i].maparea;
+            mapArrayList.push(mapObject.elements[i].maparea);
+            amountOfMapAreas++;
         }
         if (mapObject.elements[i].MapArea !== undefined){
-            return mapObject.elements[i].MapArea;
+            mapArrayList.push(mapObject.elements[i].MapArea);
+            amountOfMapAreas++;
         }
     }
-    return null;
+    console.log("AmountOfMapAreas: "+amountOfMapAreas);
+    return mapArrayList;
 };
 
 
@@ -220,10 +221,13 @@ OpenLayer3Map.prototype.prepareMapData = function (mapObject){
 };
 
 
-OpenLayer3Map.prototype.generateMapObjectFeature = function (mapObjectTyp,mapObjectElement,fid){
+OpenLayer3Map.prototype.generateMapObjectFeatures = function (mapObjectTyp,mapObjectElement,fid){
 
     var feature;
 
+    console.log("---------------------------------------");
+    console.log(mapObjectTyp);
+    var featureList = [];
     switch(mapObjectTyp)
     {
         case "arrowedCircle":
@@ -231,61 +235,61 @@ OpenLayer3Map.prototype.generateMapObjectFeature = function (mapObjectTyp,mapObj
             //console.log("draw arrowCircle " + i);
             var arrowCircle =  this.getCircleArrowOfMapObject(mapObjectElement);
             feature = this.createArrowCircleFeature(arrowCircle, fid);
+            featureList.push(feature);
             break;
         }
         case "mapArea":
         {
 
-            var mapArea = this.getmapAreaofMapObject(mapObjectElement);
 
-            var weight = this.getHeatMapWeight(mapObjectElement);
+            var mapAreaList = this.getmapAreasofMapObject(mapObjectElement);
+
+            for(var i  = 0;i<mapAreaList.length;i++)
+            {
+                var mapArea = mapAreaList[i];
+                var weight = this.getHeatMapWeight(mapObjectElement);
                 mapArea.weight = weight;
-
                 feature = this.createMapFeature(mapArea, fid);
+                featureList.push(feature);
+
+            }
 
 
             break;
         }
 
     }
-    return feature;
+    return featureList;
 
 };
 
 
 OpenLayer3Map.prototype.addMapObjectToMap = function (mapObjectElement){
 
-
-
-
-
     var mapObjectTyp = this.getMapObjectTyp(mapObjectElement);
     var fid = mapObjectElement.objectID + ":" +
         mapObjectElement.objectType + ":" +
         mapObjectElement.objectSubtype;
 
+    var featureList = this.generateMapObjectFeatures(mapObjectTyp,mapObjectElement,fid);
+    var feature;
+
+    //add features to correct layer
+    for(var i = 0;i<featureList.length;i++) {
+
+        feature = featureList[i];
 
 
+        feature.mapObject = mapObjectElement;
+        this.removeFeatureIfExisting(fid);
+        if (feature.parentLayer == 'mapObjects' || feature.parentLayer === undefined) {
+            this.vectorOfMapObjects.addFeatures([feature]);
 
-
-
-
-    var feature = this.generateMapObjectFeature(mapObjectTyp,mapObjectElement,fid);
-
-    feature.mapObject = mapObjectElement;
-
-    this.removeFeatureIfExisting(fid);
-
-    if(feature.parentLayer == 'mapObjects' || feature.parentLayer === undefined)
-    {
-        this.vectorOfMapObjects.addFeatures([feature]);
+        }
+        if (feature.parentLayer == 'heatmap') {
+            this.vectorOfHeatMapObjects.addFeature(feature);
+        }
     }
-    if(feature.parentLayer == 'heatmap')
-    {
-        this.vectorOfHeatMapObjects.addFeature(feature);
-    }
-
-
 
 };
 
@@ -349,12 +353,11 @@ OpenLayer3Map.prototype.removeFeaturesWithSubType = function(subType)
 OpenLayer3Map.prototype.addObjects = function (mapObjectList){
 
     console.log("start drawing map objects");
+    console.log(mapObjectList);
 
-    for (i = 0;i<mapObjectList.length; i++){
-
+    for (var i = 0;i<mapObjectList.length; i++){
         mapObjectList[i] = this.prepareMapData(mapObjectList[i]);
         this.addMapObjectToMap(mapObjectList[i]);
-
     }
 
 };
@@ -363,28 +366,23 @@ OpenLayer3Map.prototype.addObjects = function (mapObjectList){
 OpenLayer3Map.prototype.createHeatmapFeature = function(area, id){
 
     var coords = area.area.coordinates;
-   // console.log("coords");
-   // console.log(coords);
-var feature;
+    var feature;
 
     if(area.area.coordinateType === "UTM")
     {
 
             var point = [coords[0].e, coords[0].n];
-
-
-        coords = [point[0],point[1]];
+             coords = [point[0],point[1]];
     }
 
     feature = new ol.Feature({
         geometry: new ol.geom.Point(coords)
     });
     feature.parentLayer = "heatmap";
-    var maxWeight = 99999.00;
+    var maxWeight = this.config.heatmap.maxWeight;
 
     feature.set('weight',area.weight/maxWeight);
     return feature;
-
 
 };
 
@@ -444,6 +442,56 @@ OpenLayer3Map.prototype.createPolygonFeature = function(area, id){
 
 };
 
+OpenLayer3Map.prototype.createLineFeature = function(area, id){
+
+
+    var coords;
+    var feature;
+
+    console.log("make a line");
+    coords = area.area.coordinates;
+    var pointList = [];
+    if(area.area.coordinateType === "UTM")
+    {
+        for (var i=0; i<coords.length; i++) {
+            var point = [coords[i].e, coords[i].n];
+            pointList.push([point[0],point[1]]);
+        }
+        coords = pointList;
+    }
+
+    feature = new ol.Feature({
+        geometry: new ol.geom.LineString(coords)
+    });
+
+    var polyStyle = new ol.style.Style({
+
+
+        stroke: new ol.style.Stroke({
+            color: "rgba(" + area.color.red + ", " + area.color.green + ", " + area.color.blue + ", " + 0.5 + ")",
+            width: 5
+        })
+    });
+
+    var highlightStyle = new ol.style.Style({
+
+
+        stroke: new ol.style.Stroke({
+            color: "rgba(" + area.color.red + ", " + area.color.green + ", " + area.color.blue + ", " + 1 + ")",
+            width: 10
+        }),
+    });
+
+    feature.highlightStyle =  highlightStyle;
+    feature.unSelectedStyle = polyStyle;
+
+    feature.setStyle(polyStyle);
+    feature.parentLayer = "mapObjects";
+    return feature;
+
+
+
+};
 
 
 
@@ -465,6 +513,12 @@ OpenLayer3Map.prototype.createMapFeature = function(area, id){
     if(type.toLowerCase() === "polygon")
     {
        feature =  this.createPolygonFeature(area,id);
+
+    }
+    if(type.toLowerCase() === "line")
+    {
+        console.log("LINE");
+        feature =  this.createLineFeature(area,id);
 
     }
 

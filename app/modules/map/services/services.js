@@ -53,6 +53,7 @@ angular.module('app.dashboard.map.services', ['app.config', 'app.dashboard.map.d
         this.actualUsecaseOptions = [];
         this.charts = [];
         this.mapLegend = {};
+        this.mapLegendKey = "";
         this.citiesDefaults = {};
 
 
@@ -77,7 +78,8 @@ angular.module('app.dashboard.map.services', ['app.config', 'app.dashboard.map.d
 
         this.setMapLegend = function(legend)
         {
-            this.mapLegend = legend.values;
+            this.mapLegend = legend.values.reverse();
+            this.mapLegendKey = legend.key;
             $rootScope.showLegend = true;
 
             $rootScope.$broadcast('legendChanged');
