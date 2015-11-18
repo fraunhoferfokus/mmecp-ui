@@ -151,13 +151,14 @@ angular.module('app.socket', ['ngWebsocket', 'app.config', 'app.dashboard.map.se
             //check if valid json
             if(typeof res == "string")
             {
+
                 console.log("we got a string from backend");
-                //okay let's try to parse it
                 try {
+
                     res = JSON.parse(res);
                 } catch (e) {
-                    alert("Backend doesn't send valid JSON");
-                    return false;
+                    //alert("Backend doesn't send valid JSON");
+                    return;
                 }
             }
 
