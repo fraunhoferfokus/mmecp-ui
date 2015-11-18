@@ -466,23 +466,19 @@ OpenLayer3Map.prototype.createLineFeature = function(area, id){
 
     var polyStyle = new ol.style.Style({
 
-        fill: new ol.style.Fill({
-            color: "rgba(" + area.color.red + ", " + area.color.green + ", " + area.color.blue + ", " + 0.6 + ")"
-        }),
+
         stroke: new ol.style.Stroke({
-            color: "rgba(" + area.color.red + ", " + area.color.green + ", " + area.color.blue + ", " + 0.6 + ")",
+            color: "rgba(" + area.color.red + ", " + area.color.green + ", " + area.color.blue + ", " + 0.5 + ")",
             width: 5
-        }),
+        })
     });
 
     var highlightStyle = new ol.style.Style({
 
-        fill: new ol.style.Fill({
-            color: "rgba(" + area.color.red + ", " + area.color.green + ", " + area.color.blue + ", " + area.color.alpha + ")"
-        }),
+
         stroke: new ol.style.Stroke({
-            color: "rgba(0,0,0,1)",
-            width: 3
+            color: "rgba(" + area.color.red + ", " + area.color.green + ", " + area.color.blue + ", " + 1 + ")",
+            width: 10
         }),
     });
 
