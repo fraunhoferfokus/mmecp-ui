@@ -30,7 +30,7 @@
                                 </div>
                                 <div id="mapLegend" ng-controller="mapLegendController">
                                 <div id="mapLegendContent" ng-if="showLegend" >
-                                    <div id="mapLegendHeadline"><b>Legend</b></div>
+                                    <div id="mapLegendHeadline"><b>{{legendKey}}</b></div>
                                     <div ng-repeat="legendElement in legendList">
                                          <div class="colorLegendBox" style="background-color: {{legendElement.color}}"></div>
                                         <div class="labelLegendBox">{{legendElement.label}}</div>

@@ -27,6 +27,7 @@ mainControllers.controller('mapLegendController', ['$scope','mapService','$rootS
 
         console.log("recieved broadcast legend changed");
         $scope.legendList = replaceEmptyLabels(mapService.mapLegend);
+        $scope.legendKey = mapService.mapLegendKey;
         console.log( $scope.legendList );
         if ($scope.$root.$$phase != '$apply' && $scope.$root.$$phase != '$digest') {
             $scope.$apply();
