@@ -442,6 +442,60 @@ OpenLayer3Map.prototype.createPolygonFeature = function(area, id){
 
 };
 
+OpenLayer3Map.prototype.createLineFeature = function(area, id){
+
+
+    var coords;
+    var feature;
+
+    console.log("make a line");
+    coords = area.area.coordinates;
+    var pointList = [];
+    if(area.area.coordinateType === "UTM")
+    {
+        for (var i=0; i<coords.length; i++) {
+            var point = [coords[i].e, coords[i].n];
+            pointList.push([point[0],point[1]]);
+        }
+        coords = pointList;
+    }
+
+    feature = new ol.Feature({
+        geometry: new ol.geom.LineString(coords)
+    });
+
+    var polyStyle = new ol.style.Style({
+
+        fill: new ol.style.Fill({
+            color: "rgba(" + area.color.red + ", " + area.color.green + ", " + area.color.blue + ", " + 0.6 + ")"
+        }),
+        stroke: new ol.style.Stroke({
+            color: "rgba(" + area.color.red + ", " + area.color.green + ", " + area.color.blue + ", " + 0.6 + ")",
+            width: 5
+        }),
+    });
+
+    var highlightStyle = new ol.style.Style({
+
+        fill: new ol.style.Fill({
+            color: "rgba(" + area.color.red + ", " + area.color.green + ", " + area.color.blue + ", " + area.color.alpha + ")"
+        }),
+        stroke: new ol.style.Stroke({
+            color: "rgba(0,0,0,1)",
+            width: 3
+        }),
+    });
+
+    feature.highlightStyle =  highlightStyle;
+    feature.unSelectedStyle = polyStyle;
+
+    feature.setStyle(polyStyle);
+    feature.parentLayer = "mapObjects";
+    return feature;
+
+
+
+};
 
 
 
@@ -463,6 +517,12 @@ OpenLayer3Map.prototype.createMapFeature = function(area, id){
     if(type.toLowerCase() === "polygon")
     {
        feature =  this.createPolygonFeature(area,id);
+
+    }
+    if(type.toLowerCase() === "line")
+    {
+        console.log("LINE");
+        feature =  this.createLineFeature(area,id);
 
     }
 
