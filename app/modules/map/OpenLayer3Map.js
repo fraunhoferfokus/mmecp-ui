@@ -284,7 +284,7 @@ OpenLayer3Map.prototype.addMapObjectToMap = function (mapObjectElement){
         this.removeFeatureIfExisting(fid);
         if (feature.parentLayer == 'mapObjects' || feature.parentLayer === undefined) {
             this.vectorOfMapObjects.addFeatures([feature]);
-        
+
         }
         if (feature.parentLayer == 'heatmap') {
             this.vectorOfHeatMapObjects.addFeature(feature);
