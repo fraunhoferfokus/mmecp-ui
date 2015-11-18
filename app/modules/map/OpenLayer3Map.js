@@ -224,6 +224,8 @@ OpenLayer3Map.prototype.generateMapObjectFeature = function (mapObjectTyp,mapObj
 
     var feature;
 
+    console.log("---------------------------------------");
+    console.log(mapObjectTyp);
     switch(mapObjectTyp)
     {
         case "arrowedCircle":
@@ -235,6 +237,7 @@ OpenLayer3Map.prototype.generateMapObjectFeature = function (mapObjectTyp,mapObj
         }
         case "mapArea":
         {
+
 
             var mapArea = this.getmapAreaofMapObject(mapObjectElement);
 
@@ -349,9 +352,12 @@ OpenLayer3Map.prototype.removeFeaturesWithSubType = function(subType)
 OpenLayer3Map.prototype.addObjects = function (mapObjectList){
 
     console.log("start drawing map objects");
+    console.log(mapObjectList);
+  //  mapObjectList = mapObjectList.mapobjects;
 
-    for (i = 0;i<mapObjectList.length; i++){
+    for (var i = 0;i<mapObjectList.length; i++){
 
+        console.log("fu");
         mapObjectList[i] = this.prepareMapData(mapObjectList[i]);
         this.addMapObjectToMap(mapObjectList[i]);
 
