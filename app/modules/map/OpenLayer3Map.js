@@ -744,7 +744,7 @@ OpenLayer3Map.prototype.createArrowCircleFeature = function(arrowCircle, id) {
 
     var iconStyle = new ol.style.Style({
         image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
-            anchor: [0.5, 0.5],
+            anchor: [0.5, 200],
             anchorXUnits: 'fraction',
             anchorYUnits: 'pixels',
             opacity: 0.75,
@@ -756,7 +756,7 @@ OpenLayer3Map.prototype.createArrowCircleFeature = function(arrowCircle, id) {
 
     var highlightStyle = new ol.style.Style({
         image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
-            anchor: [0.5, 0.5],
+            anchor: [0.5, 200],
             anchorXUnits: 'fraction',
             anchorYUnits: 'pixels',
             opacity: 1,
