@@ -19,7 +19,7 @@ angular.module('app.dashboard.map.services', ['app.config', 'app.dashboard.map.d
             if(this.streetlifeInstance.indexOf("dev") > -1 || this.streetlifeInstance.indexOf("localhost") > -1)
             {
                 this.streetlifeInstance = "dev";
-                this.defaultCity = "ROV";
+                this.defaultCity = "BER";
                 this.accessToCities = ["BER","ROV","TRE"];
             }
             if(this.streetlifeInstance.indexOf("berlin") > -1)

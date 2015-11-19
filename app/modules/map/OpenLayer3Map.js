@@ -249,8 +249,10 @@ OpenLayer3Map.prototype.generateMapObjectFeatures = function (mapObjectTyp,mapOb
                 var mapArea = mapAreaList[i];
                 var weight = this.getHeatMapWeight(mapObjectElement);
                 mapArea.weight = weight;
-                feature = this.createMapFeature(mapArea, fid);
-                featureList.push(feature);
+               var features = this.createMapFeature(mapArea, fid);
+
+               featureList = featureList.concat(features);
+
 
             }
 
@@ -281,9 +283,10 @@ OpenLayer3Map.prototype.addMapObjectToMap = function (mapObjectElement){
 
 
         feature.mapObject = mapObjectElement;
-        this.removeFeatureIfExisting(fid);
+        console.log(feature);
+       this.removeFeatureIfExisting(fid);
         if (feature.parentLayer == 'mapObjects' || feature.parentLayer === undefined) {
-            this.vectorOfMapObjects.addFeatures([feature]);
+            this.vectorOfMapObjects.addFeature(feature);
 
         }
         if (feature.parentLayer == 'heatmap') {
@@ -300,7 +303,7 @@ OpenLayer3Map.prototype.removeFeatureIfExisting = function(fid)
     for(var i = 0;i<features.length;i++)
     {
         var feature = features[i];
-        if(feature.id == fid)
+        if(feature.id === fid)
         {
             this.vectorOfMapObjects.removeFeature(feature);
         }
@@ -494,13 +497,83 @@ OpenLayer3Map.prototype.createLineFeature = function(area, id){
 };
 
 
+OpenLayer3Map.prototype.createLineFeatureWithStartAndEndPoints = function(area, id){
 
+
+    var coords;
+    var lineFeature;
+
+    console.log("make a line");
+    coords = area.area.coordinates;
+    var pointList = [];
+    if(area.area.coordinateType === "UTM")
+    {
+        for (var i=0; i<coords.length; i++) {
+            var point = [coords[i].e, coords[i].n];
+            pointList.push([point[0],point[1]]);
+        }
+        coords = pointList;
+    }
+
+
+    var startPoint = coords[0];
+    var endPoint = coords[coords.length-1];
+
+
+
+    lineFeature = new ol.Feature({
+        geometry: new ol.geom.LineString(coords)
+    });
+
+    var polyStyle = new ol.style.Style({
+
+
+        stroke: new ol.style.Stroke({
+            color: "rgba(" + 0 + ", " + 140 + ", " + 186 + ", " + 0.5 + ")",
+            width: 5
+        })
+    });
+
+    var highlightStyle = new ol.style.Style({
+
+
+        stroke: new ol.style.Stroke({
+            color: "rgba(" + 0 + ", " +  140 + ", " + 186 + ", " + 1 + ")",
+            width: 10
+        }),
+    });
+
+    lineFeature.highlightStyle =  highlightStyle;
+    lineFeature.unSelectedStyle = polyStyle;
+
+    lineFeature.setStyle(polyStyle);
+    lineFeature.parentLayer = "mapObjects";
+    lineFeature.id = id+"line";
+
+
+    var startIconFeature = this.createIcon(startPoint,id+"start_icon","A");
+    var endIconFeature = this.createIcon(endPoint,id+"end_icon","B");
+
+    startIconFeature.parentLayer  = "mapObjects";
+    endIconFeature.parentLayer = "mapObjects";
+
+
+    var features = [];
+    features.push(lineFeature);
+    features.push(endIconFeature);
+    features.push(startIconFeature);
+
+    return features;
+
+
+
+};
 
 OpenLayer3Map.prototype.createMapFeature = function(area, id){
     var coords;
     var sourceCoordSystem = "EPSG:4326";
 
-
+    var featureList = [];
     var type =  area.area.type;
     var feature;
 
@@ -508,39 +581,64 @@ OpenLayer3Map.prototype.createMapFeature = function(area, id){
     {
 
     feature = this.createHeatmapFeature(area,id);
+        feature.id = id;
+        featureList.push(feature);
 
     }
     if(type.toLowerCase() === "polygon")
     {
+
        feature =  this.createPolygonFeature(area,id);
+        feature.id = id;
+        featureList.push(feature);
 
     }
     if(type.toLowerCase() === "line")
     {
         console.log("LINE");
-        feature =  this.createLineFeature(area,id);
+       featureList = this.createLineFeatureWithStartAndEndPoints(area,id);
 
     }
 
 
 
-    //TRANSFORM COORDINATES
-    if(area.area.coordinateType === "UTM")
-    {
-        sourceCoordSystem = "EPSG:32633";
-    }
+    featureList = this.transformCoordinates(sourceCoordSystem,'EPSG:900913',featureList,area.area.coordinateType);
 
-    if(sourceCoordSystem !== undefined)
-    {
-        feature.getGeometry().transform(sourceCoordSystem, 'EPSG:900913');
-    }
-    feature.id = id;
 
-    return feature;
+
+    return featureList;
 
 
 
 };
+
+OpenLayer3Map.prototype.transformCoordinates = function(sourceSystem,destinationSystem,listOfFeatures,coordinateType)
+{
+
+    var feature;
+    for(var i =0;i<listOfFeatures.length;i++)
+    {
+        feature = listOfFeatures[i];
+        //TRANSFORM COORDINATES
+        if(coordinateType === "UTM")
+        {
+            sourceSystem = "EPSG:32633";
+        }
+
+        if(sourceSystem !== undefined)
+        {
+            feature.getGeometry().transform(sourceSystem, destinationSystem);
+        }
+
+        listOfFeatures[i] = feature;
+
+    }
+
+    return listOfFeatures;
+
+
+}
+
 
 
 
@@ -560,6 +658,61 @@ OpenLayer3Map.prototype.getMapObjectTyp = function (mapObject)
     }
     return "unknown";
 };
+
+
+
+OpenLayer3Map.prototype.createIcon= function(coords, id,icon) {
+
+
+    console.log("Draw icons");
+
+    var x = coords[0];
+    var y = coords[1];
+
+    var iconPng = "img/" + icon + ".png";
+
+    var scaleFactor = 0.6;
+
+    var iconFeature = new ol.Feature({
+        geometry: new ol.geom.Point([x, y])
+
+    });
+
+    var iconStyle = new ol.style.Style({
+        image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
+            anchor: [0.5, 0.5],
+            anchorXUnits: 'fraction',
+            anchorYUnits: 'pixels',
+            opacity: 0.75,
+            scale: scaleFactor,
+            src: iconPng
+        }))
+    });
+
+
+    var highlightStyle = new ol.style.Style({
+        image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
+            anchor: [0.5, 0.5],
+            anchorXUnits: 'fraction',
+            anchorYUnits: 'pixels',
+            opacity: 1,
+            scale: scaleFactor*1.33, //make it 33% bigger if clicked
+            src: iconPng
+        }))
+    });
+
+
+    iconFeature.setStyle(iconStyle);
+    iconFeature.id = id;
+
+    iconFeature.highlightStyle =  highlightStyle;
+    iconFeature.unSelectedStyle = iconStyle;
+
+    return iconFeature;
+
+};
+
+
 
 
 OpenLayer3Map.prototype.createArrowCircleFeature = function(arrowCircle, id) {
@@ -591,7 +744,7 @@ OpenLayer3Map.prototype.createArrowCircleFeature = function(arrowCircle, id) {
 
     var iconStyle = new ol.style.Style({
         image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
-            anchor: [0.5, 46],
+            anchor: [0.5, 0.5],
             anchorXUnits: 'fraction',
             anchorYUnits: 'pixels',
             opacity: 0.75,
@@ -603,7 +756,7 @@ OpenLayer3Map.prototype.createArrowCircleFeature = function(arrowCircle, id) {
 
     var highlightStyle = new ol.style.Style({
         image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
-            anchor: [0.5, 46],
+            anchor: [0.5, 0.5],
             anchorXUnits: 'fraction',
             anchorYUnits: 'pixels',
             opacity: 1,
