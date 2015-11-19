@@ -283,10 +283,11 @@ OpenLayer3Map.prototype.addMapObjectToMap = function (mapObjectElement){
 
 
         feature.mapObject = mapObjectElement;
-        console.log(feature);
+
        this.removeFeatureIfExisting(fid);
         if (feature.parentLayer == 'mapObjects' || feature.parentLayer === undefined) {
             this.vectorOfMapObjects.addFeature(feature);
+
 
         }
         if (feature.parentLayer == 'heatmap') {
@@ -306,6 +307,7 @@ OpenLayer3Map.prototype.removeFeatureIfExisting = function(fid)
         if(feature.id === fid)
         {
             this.vectorOfMapObjects.removeFeature(feature);
+            console.log("remove");
         }
     }
 };
@@ -471,7 +473,8 @@ OpenLayer3Map.prototype.createLineFeature = function(area, id){
 
 
         stroke: new ol.style.Stroke({
-            color: "rgba(" + area.color.red + ", " + area.color.green + ", " + area.color.blue + ", " + 0.5 + ")",
+          //  color: "rgba(" + area.color.red + ", " + area.color.green + ", " + area.color.blue + ", " + 0.5 + ")",
+            color: "rgba(" + 0 + ", " + 140 + ", " + 186 + ", " + 0.5 + ")",
             width: 5
         })
     });
@@ -480,8 +483,10 @@ OpenLayer3Map.prototype.createLineFeature = function(area, id){
 
 
         stroke: new ol.style.Stroke({
-            color: "rgba(" + area.color.red + ", " + area.color.green + ", " + area.color.blue + ", " + 1 + ")",
-            width: 10
+          //  color: "rgba(" + area.color.red + ", " + area.color.green + ", " + area.color.blue + ", " + 1 + ")",
+
+            color: "#1F4754",
+            width: 8
         }),
     });
 
@@ -551,8 +556,8 @@ OpenLayer3Map.prototype.createLineFeatureWithStartAndEndPoints = function(area, 
     lineFeature.id = id+"line";
 
 
-    var startIconFeature = this.createIcon(startPoint,id+"start_icon","A");
-    var endIconFeature = this.createIcon(endPoint,id+"end_icon","B");
+    var startIconFeature = this.createIcon(startPoint,id+"start_icon","A",[0.5,0.5],0.6);
+    var endIconFeature = this.createIcon(endPoint,id+"end_icon","B",[0.5,0.5],0.6);
 
     startIconFeature.parentLayer  = "mapObjects";
     endIconFeature.parentLayer = "mapObjects";
@@ -596,7 +601,24 @@ OpenLayer3Map.prototype.createMapFeature = function(area, id){
     if(type.toLowerCase() === "line")
     {
         console.log("LINE");
-       featureList = this.createLineFeatureWithStartAndEndPoints(area,id);
+      // featureList = this.createLineFeatureWithStartAndEndPoints(area,id);
+        feature = this.createLineFeature(area,id);
+        feature.id = id+"#line";
+
+        featureList.push(feature);
+
+    }
+    if(type.toLowerCase() === "icon")
+    {
+        console.log("yay icon");
+
+        //console.log(area.coordinates);
+        console.log(area);
+        feature = this.createIcon(area.area.coordinates,id+"#"+area.area.icon,area.area.icon,area.area.anchor,area.area.scale);
+
+        featureList.push(feature);
+
+
 
     }
 
@@ -661,7 +683,7 @@ OpenLayer3Map.prototype.getMapObjectTyp = function (mapObject)
 
 
 
-OpenLayer3Map.prototype.createIcon= function(coords, id,icon) {
+OpenLayer3Map.prototype.createIcon= function(coords, id,icon,anchor,scale) {
 
 
     console.log("Draw icons");
@@ -671,7 +693,7 @@ OpenLayer3Map.prototype.createIcon= function(coords, id,icon) {
 
     var iconPng = "img/" + icon + ".png";
 
-    var scaleFactor = 0.6;
+    var scaleFactor = scale;
 
     var iconFeature = new ol.Feature({
         geometry: new ol.geom.Point([x, y])
@@ -680,7 +702,7 @@ OpenLayer3Map.prototype.createIcon= function(coords, id,icon) {
 
     var iconStyle = new ol.style.Style({
         image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
-            anchor: [0.5, 0.5],
+            anchor: anchor,
             anchorXUnits: 'fraction',
             anchorYUnits: 'pixels',
             opacity: 0.75,
@@ -692,7 +714,7 @@ OpenLayer3Map.prototype.createIcon= function(coords, id,icon) {
 
     var highlightStyle = new ol.style.Style({
         image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
-            anchor: [0.5, 0.5],
+            anchor: anchor,
             anchorXUnits: 'fraction',
             anchorYUnits: 'pixels',
             opacity: 1,
