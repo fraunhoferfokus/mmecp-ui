@@ -19,7 +19,7 @@ angular.module('app.dashboard.map.services', ['app.config', 'app.dashboard.map.d
             if(this.streetlifeInstance.indexOf("dev") > -1 || this.streetlifeInstance.indexOf("localhost") > -1)
             {
                 this.streetlifeInstance = "dev";
-                this.defaultCity = "ROV";
+                this.defaultCity = "BER";
                 this.accessToCities = ["BER","ROV","TRE"];
             }
             if(this.streetlifeInstance.indexOf("berlin") > -1)
@@ -107,7 +107,7 @@ angular.module('app.dashboard.map.services', ['app.config', 'app.dashboard.map.d
             this.setCitiesDefaults(allCityObject.defaults);
             console.log(allCityObject.defaults);
 
-            this.defaultCity = "BER"; //TODO: replace it with allCityObject.defaults.city
+          //  this.defaultCity = "BER"; //TODO: replace it with allCityObject.defaults.city
           //  this.putDefaultCityFirstInSelectionCombobox();
             this.updateSelectedCity(this.defaultCity);
         };
