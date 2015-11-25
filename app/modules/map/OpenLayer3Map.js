@@ -71,7 +71,27 @@ function OpenLayer3Map(config, rootbroadcastEvent, mapService){
 
 
 
+
+
+
     this.map.on('singleclick', function(evt) {
+
+
+        var highlightAllFeaturesOfAGroup = function(groupId,featureList) {
+
+            for(var i = 0;i<featureList.length;i++)
+            {
+                console.log("feature ....");
+                console.log(featureList[i]);
+                if(i % 3 == 0)
+                {
+                    featureList[i].setStyle( featureList[i].highlightStyle);
+                }
+            }
+
+        };
+
+
         var feature = this.forEachFeatureAtPixel(evt.pixel,
             function(feature, layer) {
 
@@ -94,6 +114,12 @@ function OpenLayer3Map(config, rootbroadcastEvent, mapService){
                 {
                     if(selectedFeature.parentLayer !== 'heatmap')
                     feature.setStyle(defaultHighlightStyle);
+                }
+
+                if(feature.groupId !== undefined)
+                {
+                    var featureList = layer.getSource().getFeatures();
+                    highlightAllFeaturesOfAGroup("fuu",featureList);
                 }
 
 
@@ -126,6 +152,8 @@ function OpenLayer3Map(config, rootbroadcastEvent, mapService){
 
 
 }
+
+
 
 OpenLayer3Map.prototype.setCenter = function(city) {
     if (this.olMap === null) return;
@@ -473,8 +501,8 @@ OpenLayer3Map.prototype.createLineFeature = function(area, id){
 
 
         stroke: new ol.style.Stroke({
-          //  color: "rgba(" + area.color.red + ", " + area.color.green + ", " + area.color.blue + ", " + 0.5 + ")",
-            color: "rgba(" + 0 + ", " + 140 + ", " + 186 + ", " + 0.5 + ")",
+            color: "rgba(" + area.color.red + ", " + area.color.green + ", " + area.color.blue + ", " + 0.5 + ")",
+          // color: "rgba(" + 0 + ", " + 140 + ", " + 186 + ", " + 0.5 + ")",
             width: 5
         })
     });
@@ -488,6 +516,9 @@ OpenLayer3Map.prototype.createLineFeature = function(area, id){
             color: "#1F4754",
             width: 8
         }),
+        fill: new ol.style.Fill({
+            color: "red"
+        })
     });
 
     feature.highlightStyle =  highlightStyle;
