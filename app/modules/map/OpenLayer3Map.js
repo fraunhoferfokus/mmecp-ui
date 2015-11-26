@@ -2,8 +2,10 @@
  * Created by lwi on 19.03.2015.
  */
 
-function OpenLayer3Map(config, rootbroadcastEvent, mapService){
 
+
+
+function OpenLayer3Map(config, rootbroadcastEvent, mapService){
 
     this.mapService = mapService;
 
@@ -22,6 +24,7 @@ function OpenLayer3Map(config, rootbroadcastEvent, mapService){
 
 
     var selectedFeature;
+    var selectedLayer;
 
     this.config = config;
 
@@ -71,27 +74,52 @@ function OpenLayer3Map(config, rootbroadcastEvent, mapService){
 
 
 
+    var setOnlySelectedFeatureMode = function(mode)
+    {
+        mapService.showOnlySelectedFeatureMode = mode;
+    }
 
+
+
+
+    var highlightAllFeaturesOfAGroup = function(groupID,featureList) {
+
+        for(var i = 0;i<featureList.length;i++)
+        {
+
+            if(featureList[i].groupID == groupID)
+            {
+                featureList[i].setStyle( featureList[i].highlightStyle);
+                // featureList[i].setZIndex(10);
+
+            }
+            else
+            {
+                if(featureList[i].nearlyInvisibleStyle !== undefined) {
+                    featureList[i].setStyle(featureList[i].nearlyInvisibleStyle);
+                }
+
+            }
+        }
+        setOnlySelectedFeatureMode(true);
+
+    };
+
+
+
+    var setNormalStyleOfAllFeaturesOfAGroup =  function(groupID,featureList) {
+
+
+        for(var i = 0;i<featureList.length;i++)
+        {
+                featureList[i].setStyle( featureList[i].unSelectedStyle);
+        }
+        setOnlySelectedFeatureMode(false);
+
+    };
 
 
     this.map.on('singleclick', function(evt) {
-
-
-        var highlightAllFeaturesOfAGroup = function(groupId,featureList) {
-
-            for(var i = 0;i<featureList.length;i++)
-            {
-                console.log("feature ....");
-                console.log(featureList[i]);
-                if(i % 3 == 0)
-                {
-                    featureList[i].setStyle( featureList[i].highlightStyle);
-                }
-            }
-
-        };
-
-
         var feature = this.forEachFeatureAtPixel(evt.pixel,
             function(feature, layer) {
 
@@ -103,6 +131,7 @@ function OpenLayer3Map(config, rootbroadcastEvent, mapService){
                 }
 
                 selectedFeature = feature;
+                selectedLayer = layer;
 
                 if(feature.highlightStyle !== undefined)
                 {
@@ -116,13 +145,13 @@ function OpenLayer3Map(config, rootbroadcastEvent, mapService){
                     feature.setStyle(defaultHighlightStyle);
                 }
 
-                if(feature.groupId !== undefined)
+
+                if(feature.groupID !== undefined)
                 {
+
                     var featureList = layer.getSource().getFeatures();
-                    highlightAllFeaturesOfAGroup("fuu",featureList);
+                    highlightAllFeaturesOfAGroup(feature.groupID,featureList);
                 }
-
-
 
                 mapService.mapObjectForInformationPanel = feature.mapObject;
                 rootbroadcastEvent('openMapObjectInformationPanel',null);
@@ -133,15 +162,20 @@ function OpenLayer3Map(config, rootbroadcastEvent, mapService){
                 return [feature, layer];
             });
 
-        console.log(selectedFeature);
-        if(feature === undefined)
+        if(feature === undefined)  //user clicked on position the map where no features were placed
         {
             //no feature selected, close detail view
             rootbroadcastEvent('closeMapObjectInformationPanel', null);
 
             //unselect previous selected feature
-            if(selectedFeature !== undefined)
+            if(selectedFeature.groupID !== undefined)
             {
+                var featureList = selectedLayer.getSource().getFeatures();
+                setNormalStyleOfAllFeaturesOfAGroup(selectedFeature.groupID,featureList);
+            }
+            else(selectedFeature !== undefined)
+            {
+
                 selectedFeature.setStyle(selectedFeature.unSelectedStyle);
             }
         }
@@ -152,6 +186,8 @@ function OpenLayer3Map(config, rootbroadcastEvent, mapService){
 
 
 }
+
+
 
 
 
@@ -184,7 +220,7 @@ OpenLayer3Map.prototype.getmapAreasofMapObject = function(mapObject){
             amountOfMapAreas++;
         }
     }
-    console.log("AmountOfMapAreas: "+amountOfMapAreas);
+    //console.log("AmountOfMapAreas: "+amountOfMapAreas);
     return mapArrayList;
 };
 
@@ -253,8 +289,6 @@ OpenLayer3Map.prototype.generateMapObjectFeatures = function (mapObjectTyp,mapOb
 
     var feature;
 
-    console.log("---------------------------------------");
-    console.log(mapObjectTyp);
     var featureList = [];
     switch(mapObjectTyp)
     {
@@ -499,33 +533,58 @@ OpenLayer3Map.prototype.createLineFeature = function(area, id){
 
     var polyStyle = new ol.style.Style({
 
-
         stroke: new ol.style.Stroke({
             color: "rgba(" + area.color.red + ", " + area.color.green + ", " + area.color.blue + ", " + 0.5 + ")",
-          // color: "rgba(" + 0 + ", " + 140 + ", " + 186 + ", " + 0.5 + ")",
-            width: 5
-        })
+
+            width: 5,
+
+        }),
+        zIndex: 5
     });
 
     var highlightStyle = new ol.style.Style({
 
+        stroke: new ol.style.Stroke({
+            color: "rgba(" + area.color.red + ", " + area.color.green + ", " + area.color.blue + ", " + 1 + ")",
+            width: 8
+
+        }),
+        zIndex: 10
+
+    });
+
+    var nearlyInvisibleStyle = new ol.style.Style({
 
         stroke: new ol.style.Stroke({
-          //  color: "rgba(" + area.color.red + ", " + area.color.green + ", " + area.color.blue + ", " + 1 + ")",
+           // color: "rgba(" + area.color.red + ", " + area.color.green + ", " + area.color.blue + ", " + 0.1 + ")",
+            color:  "rgba(144, 163, 169, 0.8)",
+            width: 5
 
-            color: "#1F4754",
-            width: 8
         }),
-        fill: new ol.style.Fill({
-            color: "red"
-        })
+        zIndex:5
     });
+
+
 
     feature.highlightStyle =  highlightStyle;
     feature.unSelectedStyle = polyStyle;
+    feature.nearlyInvisibleStyle = nearlyInvisibleStyle;
 
-    feature.setStyle(polyStyle);
+    if(this.mapService.showOnlySelectedFeatureMode === false)
+    {
+        feature.setStyle(polyStyle);
+
+    }
+    else{
+        feature.setStyle(nearlyInvisibleStyle);
+    }
+
+
     feature.parentLayer = "mapObjects";
+    if(area.groupID !== undefined)
+    {
+        feature.groupID = area.groupID;
+    }
     return feature;
 
 
@@ -646,6 +705,10 @@ OpenLayer3Map.prototype.createMapFeature = function(area, id){
         //console.log(area.coordinates);
         console.log(area);
         feature = this.createIcon(area.area.coordinates,id+"#"+area.area.icon,area.area.icon,area.area.anchor,area.area.scale);
+        if(area.groupID !== undefined)
+        {
+            feature.groupID = area.groupID;
+        }
 
         featureList.push(feature);
 
@@ -723,6 +786,7 @@ OpenLayer3Map.prototype.createIcon= function(coords, id,icon,anchor,scale) {
     var y = coords[1];
 
     var iconPng = "img/" + icon + ".png";
+    var iconGray =  "img/" + icon + "_gray.png";
 
     var scaleFactor = scale;
 
@@ -740,6 +804,8 @@ OpenLayer3Map.prototype.createIcon= function(coords, id,icon,anchor,scale) {
             scale: scaleFactor,
             src: iconPng
         }))
+        ,
+        zIndex:5
     });
 
 
@@ -751,15 +817,37 @@ OpenLayer3Map.prototype.createIcon= function(coords, id,icon,anchor,scale) {
             opacity: 1,
             scale: scaleFactor*1.33, //make it 33% bigger if clicked
             src: iconPng
-        }))
+        })),
+        zIndex:10
     });
 
 
-    iconFeature.setStyle(iconStyle);
+    var nearlyInvisibleStyle = new ol.style.Style({
+        image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
+            anchor: anchor,
+            anchorXUnits: 'fraction',
+            anchorYUnits: 'pixels',
+            opacity: 0.3,
+            scale: scaleFactor, //make it 33% bigger if clicked
+            src: iconGray
+        })),
+        zIndex:5
+    });
+
+
+    if(this.mapService.showOnlySelectedFeatureMode == false)
+    {
+        iconFeature.setStyle(iconStyle);
+    }
+    else{
+        iconFeature.setStyle(nearlyInvisibleStyle);
+    }
+
     iconFeature.id = id;
 
     iconFeature.highlightStyle =  highlightStyle;
     iconFeature.unSelectedStyle = iconStyle;
+    iconFeature.nearlyInvisibleStyle = nearlyInvisibleStyle;
 
     return iconFeature;
 
