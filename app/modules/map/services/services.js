@@ -55,6 +55,7 @@ angular.module('app.dashboard.map.services', ['app.config', 'app.dashboard.map.d
         this.mapLegend = {};
         this.mapLegendKey = "";
         this.citiesDefaults = {};
+        this.showOnlySelectedFeatureMode = false; //important in which style new features are added in the meanwhile
 
 
         this.setCitiesDefaults=  function(citiesDefaults)
@@ -116,10 +117,13 @@ angular.module('app.dashboard.map.services', ['app.config', 'app.dashboard.map.d
 
         this.updateCharts = function(chartsObjects)
         {
-            this.charts = chartsObjects.elements;
+
+            var oldCharts = this.charts;
+            this.charts = [];
+            this.charts = this.charts.concat(chartsObjects.elements, oldCharts);
+            console.log(this.charts+"");
             console.log("Update Charts here");
             $rootScope.$broadcast('chartUpdate');
-
         };
 
 
