@@ -94,7 +94,9 @@
                                                     <tabset>
 
                                                     <tab heading="Scenario">{{  useCaseDescription }}</tab>
-                                                    <tab heading="Information" ng-if="showInformation" active="showInformation">
+
+
+                                                        <tab heading="Information" ng-if="showInformation" active="showInformation">
                                                         <div class="chart" ng-repeat="description in activeOptionDescriptionList">
 
                                                         <h3>{{description.headline}}</h3>
@@ -110,10 +112,10 @@
 
 
 
-                                                    </div></tab>
+                                                  </tab>
+                                                        <tab heading="Detail View" active="showDetailView" ng-if="showDetailView"><map-Object-Information align="Vertical"></map-Object-Information></tab>
 
-                                                    <tab heading="Detail View" active="showDetailView" ng-if="showDetailView"><map-Object-Information align="Vertical"></map-Object-Information></tab>
-
+                                                    </div>
                                                 </tabset>
 
                                                 </div>
