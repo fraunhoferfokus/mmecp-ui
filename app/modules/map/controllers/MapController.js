@@ -139,10 +139,13 @@ angular.module('app.dashboard.map.controller', ['app.socket', 'app.config', 'app
                 }
             );
 
-            $rootScope.showDetailView = false;
-            $rootScope.showUseCaseDescription = true;
-            $rootScope.showLegend = false;
-            $rootScope.showInformation = false;
+
+            //remove description from view panel
+            $rootScope.$broadcast("removeOptionDescriptionFromViewPanel", filterOption.optionID);
+            $rootScope.$broadcast("closeInformationTabIfEmpty", filterOption.optionID);
+
+
+
 
         };
 

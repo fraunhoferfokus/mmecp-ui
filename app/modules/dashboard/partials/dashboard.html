@@ -93,10 +93,12 @@
 
                                                     <tab heading="Scenario">{{  useCaseDescription }}</tab>
                                                     <tab heading="Information" ng-if="showInformation" active="showInformation">
+                                                        <div class="chart" ng-repeat="description in activeOptionDescriptionList">
 
+                                                        <h3>{{description.headline}}</h3>
+                                                        {{description.desc}}
 
-                                                        <h3>{{optionHeadline}}</h3>
-                                                        {{optionDescription}}
+                                                            </div>
 
                                                         <div ng-controller="StatusPanelMainChartController" ng-if="showCharts">
                                                         <div class="chart" ng-repeat="chart in charts">
@@ -109,22 +111,6 @@
                                                     <tab heading="Detail View" active="showDetailView" ng-if="showDetailView"><map-Object-Information align="Vertical"></map-Object-Information></tab>
 
                                                 </tabset>
-
-
-<!--                                                <div ng-if="showUseCaseDescription"> {{  useCaseDescription }} </div>
-
-                                                    <map-Object-Information ng-if="showDetailView"  align="Vertical"></map-Object-Information>
-
-
-                                                <div ng-controller="StatusPanelMainChartController" ng-if="showCharts">
-                                                    <div class="chart" ng-repeat="chart in charts">
-                                                        <h3>{{chart.chart.title}}</h3>
-                                                        <nvd3 options="chart.chart.options" data="chart.chart.data" api="api"></nvd3>
-                                                        {{chart.chart.description}}
-                                                    </div>
-</div> -->
-
-
 
                                                 </div>
                                             </div>

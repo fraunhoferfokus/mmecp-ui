@@ -19,9 +19,42 @@ mainControllers.controller('tabController', ['$scope','mapService','$rootScope',
 
 
 
-    $scope.optionHeadline = "";
-    $scope.optionDescription = "";
+    $scope.activeOptionDescriptionList = [];
 
+
+
+    var removeOptionDescriptionFromViewPanel = function(optionID){
+
+        for(var i = 0;i< $scope.activeOptionDescriptionList.length;i++)
+        {
+            console.log(optionID);
+            if($scope.activeOptionDescriptionList[i].optionID == optionID)
+            {
+                $scope.activeOptionDescriptionList.splice(i,1);
+                return;
+            }
+        }
+    }
+
+
+
+
+    $scope.$on('closeInformationTabIfEmpty',function(event,optionID)
+        {
+            if($scope.activeOptionDescriptionList.length == 0)
+            {
+               $rootScope.showInformation = false;
+                $rootScope.showDetailView = false;
+                $rootScope.showUseCaseDescription = true;
+                $rootScope.showLegend = false;
+            }
+        }
+    )
+
+    $scope.$on('removeOptionDescriptionFromViewPanel', function(event,optionID) {
+
+        removeOptionDescriptionFromViewPanel(optionID);
+    });
 
 
     $scope.$on('optionActivated', function(event,option) {
@@ -29,8 +62,15 @@ mainControllers.controller('tabController', ['$scope','mapService','$rootScope',
 
         console.log(">>>>>>>>>>>>>><<<<<<<<<<<<<<<<<");
         console.log(option);
-        $scope.optionHeadline = option.value;
-        $scope.optionDescription = option.description;
+
+
+
+        var descriptionElement = {};
+        descriptionElement.headline = option.value;
+        descriptionElement.desc = option.description;
+        descriptionElement.optionID = option.optionID;
+        $scope.activeOptionDescriptionList.push(descriptionElement);
+
 
         //workaround for firefox
         if ($scope.$root.$$phase != '$apply' && $scope.$root.$$phase != '$digest') {
