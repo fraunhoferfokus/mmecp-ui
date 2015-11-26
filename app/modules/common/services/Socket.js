@@ -18,10 +18,6 @@ angular.module('app.socket', ['ngWebsocket', 'app.config', 'app.dashboard.map.se
 
 
 
-
-
-
-
         ws.$on('$open', function () {
             console.log('connection open');
             console.log(mapService.city);

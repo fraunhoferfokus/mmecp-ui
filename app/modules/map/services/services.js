@@ -102,6 +102,8 @@ angular.module('app.dashboard.map.services', ['app.config', 'app.dashboard.map.d
 
 
 
+      
+
 
         this.setAllCityObject = function(allCityObject){
             this.allCities[0] = allCityObject;
@@ -119,12 +121,16 @@ angular.module('app.dashboard.map.services', ['app.config', 'app.dashboard.map.d
         {
             console.log(chartsObjects);
 
+
+            console.log(chartsObjects);
+
             var oldCharts = this.charts;
             this.charts = [];
             this.charts = this.charts.concat(chartsObjects.elements, oldCharts);
             console.log(this.charts);
             console.log("Update Charts here");
             $rootScope.$broadcast('chartUpdate');
+            $rootScope.$broadcast('chartUpdateOption',chartsObjects.elements[0].chart.optionID);
         };
 
 

@@ -37,6 +37,45 @@ mainControllers.controller('tabController', ['$scope','mapService','$rootScope',
     }
 
 
+    var getOptionDescriptionIndex = function(optionID)
+    {
+
+        for(var i = 0;i< $scope.activeOptionDescriptionList.length;i++)
+        {
+            if($scope.activeOptionDescriptionList[i].optionID == optionID)
+            {
+                return i;
+            }
+        }
+    }
+
+
+    var addChartsToDescription = function(optionID)
+    {
+
+       var index =  getOptionDescriptionIndex(optionID);
+        $scope.activeOptionDescriptionList[index].charts = [];
+        var chartList = [];
+        for(var i = 0;i<mapService.charts.length;i++)
+        {
+            if(mapService.charts[i].chart.optionID == optionID)
+            {
+
+                chartList.push(mapService.charts[i]);
+            }
+        }
+        $scope.activeOptionDescriptionList[index].charts = chartList;
+    }
+
+
+
+    $scope.$on('chartUpdateOption',function(event,optionID)
+    {
+
+        addChartsToDescription(optionID);
+
+    });
+
 
 
     $scope.$on('closeInformationTabIfEmpty',function(event,optionID)
@@ -52,10 +91,8 @@ mainControllers.controller('tabController', ['$scope','mapService','$rootScope',
     )
 
     $scope.$on('removeOptionDescriptionFromViewPanel', function(event,optionID) {
-
         removeOptionDescriptionFromViewPanel(optionID);
     });
-
 
     $scope.$on('optionActivated', function(event,option) {
 
@@ -63,13 +100,11 @@ mainControllers.controller('tabController', ['$scope','mapService','$rootScope',
         console.log(">>>>>>>>>>>>>><<<<<<<<<<<<<<<<<");
         console.log(option);
 
-
-
         var descriptionElement = {};
         descriptionElement.headline = option.value;
         descriptionElement.desc = option.description;
         descriptionElement.optionID = option.optionID;
-        $scope.activeOptionDescriptionList.push(descriptionElement);
+        $scope.activeOptionDescriptionList.unshift(descriptionElement);
 
 
         //workaround for firefox
