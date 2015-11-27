@@ -2,8 +2,8 @@
   "socket":
   {
     "__url": "ws://10.147.78.133:8080/api-websocket/panelui",
-    "_url": "ws://193.175.133.251/api-websocket",
-    "url": "ws://localhost:8080/api-websocket/panelui"
+    "url": "ws://193.175.133.251/api-websocket",
+    "_url": "ws://localhost:8080/api-websocket/panelui"
   },
 
   "heatmap":
