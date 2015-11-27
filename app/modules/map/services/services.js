@@ -99,11 +99,10 @@ angular.module('app.dashboard.map.services', ['app.config', 'app.dashboard.map.d
             $rootScope.$broadcast('chartUpdate');
 
         };
-
-
-
+        
 
         this.setAllCityObject = function(allCityObject){
+
             this.allCities[0] = allCityObject;
             this.setCitiesDefaults(allCityObject.defaults);
             console.log(allCityObject.defaults);
@@ -117,13 +116,18 @@ angular.module('app.dashboard.map.services', ['app.config', 'app.dashboard.map.d
 
         this.updateCharts = function(chartsObjects)
         {
+            console.log(chartsObjects);
+
+
+            console.log(chartsObjects);
 
             var oldCharts = this.charts;
             this.charts = [];
             this.charts = this.charts.concat(chartsObjects.elements, oldCharts);
-            console.log(this.charts+"");
+            console.log(this.charts);
             console.log("Update Charts here");
             $rootScope.$broadcast('chartUpdate');
+            $rootScope.$broadcast('chartUpdateOption',chartsObjects.elements[0].chart.optionID);
         };
 
 
