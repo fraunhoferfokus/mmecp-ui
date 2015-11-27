@@ -404,7 +404,7 @@ ul.off-canvas-list li  {
     position: absolute;
     bottom: 0%;
     z-index: 10000;
-    width: 85px;
+    width: 145px;
     background: rgba(255, 255, 255, 0.72);
     font-size: 75%;
     border-style: solid;
