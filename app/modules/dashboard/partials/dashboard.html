@@ -13,8 +13,10 @@
                             </section>
                             <section ng-switch on="showBigMap" class="middle tab-bar-section tab-bar-section-map">
                                 <h1 class="title left" style="color: black !important;">Map</h1>
-                                <a  ng-switch-when="true" class="right btn-showHideMap" ng-click="showHideMap()"><i class="fi-arrows-in large" style="color: black;"></i></a>
-                                <a  ng-switch-when="false" class="right btn-showHideMap" ng-click="showHideMap()"><i class="fi-arrows-out large" style="color: black;"></i></a>
+                                <a ng-switch-when="true" class="right btn-showHideMap" ng-click="showHideMap()"><i
+                                        class="fi-arrows-in large" style="color: black;"></i></a>
+                                <a ng-switch-when="false" class="right btn-showHideMap" ng-click="showHideMap()"><i
+                                        class="fi-arrows-out large" style="color: black;"></i></a>
                             </section>
                         </nav>
                         <!-- Filter -->
@@ -22,23 +24,24 @@
                             <filter></filter>
                         </aside>
                         <!-- Map -->
-                        <section  id="mapContainer" class="main-section overlayMapInfo-section panel" >
+                        <section id="mapContainer" class="main-section overlayMapInfo-section panel">
                             <div class="small-12 columns">
                                 <ol-map alt="Map ol-map"></ol-map>
                                 <div class="overlayMapInfo" ng-show="showOverlayMapInfo">
-                                    <map-Object-Information  align="Horizontal"></map-Object-Information>
+                                    <map-Object-Information align="Horizontal"></map-Object-Information>
                                 </div>
                                 <div id="mapLegend" ng-controller="mapLegendController">
-                                <div id="mapLegendContent" ng-if="showLegend" >
-                                    <div id="mapLegendHeadline"><b>{{legendKey}}</b></div>
-                                    <div ng-repeat="legendElement in legendList">
-                                         <div class="colorLegendBox" style="background-color: {{legendElement.color}}"></div>
-                                        <div class="labelLegendBox">{{legendElement.label}}</div>
-                                        </div>
+                                    <div id="mapLegendContent" ng-if="showLegend">
+                                        <div id="mapLegendHeadline"><b>{{legendKey}}</b></div>
+                                        <ul id="legend">
+                                            <div ng-repeat="legendElement in legendList">
+                                                <li style="color:{{legendElement.color}}">{{legendElement.label}}</li>
+                                                <!--<div class="colorLegendBox" style="background-color: {{legendElement.color}}"></div>-->
+                                                <!--<div class="labelLegendBox">{{legendElement.label}}</div>-->
+                                            </div>
+                                        </ul>
+                                    </div>
                                 </div>
-                                </div>
-
-
                             </div>
                         </section>
                         <a class="exit-off-canvas"></a>
@@ -57,7 +60,8 @@
                                 </section>
 
                                 <section class="right-small">
-                                    <a class="right-off-canvas-toggle"><i class="fi-list large" style="font-size: 26px;color: black"></i></a>
+                                    <a class="right-off-canvas-toggle"><i class="fi-list large"
+                                                                          style="font-size: 26px;color: black"></i></a>
                                 </section>
                             </nav>
                             <aside class="right-off-canvas-menu">
@@ -67,10 +71,10 @@
                                 <div class="off-canvas-menu-content">
                                     <label>Datum</label>
                                     <label class="apiControllEntry">Von:
-                                        <input type="text"  />
+                                        <input type="text"/>
                                     </label>
                                     <label class="apiControllEntry">Bis:
-                                        <input type="text"  />
+                                        <input type="text"/>
                                     </label>
                                     <label>Uhrzeit</label>
                                     <input id="checkbox1" type="checkbox"><label for="checkbox1">6-10</label>
@@ -84,45 +88,47 @@
                                     <div class="row">
                                         <div class="columns" ng-class="singleDiagramCSS">
                                             <div class=" callout">
-                                                <h2>{{  useCaseTitle }}</h2>
+                                                <h2>{{ useCaseTitle }}</h2>
                                                 <br>
 
 
                                                 <div ng-controller="tabController">
                                                     <div ng-controller="StatusPanelMainChartController" ng-if="showCharts">
 
-                                                    <tabset>
+                                                        <tabset>
 
-                                                    <tab heading="Scenario">{{  useCaseDescription }}</tab>
-
-
-                                                        <tab heading="Information" ng-if="showInformation" active="showInformation">
-                                                        <div class="chart" ng-repeat="description in activeOptionDescriptionList">
-
-                                                        <h3>{{description.headline}}</h3>
-                                                        {{description.desc}}
-
-                                                            <div class="chart" ng-repeat="chart in description.charts">
-                                                                <h3>{{chart.chart.title}}</h3>
-                                                                <nvd3 options="chart.chart.options" data="chart.chart.data" api="api"></nvd3>
-                                                                {{chart.chart.description}}
-                                                            </div>
-
-                                                            </div>
+                                                            <tab heading="Scenario">{{ useCaseDescription }}</tab>
 
 
+                                                            <tab heading="Information" ng-if="showInformation" active="showInformation">
+                                                                <div class="chart" ng-repeat="description in activeOptionDescriptionList">
 
-                                                  </tab>
-                                                        <tab heading="Detail View" active="showDetailView" ng-if="showDetailView"><map-Object-Information align="Vertical"></map-Object-Information></tab>
+                                                                    <h3>{{description.headline}}</h3>
+                                                                    {{description.desc}}
+
+                                                                    <div class="chart" ng-repeat="chart in description.charts">
+                                                                        <h3>{{chart.chart.title}}</h3>
+                                                                        <nvd3 options="chart.chart.options" data="chart.chart.data"
+                                                                              api="api"></nvd3>
+                                                                        {{chart.chart.description}}
+                                                                    </div>
+
+                                                                </div>
+
+
+                                                            </tab>
+                                                            <tab heading="Detail View" active="showDetailView" ng-if="showDetailView">
+                                                                <map-Object-Information align="Vertical"></map-Object-Information>
+                                                            </tab>
 
                                                     </div>
-                                                </tabset>
+                                                    </tabset>
 
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    </div>
+                                </div>
                             </section>
                             <a class="exit-off-canvas"></a>
                         </div>
@@ -133,14 +139,15 @@
         </div>
     </div>
     <!-- Kpis-->
-    <div class="medium-1-customer columns use-case-menu" ng-class="kipsCSS"  id = "scenarioBar">
+    <div class="medium-1-customer columns use-case-menu" ng-class="kipsCSS" id="scenarioBar">
         <div class="row full-width" style="margin-top: 50px">
 
 
             <div class="medium-12-customer padding-none columns">
                 <ul ng-repeat="useCase in useCaseList" class="side-nav">
 
-                    <span data-tooltip aria-haspopup="true" class="tip-left" title="{{useCase.title}}"><a  ng-click="useCaseClicked(useCase.useCaseID)"><img src="{{'img/'+useCase.icon}}" style="height:32px;width:32px"></a></span>
+                    <span data-tooltip aria-haspopup="true" class="tip-left" title="{{useCase.title}}"><a
+                            ng-click="useCaseClicked(useCase.useCaseID)"><img src="{{'img/'+useCase.icon}}" style="height:32px;width:32px"></a></span>
 
                 </ul>
             </div>
