@@ -1,8 +1,8 @@
 # --- ignore IDE specific files
 /.idea
 *.iml
-
 # --- exclude frontend dependencies
 /node_modules
 *.log
 app/dest
+app/bower_components
