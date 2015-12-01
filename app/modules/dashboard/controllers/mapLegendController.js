@@ -16,7 +16,7 @@ mainControllers.controller('mapLegendController', ['$scope','mapService','$rootS
         {
             if(legendList[i].label === "")
             {
-                legendList[i].label = ".";
+                legendList[i].label = " ";
             }
         }
         return legendList;
