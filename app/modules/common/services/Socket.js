@@ -13,7 +13,7 @@ angular.module('app.socket', ['ngWebsocket', 'app.config', 'app.dashboard.map.se
         });
 
         var mapObjects = [];
-        var subject = [];
+        var newMapObjectsObserver = [];
         var doInitRequest = true;
 
 
@@ -56,7 +56,7 @@ angular.module('app.socket', ['ngWebsocket', 'app.config', 'app.dashboard.map.se
 
 
             console.log("Message from Backend##############################################");
-            //console.log(res);
+            console.log(res);
 
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////
             //INTERPRETE MESSAGE FROM BACKEND
@@ -102,8 +102,8 @@ angular.module('app.socket', ['ngWebsocket', 'app.config', 'app.dashboard.map.se
                 mapObjects.push(res.mapobjects);
                 console.log(res);
 
-                for (var i = 0;i<subject.length;i++){
-                    subject[i].notify();
+                for (var i = 0;i<newMapObjectsObserver.length;i++){
+                    newMapObjectsObserver[i].notify();
                 }
 
 
@@ -125,8 +125,8 @@ angular.module('app.socket', ['ngWebsocket', 'app.config', 'app.dashboard.map.se
                 mapObjects.push(res);
                 console.log(res);
 
-                for (var j = 0;j<subject.length;j++){
-                    subject[j].notify();
+                for (var j = 0;j<newMapObjectsObserver.length;j++){
+                    newMapObjectsObserver[j].notify();
                 }
             }}
 
@@ -146,7 +146,7 @@ angular.module('app.socket', ['ngWebsocket', 'app.config', 'app.dashboard.map.se
             },
             addObserver: function(newObserver){
                 console.log("add new Observer");
-                subject.push(newObserver);
+                newMapObjectsObserver.push(newObserver);
             },
             lastCommandSends: lastCommandSends,
             getLastCommmandSend: function(){
