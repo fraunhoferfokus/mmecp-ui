@@ -77,7 +77,7 @@ function OpenLayer3Map(config, rootbroadcastEvent, mapService){
     var setOnlySelectedFeatureMode = function(mode)
     {
         mapService.showOnlySelectedFeatureMode = mode;
-    }
+    };
 
 
 
@@ -173,7 +173,7 @@ function OpenLayer3Map(config, rootbroadcastEvent, mapService){
                 var featureList = selectedLayer.getSource().getFeatures();
                 setNormalStyleOfAllFeaturesOfAGroup(selectedFeature.groupID,featureList);
             }
-            else(selectedFeature !== undefined)
+            else
             {
 
                 selectedFeature.setStyle(selectedFeature.unSelectedStyle);
@@ -753,7 +753,7 @@ OpenLayer3Map.prototype.transformCoordinates = function(sourceSystem,destination
     return listOfFeatures;
 
 
-}
+};
 
 
 
@@ -835,7 +835,7 @@ OpenLayer3Map.prototype.createIcon= function(coords, id,icon,anchor,scale) {
     });
 
 
-    if(this.mapService.showOnlySelectedFeatureMode == false)
+    if(this.mapService.showOnlySelectedFeatureMode === false)
     {
         iconFeature.setStyle(iconStyle);
     }

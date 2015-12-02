@@ -34,7 +34,7 @@ mainControllers.controller('tabController', ['$scope','mapService','$rootScope',
                 return;
             }
         }
-    }
+    };
 
 
     var getOptionDescriptionIndex = function(optionID)
@@ -47,7 +47,7 @@ mainControllers.controller('tabController', ['$scope','mapService','$rootScope',
                 return i;
             }
         }
-    }
+    };
 
 
     var addChartsToDescription = function(optionID)
@@ -65,7 +65,7 @@ mainControllers.controller('tabController', ['$scope','mapService','$rootScope',
             }
         }
         $scope.activeOptionDescriptionList[index].charts = chartList;
-    }
+    };
 
 
 
@@ -88,7 +88,7 @@ mainControllers.controller('tabController', ['$scope','mapService','$rootScope',
                 $rootScope.showLegend = false;
             }
         }
-    )
+    );
 
     $scope.$on('removeOptionDescriptionFromViewPanel', function(event,optionID) {
         removeOptionDescriptionFromViewPanel(optionID);

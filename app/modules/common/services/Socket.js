@@ -125,8 +125,8 @@ angular.module('app.socket', ['ngWebsocket', 'app.config', 'app.dashboard.map.se
                 mapObjects.push(res);
                 console.log(res);
 
-                for (var i = 0;i<subject.length;i++){
-                    subject[i].notify();
+                for (var j = 0;j<subject.length;j++){
+                    subject[j].notify();
                 }
             }}
 
