@@ -1,9 +1,8 @@
 /**
  * Created by Aminskee on 10.03.15.
  */
-var mainControllers = angular.module('app.dashboard.controllers',['app.common', 'app.dashboard.map.controller','angular-loading-bar', 'ngAnimate'])
 
-    .controller('dashboardController', ['$scope','$log', '$rootScope','mapService','socketService','cfpLoadingBar', function($scope,$log, $rootScope,mapService,socketService,cfpLoadingBar) {
+mainControllers.controller('dashboardController', ['$scope','$log', '$rootScope','mapService','socketService','cfpLoadingBar', function($scope,$log, $rootScope,mapService,socketService,cfpLoadingBar) {
 
         console.log("DashboardController loaded");
         console.log(mapService.allCities);

@@ -2,7 +2,7 @@
  * Created by mpo on 14.10.2015.
  */
 
-
+var mainControllers = angular.module('app.dashboard.controllers',['app.common', 'app.dashboard.map.controller','angular-loading-bar', 'ngAnimate']);
 mainControllers.controller('StatusPanelMainChartController', ['$scope','mapService', function($scope,mapService){
 
     console.log("loading Diagrams Controller");
