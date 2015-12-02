@@ -23,12 +23,13 @@
     "angularjs-nvd3-directives": "~0.0.7",
     "proj4": "~2.3.7",
     "nvd3": "~1.8.1",
-    "angular-nvd3": "~0.1.1",
-    "OpenLayers": "~3.10.1",
-    "angular-loading-bar": "~0.8.0"
+    "angular-nvd3": "~1.0.4",
+    "angular-loading-bar": "~0.8.0",
+    "jquery-ui": "~1.11.4"
   },
   "resolutions": {
     "angular": "~1.3.14",
-    "d3": "~3.4.1"
+    "d3": "~3.4.1",
+    "nvd3": "v1.1.15-beta"
   }
 }
