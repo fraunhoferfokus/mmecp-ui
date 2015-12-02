@@ -803,8 +803,7 @@ OpenLayer3Map.prototype.createIcon= function(coords, id,icon,anchor,scale) {
             opacity: 0.75,
             scale: scaleFactor,
             src: iconPng
-        }))
-        ,
+        })),
         zIndex:5
     });
 

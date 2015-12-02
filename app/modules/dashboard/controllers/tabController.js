@@ -80,7 +80,7 @@ mainControllers.controller('tabController', ['$scope','mapService','$rootScope',
 
     $scope.$on('closeInformationTabIfEmpty',function(event,optionID)
         {
-            if($scope.activeOptionDescriptionList.length == 0)
+            if($scope.activeOptionDescriptionList.length === 0)
             {
                $rootScope.showInformation = false;
                 $rootScope.showDetailView = false;
