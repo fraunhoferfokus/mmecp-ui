@@ -76,7 +76,14 @@ module.exports = function(grunt) {
                 src: ['<%= bower_concat.all.dest %>', '<%= bower_concat.all.cssDest %>', '<%= concat.js.dest %>', '<%= concat.css.dest %>']
             },
             dev: {
-                src: ['bower.json', '<%= concat.js.src %>', '<%= concat.css.src %>']
+                src: ['bower.json', '<%= concat.js.src %>', '<%= concat.css.src %>'],
+
+            }
+            ,
+            local_dependencies: {
+                files: {
+                    'modules/dashboard/controllers/dashboardController.js': ['modules/dashboard/controllers/citySelectionController.js']
+                }
             }
         },
         clean: {
@@ -107,7 +114,7 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-copy');
 
     grunt.registerTask('test', ['jshint', 'watch']);
-	grunt.registerTask('dev', ['jshint', 'injector:dev']);
+	grunt.registerTask('dev', ['jshint']);
 	grunt.registerTask('prod', ['clean', 'concat', 'bower_concat', 'uglify', 'cssmin', 'injector:prod', 'copy']);
 	grunt.registerTask('default', ['dev']);
 };
