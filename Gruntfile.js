@@ -95,7 +95,13 @@ module.exports = function(grunt) {
 		watch: {
 			files: ['<%= jshint.files %>'],
 			tasks: ['jshint']
-		}
+		},
+        removelogging: {
+            dist: {
+                src:  js_dest + '<%= pkg.name %>.js',
+                dest:  js_dest + '<%= pkg.name %>.js'
+            }
+        }
 	});
 
 	grunt.loadNpmTasks('grunt-contrib-jshint');
@@ -107,9 +113,10 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-cssmin');
     grunt.loadNpmTasks('grunt-contrib-clean');
 	grunt.loadNpmTasks('grunt-contrib-copy');
+    grunt.loadNpmTasks("grunt-remove-logging");
 
-    grunt.registerTask('test', ['jshint', 'watch']);
+    grunt.registerTask('test', ['jshint']);
 	grunt.registerTask('dev', ['jshint','injector:dev']);
-	grunt.registerTask('prod', ['clean', 'concat', 'bower_concat', 'uglify', 'cssmin', 'injector:prod', 'copy']);
+	grunt.registerTask('prod', ['clean', 'concat', 'bower_concat','removelogging', 'uglify', 'cssmin', 'injector:prod', 'copy']);
 	grunt.registerTask('default', ['dev']);
 };

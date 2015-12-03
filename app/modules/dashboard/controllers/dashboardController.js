@@ -4,6 +4,8 @@
 
 mainControllers.controller('dashboardController', ['$scope','$log', '$rootScope','mapService','socketService','cfpLoadingBar', function($scope,$log, $rootScope,mapService,socketService,cfpLoadingBar) {
 
+
+
         console.log("DashboardController loaded");
         console.log(mapService.allCities);
         console.log("Dashboard Controller City");

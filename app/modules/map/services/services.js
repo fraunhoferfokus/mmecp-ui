@@ -8,6 +8,8 @@ angular.module('app.dashboard.map.services', ['app.config', 'app.dashboard.map.d
 
     this.mapObjectForInformationPanel = undefined;
 
+        console.log("Streetlife Project Console");/*RemoveLogging:skip*/
+
 
 
         this.accessToCities = [];
@@ -49,7 +51,7 @@ angular.module('app.dashboard.map.services', ['app.config', 'app.dashboard.map.d
 
         this.city = [];
         this.allCities = [];
-        this.actualUseCase = {};
+        this.actualUseCase = [];
         this.actualUsecaseOptions = [];
         this.charts = [];
         this.mapLegend = {};

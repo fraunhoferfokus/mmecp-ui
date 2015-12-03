@@ -10,7 +10,6 @@
 mainControllers.controller('tabController', ['$scope','mapService','$rootScope', function($scope,mapService,$rootScope){
 
     console.log("TabController");
-
     $scope.tabs = [
         { title:"Scenario", content:$scope.useCaseDescription },
         { title:"Traffic Rate", content:"Dynamic content 2" },
@@ -20,7 +19,6 @@ mainControllers.controller('tabController', ['$scope','mapService','$rootScope',
 
 
     $scope.activeOptionDescriptionList = [];
-
 
 
     var removeOptionDescriptionFromViewPanel = function(optionID){
