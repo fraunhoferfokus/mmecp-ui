@@ -372,6 +372,21 @@ OpenLayer3Map.prototype.removeFeatureIfExisting = function(fid)
             console.log("remove");
         }
     }
+
+    features = this.vectorOfHeatMapObjects.getFeatures();
+    for(i = 0;i<features.length;i++)
+    {
+        feature = features[i];
+
+        if(feature.id === fid)
+        {
+            this.vectorOfHeatMapObjects.removeFeature(feature);
+        }
+    }
+
+
+
+
 };
 
 
@@ -396,6 +411,7 @@ OpenLayer3Map.prototype.removeFeaturesWithSubType = function(subType)
     for(var i = 0;i<features.length;i++)
     {
          feature = features[i];
+
         if(feature.mapObject.objectSubtype == subType)
         {
             this.vectorOfMapObjects.removeFeature(feature);

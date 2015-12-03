@@ -66,6 +66,7 @@ angular.module('app.dashboard.map.controller', ['app.socket', 'app.config', 'app
             }
             else
             {
+
                 map.removeFeaturesWithSubType(subType);
             }
 
@@ -175,7 +176,7 @@ angular.module('app.dashboard.map.controller', ['app.socket', 'app.config', 'app
 
                 socketService.send(filterOption.requestActivated);
                 console.log("send requestActivated: " + filterOption.requestActivated);
-                $rootScope.showInformation = true;
+
                 $rootScope.$broadcast("optionActivated", filterOption);
                 $rootScope.$broadcast('activateLoadingIcon');
 

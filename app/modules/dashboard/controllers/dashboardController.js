@@ -11,15 +11,6 @@ mainControllers.controller('dashboardController', ['$scope','$log', '$rootScope'
         console.log("Dashboard Controller City");
         console.log(mapService.city);
 
-
-        //VIEW FLAGS
-        $rootScope.showDetailView = false;
-        $rootScope.showUseCaseDescription = true;
-        $rootScope.showCharts = true;
-        $rootScope.showInformation = false;
-        $rootScope.showLegend = false;
-
-
         //usecase description
         $scope.useCaseDescription = mapService.actualUseCase.description;
         $scope.useCaseTitle = mapService.actualUseCase.title;
@@ -41,20 +32,19 @@ mainControllers.controller('dashboardController', ['$scope','$log', '$rootScope'
 
 
 
-        $scope.useCaseClicked = function(useCaseID)
+
+
+    $scope.useCaseClicked = function(useCaseID)
         {
             //remove old
             console.log("### deactivate old usecase");
             $scope.$broadcast('deactivateAllActiveFilters');
 
             //activate default usecase views
-            $rootScope.showDetailView = false;
-            $rootScope.showUseCaseDescription = true;
-
+            $rootScope.$broadcast('openANewScenario', null);
 
             console.log("Information: Clicked on UseCase:" + useCaseID);
             mapService.updateUseCase(useCaseID);
-
 
             if(mapService.actualUseCase.requestChart !== undefined)
 
@@ -210,17 +200,7 @@ mainControllers.controller('dashboardController', ['$scope','$log', '$rootScope'
             }
         };
 
-        $scope.$on('openMapObjectInformationPanel', function(event, args){
-            $rootScope.showDetailView = true;
-            $rootScope.showUseCaseDescription = false;
 
-        });
-        $scope.$on('closeMapObjectInformationPanel', function(event, args){
-            $rootScope.showDetailView = false;
-            $rootScope.showUseCaseDescription = true;
-            $scope.$apply();
-
-        });
 
 
         //old needs to be removed

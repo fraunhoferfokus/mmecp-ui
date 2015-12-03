@@ -17,6 +17,14 @@ mainControllers.controller('tabController', ['$scope','mapService','$rootScope',
     ];
 
 
+    //VIEW FLAGS
+    $scope.showDetailView = false;
+    $scope.showUseCaseDescription = true;
+    $scope.showInformation = false;
+    $rootScope.showLegend = false;
+
+
+
 
     $scope.activeOptionDescriptionList = [];
 
@@ -75,29 +83,15 @@ mainControllers.controller('tabController', ['$scope','mapService','$rootScope',
     });
 
 
-
-    $scope.$on('closeInformationTabIfEmpty',function(event,optionID)
-        {
-            if($scope.activeOptionDescriptionList.length === 0)
-            {
-               $rootScope.showInformation = false;
-                $rootScope.showDetailView = false;
-                $rootScope.showUseCaseDescription = true;
-                $rootScope.showLegend = false;
-            }
-        }
-    );
-
     $scope.$on('removeOptionDescriptionFromViewPanel', function(event,optionID) {
         removeOptionDescriptionFromViewPanel(optionID);
     });
 
     $scope.$on('optionActivated', function(event,option) {
 
-
+        $scope.showInformation = true;
         console.log(">>>>>>>>>>>>>><<<<<<<<<<<<<<<<<");
         console.log(option);
-
         var descriptionElement = {};
         descriptionElement.headline = option.value;
         descriptionElement.desc = option.description;
@@ -110,6 +104,37 @@ mainControllers.controller('tabController', ['$scope','mapService','$rootScope',
             $scope.$apply();
         }
 
+
+    });
+
+    $scope.$on('openANewScenario',function(event,optionID)
+    {
+        $scope.showDetailView = false;
+        $scope.showUseCaseDescription = true;
+
+    });
+
+    $scope.$on('closeInformationTabIfEmpty',function(event,optionID)
+        {
+            if($scope.activeOptionDescriptionList.length === 0)
+            {
+                $scope.showInformation = false;
+                $scope.showDetailView = false;
+                $scope.showUseCaseDescription = true;
+                $rootScope.showLegend = false;
+            }
+        }
+    );
+
+    $scope.$on('openMapObjectInformationPanel', function(event, args){
+        $scope.showDetailView = true;
+        $scope.showUseCaseDescription = false;
+
+    });
+    $scope.$on('closeMapObjectInformationPanel', function(event, args){
+        $scope.showDetailView = false;
+        $scope.showUseCaseDescription = true;
+        $scope.$apply();
 
     });
 

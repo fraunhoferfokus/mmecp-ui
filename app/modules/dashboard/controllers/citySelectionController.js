@@ -14,13 +14,16 @@ mainControllers.controller('citySelectionController',['$scope', 'socketService',
         $rootScope.$broadcast('deactivateAllActiveFilters');
 
 
-        console.log("new City: " + newCity);
-        mapService.updateSelectedCity(newCity);
 
-        if(mapService.actualUseCase.requestChart !== undefined)
+        console.log("new City: " + newCity);
+        if(newCity !== mapService.city.cityShortForm) //already selected
         {
-            socketService.send(mapService.actualUseCase.requestChart);
-            console.log("Chart Request send for Usecase");
+            mapService.updateSelectedCity(newCity);
+
+            if (mapService.actualUseCase.requestChart !== undefined) {
+                socketService.send(mapService.actualUseCase.requestChart);
+
+            }
         }
 
 
