@@ -115,7 +115,7 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks("grunt-remove-logging");
 
-    grunt.registerTask('test', ['jshint']);
+    grunt.registerTask('test', ['jshint','watch']);
 	grunt.registerTask('dev', ['jshint','injector:dev']);
 	grunt.registerTask('prod', ['clean', 'concat', 'bower_concat','removelogging', 'uglify', 'cssmin', 'injector:prod', 'copy']);
 	grunt.registerTask('default', ['dev']);
