@@ -79,12 +79,7 @@ module.exports = function(grunt) {
                 src: ['bower.json', '<%= concat.js.src %>', '<%= concat.css.src %>'],
 
             }
-            ,
-            local_dependencies: {
-                files: {
-                    'modules/dashboard/controllers/dashboardController.js': ['modules/dashboard/controllers/citySelectionController.js']
-                }
-            }
+
         },
         clean: {
             all: ['<%= concat.js.dest %>', '<%= concat.css.dest %>', '<%= bower_concat.all.dest %>', '<%= bower_concat.all.cssDest %>']
