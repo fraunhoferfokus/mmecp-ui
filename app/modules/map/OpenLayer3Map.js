@@ -386,7 +386,6 @@ OpenLayer3Map.prototype.removeFeatureIfExisting = function(fid)
 
 
 
-
 };
 
 
