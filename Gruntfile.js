@@ -101,6 +101,11 @@ module.exports = function(grunt) {
                 src:  js_dest + '<%= pkg.name %>.js',
                 dest:  js_dest + '<%= pkg.name %>.js'
             }
+        },
+        bower: {
+            install: {
+                //just run 'grunt bower:install' and you'll see files from your Bower packages in lib directory
+            }
         }
 	});
 
@@ -114,9 +119,10 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-clean');
 	grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks("grunt-remove-logging");
+    grunt.loadNpmTasks('grunt-bower-task');
 
     grunt.registerTask('test', ['jshint','watch']);
-	grunt.registerTask('dev', ['jshint','injector:dev']);
-	grunt.registerTask('prod', ['clean', 'concat', 'bower_concat','removelogging', 'uglify', 'cssmin', 'injector:prod', 'copy']);
+	grunt.registerTask('dev', ['jshint','bower:install','injector:dev']);
+	grunt.registerTask('prod', ['bower:install','clean', 'concat', 'bower_concat','removelogging', 'uglify', 'cssmin', 'injector:prod', 'copy']);
 	grunt.registerTask('default', ['dev']);
 };
