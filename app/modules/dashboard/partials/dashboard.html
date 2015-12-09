@@ -27,9 +27,7 @@
                         <section id="mapContainer" class="main-section overlayMapInfo-section panel">
                             <div class="small-12 columns">
                                 <ol-map alt="Map ol-map"></ol-map>
-                                <div class="overlayMapInfo" ng-show="showOverlayMapInfo">
-                                    <map-Object-Information align="Horizontal"></map-Object-Information>
-                                </div>
+                          
                                 <div id="mapLegend" ng-controller="mapLegendController">
                                     <div id="mapLegendContent" ng-if="showLegend">
                                         <div id="mapLegendHeadline"><b>{{legendKey}}</b></div>
