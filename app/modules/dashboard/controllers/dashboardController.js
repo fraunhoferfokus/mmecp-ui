@@ -150,9 +150,6 @@ mainControllers.controller('dashboardController', ['$scope','$log', '$rootScope'
             }
         };
 
-
-
-
         $scope.showHideMap=function(){
 
             $scope.showBigMap = !$scope.showBigMap;

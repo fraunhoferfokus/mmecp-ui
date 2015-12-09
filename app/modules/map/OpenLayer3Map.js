@@ -363,9 +363,10 @@ OpenLayer3Map.prototype.addMapObjectToMap = function (mapObjectElement){
 OpenLayer3Map.prototype.removeFeatureIfExisting = function(fid)
 {
     var features = this.vectorOfMapObjects.getFeatures();
+    var feature;
     for(var i = 0;i<features.length;i++)
     {
-        var feature = features[i];
+        feature = features[i];
         if(feature.id === fid)
         {
             this.vectorOfMapObjects.removeFeature(feature);
