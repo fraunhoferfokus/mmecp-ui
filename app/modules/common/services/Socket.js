@@ -104,36 +104,46 @@ angular.module('app.socket', ['ngWebsocket', 'app.config', 'app.dashboard.map.se
                 if(mapService.checkIfOptionIsActive(res.mapobjects[0].objectSubtype))
                 {
 
-                    console.log("huaaa");
-
                 for (var i = 0;i<newMapObjectsObserver.length;i++){
                     newMapObjectsObserver[i].notify();
                 }
 
 
-                //if legend was send
-                if(res.legend !== undefined) {
-                    console.log("legend");
-                    console.log(res.legend);
-                    mapService.setMapLegend(res.legend);
-
-                }
 
             }
-                return;
             }
            }
 
-            if(res[0] !== undefined){
-            if(res[0].type == "mapobject") {
-                console.log("New Message from Backend: mapobject");
-                mapObjects.push(res);
-                console.log(res);
+            //mapObjects from City ROV are still different
+            if(res[0] !== undefined) {
 
-                for (var j = 0;j<newMapObjectsObserver.length;j++){
-                    newMapObjectsObserver[j].notify();
+                if (mapService.checkIfOptionIsActive(res[0].objectSubtype)) {
+
+                    if (res[0].type == "mapobject") {
+                        console.log("New Message from Backend: mapobject");
+                        mapObjects.push(res);
+                        console.log(res);
+
+                        for (var j = 0; j < newMapObjectsObserver.length; j++) {
+                            newMapObjectsObserver[j].notify();
+                        }
+                    }
                 }
-            }}
+            }
+
+
+            //
+            // new legend arrived
+            ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+            if(res.legend !== undefined) {
+                res.legend.id = res.optionID;
+                mapService.setMapLegend(res.legend);
+
+            }
+
+
 
 
         });

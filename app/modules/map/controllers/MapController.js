@@ -132,6 +132,8 @@ angular.module('app.dashboard.map.controller', ['app.socket', 'app.config', 'app
 
             mapService.unRegisterActiveOption(filterOption.subType);
 
+            mapService.removeMapLegend(filterOption.id);
+
             mapService.deactivateCharts();
 
             $scope.$emit('removeMapObjects',

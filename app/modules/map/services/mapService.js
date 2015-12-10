@@ -58,6 +58,7 @@ angular.module('app.dashboard.map.services', ['app.config', 'app.dashboard.map.d
         this.showOnlySelectedFeatureMode = false; //important in which style new features are added in the meanwhile
 
         this.activeOptions = [];
+        this.legendList = [];
 
 
         this.registerActiveOption = function(activeOptionId)
@@ -98,11 +99,13 @@ angular.module('app.dashboard.map.services', ['app.config', 'app.dashboard.map.d
 
         };
 
+        this.counter = 0;
         this.setMapLegend = function(legend)
         {
-            this.mapLegend = legend.values.reverse();
-            this.mapLegendKey = legend.key;
-            $rootScope.showLegend = true;
+
+            //if multiply options are active only the latest legend will be shown
+            legend.key = this.counter++;
+            this.legendList.push(legend);
 
             $rootScope.$broadcast('legendChanged');
             console.log("broadcast legend changed");
@@ -110,6 +113,40 @@ angular.module('app.dashboard.map.services', ['app.config', 'app.dashboard.map.d
         this.getMapLegend = function()
         {
             return this.mapLegend;
+        };
+
+        this.removeMapLegend = function(optionId)
+        {
+            console.log("LEGEND SIZE");
+            console.log("remvoe ");
+            console.log(optionId);
+            console.log(this.legendList.length);
+          for(var i = 0;i<this.legendList.length;i++)
+          {
+
+
+              if(this.legendList[i].id === optionId)
+              {
+                  var topLegendIndex = this.legendList.length-1;
+                  this.legendList.splice(i,1);
+
+
+                  if(i === topLegendIndex)
+                  {
+
+                      console.log("LEGEND TOP REMOVED");
+
+                      //actual legend got removed
+                      if(i > 0)
+                      {
+                          $rootScope.$broadcast('legendChanged');
+                      }
+
+
+                  }
+              }
+          }
+
         };
 
 
