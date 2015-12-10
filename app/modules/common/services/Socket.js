@@ -138,6 +138,10 @@ angular.module('app.socket', ['ngWebsocket', 'app.config', 'app.dashboard.map.se
 
 
             if(res.legend !== undefined) {
+
+                console.log("xxxxxxa");
+                console.log(res);
+
                 res.legend.id = res.optionID;
                 mapService.setMapLegend(res.legend);
 

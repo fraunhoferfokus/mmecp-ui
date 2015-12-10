@@ -23,8 +23,8 @@ mainControllers.controller('mapLegendController', ['$scope','mapService','$rootS
     $scope.$on('legendChanged', function(event, options){
 
         console.log("recieved broadcast legend changed");
-        
-        $scope.legendList = replaceEmptyLabels(mapService.legendList[mapService.legendList.length-1].values.reverse());
+
+        $scope.legendList = replaceEmptyLabels(mapService.legendList[mapService.legendList.length-1].values);
         $scope.legendKey = mapService.legendList[mapService.legendList.length-1].key;
         console.log("the key");
         console.log(mapService.legendList.length-1);

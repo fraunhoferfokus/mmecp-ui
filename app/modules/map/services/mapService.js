@@ -99,12 +99,15 @@ angular.module('app.dashboard.map.services', ['app.config', 'app.dashboard.map.d
 
         };
 
-        this.counter = 0;
+
+    
         this.setMapLegend = function(legend)
         {
 
             //if multiply options are active only the latest legend will be shown
-            legend.key = this.counter++;
+            legend.values = legend.values.reverse();
+
+
             this.legendList.push(legend);
 
             $rootScope.$broadcast('legendChanged');
@@ -117,13 +120,9 @@ angular.module('app.dashboard.map.services', ['app.config', 'app.dashboard.map.d
 
         this.removeMapLegend = function(optionId)
         {
-            console.log("LEGEND SIZE");
-            console.log("remvoe ");
-            console.log(optionId);
-            console.log(this.legendList.length);
+
           for(var i = 0;i<this.legendList.length;i++)
           {
-
 
               if(this.legendList[i].id === optionId)
               {
