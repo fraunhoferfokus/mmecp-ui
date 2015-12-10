@@ -10,8 +10,6 @@ angular.module('app.dashboard.map.services', ['app.config', 'app.dashboard.map.d
 
         console.log("Streetlife Project Console");/*RemoveLogging:skip*/
 
-
-
         this.accessToCities = [];
 
         //needed because only "dev" should see all cities
@@ -59,6 +57,29 @@ angular.module('app.dashboard.map.services', ['app.config', 'app.dashboard.map.d
         this.citiesDefaults = {};
         this.showOnlySelectedFeatureMode = false; //important in which style new features are added in the meanwhile
 
+        this.activeOptions = [];
+
+
+        this.registerActiveOption = function(activeOptionId)
+        {
+            this.activeOptions[activeOptionId] = true;
+        };
+
+        this.unRegisterActiveOption = function(activeOptionId)
+        {
+            this.activeOptions[activeOptionId] = false;
+        };
+
+        this.checkIfOptionIsActive = function(optionId)
+        {
+
+            if(this.activeOptions[optionId] !== undefined)
+            {
+                return this.activeOptions[optionId];
+            }
+            return false;
+        };
+
 
         this.setCitiesDefaults=  function(citiesDefaults)
         {
@@ -76,8 +97,6 @@ angular.module('app.dashboard.map.services', ['app.config', 'app.dashboard.map.d
             this.accessToCities.unshift(this.defaultCity);
 
         };
-
-
 
         this.setMapLegend = function(legend)
         {
@@ -101,7 +120,7 @@ angular.module('app.dashboard.map.services', ['app.config', 'app.dashboard.map.d
             $rootScope.$broadcast('chartUpdate');
 
         };
-        
+
 
         this.setAllCityObject = function(allCityObject){
 
@@ -156,9 +175,6 @@ angular.module('app.dashboard.map.services', ['app.config', 'app.dashboard.map.d
 
             }
 
-
-
-
             //set default usecase for city
             this.updateUseCase(this.city.defaultUseCase);
 
@@ -169,8 +185,6 @@ angular.module('app.dashboard.map.services', ['app.config', 'app.dashboard.map.d
             //load new filters
             console.log("update city");
             console.log(city);
-
-
 
         };
 
@@ -200,8 +214,6 @@ angular.module('app.dashboard.map.services', ['app.config', 'app.dashboard.map.d
                             this.city[0] = actualCity.useCases[useCase].options;
                             this.actualUsecaseOptions[0] =  actualCity.useCases[useCase].options;
                             this.actualUseCase = actualCity.useCases[useCase];
-
-
 
 
                         }

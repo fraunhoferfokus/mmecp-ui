@@ -82,7 +82,11 @@ svg {
 
 .filterActive {
     background-color: white;
-    color: #000000 !important;
+    color: #000000;
+
+}
+.filterActive:hover{
+    color: white;
 }
 
 .left-off-canvas-menu, .right-off-canvas-menu {

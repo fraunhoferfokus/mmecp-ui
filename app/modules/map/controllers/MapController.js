@@ -130,6 +130,7 @@ angular.module('app.dashboard.map.controller', ['app.socket', 'app.config', 'app
                 console.log("send requestDeactivated: " + filterOption.requestDeactivated);
             }
 
+            mapService.unRegisterActiveOption(filterOption.subType);
 
             mapService.deactivateCharts();
 
@@ -166,6 +167,10 @@ angular.module('app.dashboard.map.controller', ['app.socket', 'app.config', 'app
 
                 //FILTER ACTIVATE
                 filterOption.requested = !filterOption.requested;
+
+
+                mapService.registerActiveOption(filterOption.subType);
+
                 console.log("----------------------------------- Filter active");
                if(filterOption.requestChart !== undefined)
                {

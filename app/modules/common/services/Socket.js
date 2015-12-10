@@ -35,8 +35,6 @@ angular.module('app.socket', ['ngWebsocket', 'app.config', 'app.dashboard.map.se
         ws.$on('$message', function(event) {
             var res = event;
 
-
-
             //check if valid json
             if(typeof res == "string")
             {
@@ -102,6 +100,12 @@ angular.module('app.socket', ['ngWebsocket', 'app.config', 'app.dashboard.map.se
                 mapObjects.push(res.mapobjects);
                 console.log(res);
 
+
+                if(mapService.checkIfOptionIsActive(res.mapobjects[0].objectSubtype))
+                {
+
+                    console.log("huaaa");
+
                 for (var i = 0;i<newMapObjectsObserver.length;i++){
                     newMapObjectsObserver[i].notify();
                 }
@@ -118,6 +122,7 @@ angular.module('app.socket', ['ngWebsocket', 'app.config', 'app.dashboard.map.se
             }
                 return;
             }
+           }
 
             if(res[0] !== undefined){
             if(res[0].type == "mapobject") {
