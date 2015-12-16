@@ -55,7 +55,7 @@ angular.module('app.dashboard.map.services', ['app.config', 'app.dashboard.map.d
         this.mapLegend = {};
         this.mapLegendKey = "";
         this.citiesDefaults = {};
-        this.showOnlySelectedFeatureMode = false; //important in which style new features are added in the meanwhile
+        this.showOnlySelectedFeatureMode = {active: false}; //important in which style new features are added in the meanwhile
 
         this.activeOptions = [];
         this.legendList = [];
@@ -100,14 +100,13 @@ angular.module('app.dashboard.map.services', ['app.config', 'app.dashboard.map.d
         };
 
 
-    
+
         this.setMapLegend = function(legend)
         {
 
             //if multiply options are active only the latest legend will be shown
             legend.values = legend.values.reverse();
-
-
+            this.removeMapLegend(legend.optionID); //remove old version of legend in case of existing
             this.legendList.push(legend);
 
             $rootScope.$broadcast('legendChanged');

@@ -108,12 +108,9 @@ angular.module('app.socket', ['ngWebsocket', 'app.config', 'app.dashboard.map.se
                     newMapObjectsObserver[i].notify();
                 }
 
-
-
             }
             }
            }
-
             //mapObjects from City ROV are still different
             if(res[0] !== undefined) {
 
@@ -131,7 +128,6 @@ angular.module('app.socket', ['ngWebsocket', 'app.config', 'app.dashboard.map.se
                 }
             }
 
-
             //
             // new legend arrived
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -146,8 +142,6 @@ angular.module('app.socket', ['ngWebsocket', 'app.config', 'app.dashboard.map.se
                 mapService.setMapLegend(res.legend);
 
             }
-
-
 
 
         });

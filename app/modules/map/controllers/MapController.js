@@ -136,6 +136,12 @@ angular.module('app.dashboard.map.controller', ['app.socket', 'app.config', 'app
 
             mapService.deactivateCharts();
 
+
+            if(mapService.showOnlySelectedFeatureMode.optionID == filterOption.subType)
+            {
+                mapService.showOnlySelectedFeatureMode.active = false;
+            }
+
             $scope.$emit('removeMapObjects',
                 {
                     layer: filterOption.id,
@@ -174,18 +180,29 @@ angular.module('app.dashboard.map.controller', ['app.socket', 'app.config', 'app
                 mapService.registerActiveOption(filterOption.subType);
 
                 console.log("----------------------------------- Filter active");
+
+                var requestFilter = function()
+                {
+                    socketService.send(filterOption.requestActivated);
+                    console.log("send requestActivated: " + filterOption.requestActivated);
+
+                }
                if(filterOption.requestChart !== undefined)
                {
                    console.log("send chart request Option level");
                    socketService.send(filterOption.requestChart);
-
+                   $rootScope.$broadcast("optionActivated", filterOption);
+                   $rootScope.$broadcast('activateLoadingIcon');
+                   setTimeout(requestFilter,500);
+               }
+                else
+               {
+                   $rootScope.$broadcast("optionActivated", filterOption);
+                   $rootScope.$broadcast('activateLoadingIcon');
+                   requestFilter();
                }
 
-                socketService.send(filterOption.requestActivated);
-                console.log("send requestActivated: " + filterOption.requestActivated);
 
-                $rootScope.$broadcast("optionActivated", filterOption);
-                $rootScope.$broadcast('activateLoadingIcon');
 
 
             }else {

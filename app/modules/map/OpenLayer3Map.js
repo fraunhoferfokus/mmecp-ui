@@ -74,9 +74,12 @@ function OpenLayer3Map(config, rootbroadcastEvent, mapService){
 
 
 
-    var setOnlySelectedFeatureMode = function(mode)
+    var setOnlySelectedFeatureMode = function(mode,optionID)
     {
-        mapService.showOnlySelectedFeatureMode = mode;
+
+
+        mapService.showOnlySelectedFeatureMode.active= mode;
+        mapService.showOnlySelectedFeatureMode.optionID = optionID;
     };
 
 
@@ -84,13 +87,18 @@ function OpenLayer3Map(config, rootbroadcastEvent, mapService){
 
     var highlightAllFeaturesOfAGroup = function(groupID,featureList) {
 
+
+        var subTypeID;
+
         for(var i = 0;i<featureList.length;i++)
         {
 
             if(featureList[i].groupID == groupID)
             {
                 featureList[i].setStyle( featureList[i].highlightStyle);
-                // featureList[i].setZIndex(10);
+
+                subTypeID = featureList[i].mapObject.objectSubtype;
+
 
             }
             else
@@ -101,7 +109,9 @@ function OpenLayer3Map(config, rootbroadcastEvent, mapService){
 
             }
         }
-        setOnlySelectedFeatureMode(true);
+
+
+        setOnlySelectedFeatureMode(true,subTypeID);
 
     };
 
@@ -114,7 +124,8 @@ function OpenLayer3Map(config, rootbroadcastEvent, mapService){
         {
                 featureList[i].setStyle( featureList[i].unSelectedStyle);
         }
-        setOnlySelectedFeatureMode(false);
+
+        setOnlySelectedFeatureMode(false,null);
 
     };
 
@@ -586,7 +597,7 @@ OpenLayer3Map.prototype.createLineFeature = function(area, id){
     feature.unSelectedStyle = polyStyle;
     feature.nearlyInvisibleStyle = nearlyInvisibleStyle;
 
-    if(this.mapService.showOnlySelectedFeatureMode === false)
+    if(this.mapService.showOnlySelectedFeatureMode.active === false)
     {
         feature.setStyle(polyStyle);
 
@@ -850,7 +861,7 @@ OpenLayer3Map.prototype.createIcon= function(coords, id,icon,anchor,scale) {
     });
 
 
-    if(this.mapService.showOnlySelectedFeatureMode === false)
+    if(this.mapService.showOnlySelectedFeatureMode.active === false)
     {
         iconFeature.setStyle(iconStyle);
     }
