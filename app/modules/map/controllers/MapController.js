@@ -186,7 +186,7 @@ angular.module('app.dashboard.map.controller', ['app.socket', 'app.config', 'app
                     socketService.send(filterOption.requestActivated);
                     console.log("send requestActivated: " + filterOption.requestActivated);
 
-                }
+                };
                if(filterOption.requestChart !== undefined)
                {
                    console.log("send chart request Option level");

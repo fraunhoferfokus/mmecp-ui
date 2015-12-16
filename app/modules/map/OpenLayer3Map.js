@@ -350,7 +350,7 @@ OpenLayer3Map.prototype.addMapObjectToMap = function (mapObjectElement){
     var feature;
 
     //add features to correct layer
-    for(var i = 0;i<featureList.length;i++) {
+        for(var i = 0;i<featureList.length;i++) {
 
         feature = featureList[i];
 
@@ -366,7 +366,10 @@ OpenLayer3Map.prototype.addMapObjectToMap = function (mapObjectElement){
         if (feature.parentLayer == 'heatmap') {
             this.vectorOfHeatMapObjects.addFeature(feature);
         }
+
+
     }
+
 
 };
 
