@@ -170,6 +170,29 @@ angular.module('app.dashboard.map.services', ['app.config', 'app.dashboard.map.d
 
 
 
+        this.removeOutDatedCharts = function(newCharts)
+        {
+            console.log("removeOutdated Charts");
+            console.log(this.charts);
+
+            console.log("new charts");
+            console.log(newCharts);
+           for(var i = 0;i<newCharts.length;i++)
+            {
+                for(var j = 0;j<this.charts.length;j++)
+                {
+                    if(this.charts[j].chartID == newCharts[i].chartID && this.charts[j].optionID == newCharts[i].optionID && this.charts[j].useCaseID == newCharts[i].useCaseID){
+                        //delete outdated chart
+                        this.charts.splice(j,1);
+                    }
+                }
+
+            }
+
+
+        }
+
+
         this.updateCharts = function(chartsObjects)
         {
             console.log(chartsObjects);
@@ -177,8 +200,16 @@ angular.module('app.dashboard.map.services', ['app.config', 'app.dashboard.map.d
 
             console.log(chartsObjects);
 
+
+            //remove old charts if a newer version arrives
+            this.removeOutDatedCharts(chartsObjects.elements);
+
+
             var oldCharts = this.charts;
             this.charts = [];
+
+
+            //add the new ones to the central charts list
             this.charts = this.charts.concat(chartsObjects.elements, oldCharts);
             console.log(this.charts);
             console.log("Update Charts here");
