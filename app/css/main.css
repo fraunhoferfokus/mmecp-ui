@@ -578,3 +578,11 @@ ul.off-canvas-list li {
 ul.off-canvas-list li a {
     border-bottom: 0px solid #262626;
 }
+
+#genderSelection .slider-track-high {
+
+    background: rgb(35, 212, 179);
+}
+#genderSelection .slider-selection{
+    background: rgb(8, 21, 179);
+}

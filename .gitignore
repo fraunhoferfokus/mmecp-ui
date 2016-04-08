@@ -6,3 +6,4 @@
 *.log
 app/dest
 app/bower_components
+lib/**

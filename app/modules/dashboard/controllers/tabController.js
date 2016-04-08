@@ -21,6 +21,7 @@ mainControllers.controller('tabController', ['$scope','mapService','$rootScope',
     $scope.showDetailView = false;
     $scope.showUseCaseDescription = true;
     $scope.showInformation = false;
+    $scope.showModalSplitSimulator = false;
     $rootScope.showLegend = false;
 
 
@@ -145,6 +146,16 @@ mainControllers.controller('tabController', ['$scope','mapService','$rootScope',
         $scope.useCaseDescription = mapService.actualUseCase.description;
         console.log("------------------->");
         console.log($scope.useCaseDescription);
+
+        console.log("activeUsecase:"+activeUseCaseName);
+        if(activeUseCaseName == "ModalSplit@Berlin")
+        {
+            $scope.showModalSplitSimulator = true;
+        }
+        else
+        {
+            $scope.showModalSplitSimulator = false;
+        }
 
         $scope.tabs[0].content = $scope.useCaseDescription;
 
