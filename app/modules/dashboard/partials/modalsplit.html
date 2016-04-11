@@ -1,46 +1,8 @@
-<div ng-controller="modalSplitController">
-<h3> Modal Split Simulator</h3>
-
-
-    <b>Gender</b>
-   <div id="genderSelection"><input id="genderSlider" data-slider-id='genderSliderId' type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="50"/></div>
-
-    Male: <b>{{genderMale}} %</b> <b>Female: {{genderFemale}} %</b>
-
-<br>
-    <b>Age</b>
-    <br>
-    <div id="ageSelection">
-
-
-        <table style="border:0"><tr><td>     <b>Age under 14 </b> <br>        <input id="age14" data-slider-id='age14Slider' type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="50"/></td>
-        <td> <center>  <canvas id="age14Canvas" width="200" height="200"></canvas></center> </td></tr></table>
-
-
-
-
-        <br><br>
-        <b>14 - 19</b> <br>
-    <input id="age14-19" data-slider-id='age14-19Slider' type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="50"/>
-        <br><br>
-        <b>20 - 29</b> <br>
-        <input id="age20-29" data-slider-id='ex1Slider' type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="50"/>
-        <br><br>
-        <b>30 - 39</b> <br>
-        <input id="age30-39" data-slider-id='ex1Slider' type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="50"/>
-        <br><br>
-        <b>40 - 49</b> <br>
-        <input id="age40-49" data-slider-id='ex1Slider' type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="50"/>
-        <br><br>
-        <b>50 - 59</b> <br>
-        <input id="age50-59" data-slider-id='ex1Slider' type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="50"/>
-        <br><br>
-        <b>> 60 </b> <br>
-        <input id="age60" data-slider-id='ex1Slider' type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="50"/>
-    </div>
-
-
-
+<div ng-controller="modalSplitViewController">
+<h3> Modal Split</h3>
+    
+<nvd3 options="modalSplitPieChartOptions" data="modalSplitPieChartData"
+      api="api"></nvd3>
 
 
 

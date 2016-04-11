@@ -24,6 +24,13 @@ angular.module('app.dashboard.directives',[
 
         };
     })
+    .directive('modalsplitsimulator', function(){
+        return{
+            templateUrl: 'modules/dashboard/partials/modalsplitsimulator.html'
+
+
+        };
+    })
     .directive('modalsplit', function(){
         return{
             templateUrl: 'modules/dashboard/partials/modalsplit.html'

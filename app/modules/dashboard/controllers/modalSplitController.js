@@ -15,6 +15,7 @@ mainControllers.controller('modalSplitController', ['$scope','mapService','$root
 
     $scope.test = "hello";
 
+
     // Without JQuery
    $scope.slider = new Slider('#genderSlider', {
         formatter: function(value) {
@@ -24,25 +25,34 @@ mainControllers.controller('modalSplitController', ['$scope','mapService','$root
     });
 
     // AGE
-    $scope.sliderAge14 = new Slider('#age14', {
+   /* $scope.sliderAge14 = new Slider('#age14', {
         formatter: function(value) {
             return 'Current value: ' + value;
         },
 
-    });
+    }); */
 
+    $scope.ageSlider = {"age14":null,"age14-19":null,"age20-29":null,"age30-39":null,"age40-49":null,"age50-59":null,"age60":null}
+
+   /* $scope.sliderAge14.on("change",function(){
+        drawPercentCircle("age14");
+    }); */
+
+    $scope.totalPercentSum = 0;
 
     var drawPercentCircle = function(sliderId) {
-        var percent = $scope.sliderAge14.getValue();
+
+        var percent = $scope.ageSlider[sliderId].getValue();
+        //var percent = $scope.sliderAge14.getValue();
 
         var canvas = document.getElementById(sliderId + "Canvas");
         var context = canvas.getContext("2d");
-        context.clearRect(0, 0, 200, 200);
+        context.clearRect(0, 0, 100, 100);
 
 
         //clear
 
-        var radius_one_percent = 10;
+        var radius_one_percent = 5;
         var area_of_one_percent = radius_one_percent * radius_one_percent * Math.PI;
 
         var area_of_percent = area_of_one_percent * percent;
@@ -66,56 +76,150 @@ mainControllers.controller('modalSplitController', ['$scope','mapService','$root
     };
 
 
+    var calculateTotalSum = function() {
+        var totalSum = 0;
+        for (var sliderName in $scope.ageSlider) {
+            if ($scope.ageSlider.hasOwnProperty(sliderName)) {
 
-    $scope.sliderAge14.on("change",function(){
-        drawPercentCircle("age14");
+                var sum = $scope.ageSlider[sliderName].getValue();
+                totalSum += sum;
+
+            }
+        }
+        return totalSum;
+    };
+
+    var initAgeSlider = function(){
+        for (var sliderName in $scope.ageSlider) {
+            if ($scope.ageSlider.hasOwnProperty(sliderName))
+
+                console.log("init of AgeSlider:"+sliderName);
+
+                $scope.ageSlider[sliderName] =  new Slider('#'+sliderName, {
+                    formatter: function(value) {
+                        return 'Current value: ' + value;
+                    },
+
+                });
+            }
+
+        $scope.totalPercentSum = calculateTotalSum();
+    };
+
+
+
+    initAgeSlider();
+
+
+
+
+    $scope.simulateModalSplit = function()
+    {
+        $rootScope.$broadcast('openModalSplitTab', null);
+    };
+
+
+    $scope.regulateOthers = function(actualSliderId)
+    {
+        var totalSum = calculateTotalSum();
+        console.log("TotalSum:" +totalSum);
+        while(totalSum > 100)
+        {
+
+            for (var sliderName in $scope.ageSlider) {
+                if ($scope.ageSlider.hasOwnProperty(sliderName)) {
+
+                   if(actualSliderId != sliderName)
+                   {
+                       var percentOfSlider = $scope.ageSlider[sliderName].getValue()
+                       console.log(sliderName+":"+percentOfSlider);
+                       if(percentOfSlider > 0)
+                       {
+                           percentOfSlider--;
+                           $scope.ageSlider[sliderName].setValue(percentOfSlider);
+                           drawPercentCircle(sliderName);
+                           totalSum = totalSum - 1;
+
+                       }
+
+                   }
+                }
+            }
+
+        }
+        $scope.totalPercentSum = totalSum;
+        $scope.$apply();
+
+    }
+
+
+    $scope.ageSlider["age14"].on("change",function(e){
+        var sliderName = "age14";
+     
+      
+
+        $scope.regulateOthers(sliderName);
+        drawPercentCircle(sliderName);
     });
-
     drawPercentCircle("age14");
 
-
-
-
-
-
-
-    //rst
-    $scope.sliderAge14_19 = new Slider('#age14-19', {
-        formatter: function(value) {
-            return 'Current value: ' + value;
-        },
-
+    $scope.ageSlider["age14-19"].on("change",function(e){
+        var sliderName = "age14-19";
+     
+      
+        $scope.regulateOthers(sliderName);
+        drawPercentCircle(sliderName);
     });
-    $scope.sliderAge20_29 = new Slider('#age20-29', {
-        formatter: function(value) {
-            return 'Current value: ' + value;
-        },
+    drawPercentCircle("age14-19");
 
+    $scope.ageSlider["age20-29"].on("change",function(e){
+        var sliderName = "age20-29";
+     
+      
+        $scope.regulateOthers(sliderName);
+        drawPercentCircle(sliderName);
     });
-    $scope.sliderAge30_39 = new Slider('#age30-39', {
-        formatter: function(value) {
-            return 'Current value: ' + value;
-        },
+    drawPercentCircle("age20-29");
 
-    });
-    $scope.sliderAge40_49 = new Slider('#age40-49', {
-        formatter: function(value) {
-            return 'Current value: ' + value;
-        },
 
+    $scope.ageSlider["age30-39"].on("change",function(e){
+        var sliderName = "age30-39";
+     
+      
+        $scope.regulateOthers(sliderName);
+        drawPercentCircle(sliderName);
     });
-    $scope.sliderAge50_59 = new Slider('#age50-59', {
-        formatter: function(value) {
-            return 'Current value: ' + value;
-        },
+    drawPercentCircle("age30-39");
 
-    });
-    $scope.sliderAge60 = new Slider('#age60', {
-        formatter: function(value) {
-            return 'Current value: ' + value;
-        },
 
+    $scope.ageSlider["age40-49"].on("change",function(e){
+        var sliderName = "age40-49";
+     
+      
+        $scope.regulateOthers(sliderName);
+        drawPercentCircle(sliderName);
     });
+    drawPercentCircle("age40-49")
+
+
+    $scope.ageSlider["age50-59"].on("change",function(e){
+        var sliderName = "age50-59";
+     
+      
+        $scope.regulateOthers(sliderName);
+        drawPercentCircle(sliderName);
+    });
+    drawPercentCircle("age50-59");
+
+
+    $scope.ageSlider["age60"].on("change",function(e){
+        var sliderName = "age60";
+     
+      
+        $scope.regulateOthers(sliderName);
+        drawPercentCircle(sliderName);
+    });
+    drawPercentCircle("age60");
 
 
 
@@ -133,6 +237,59 @@ mainControllers.controller('modalSplitController', ['$scope','mapService','$root
     });
 
 
+
+
+
+
+}]);
+
+mainControllers.controller('modalSplitViewController', ['$scope','mapService','$rootScope', function($scope,mapService,$rootScope){
+
+    $scope.modalSplitPieChartOptions = {
+        chart: {
+            type: 'pieChart',
+            height: 500,
+            width: 500,
+            showLabels:true,
+            x: function(d){return d.key;},
+            y: function(d){return d.y},
+            showLabels: true,
+            duration: 500,
+            labelThreshold: 0.05,
+            color: ['lightskyblue', 'deepskyblue', 'darkred', 'yellowgreen'],
+            donut: true,
+            donutRatio:0.35
+
+
+        }
+    };
+
+
+
+
+
+
+
+    $scope.modalSplitPieChartData = [
+        {
+            key: "zu Fuss",
+            y: 33.5
+        },
+        {
+            key: "Fahrrad",
+            y: 4.3
+        },
+        {
+            key: "MIV",
+            y: 35.1
+        },
+        {
+            key: "OEPNV",
+            y: 26.9
+
+        }
+
+    ];
 
 
 

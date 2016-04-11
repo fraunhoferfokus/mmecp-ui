@@ -10,11 +10,7 @@
 mainControllers.controller('tabController', ['$scope','mapService','$rootScope', function($scope,mapService,$rootScope){
 
     console.log("TabController");
-    $scope.tabs = [
-        { title:"Scenario", content:$scope.useCaseDescription },
-        { title:"Traffic Rate", content:"Dynamic content 2" },
-        { title:"Detail View", content:"Dynamic content 3" }
-    ];
+    $scope.tabs = [];
 
 
     //VIEW FLAGS
@@ -22,6 +18,7 @@ mainControllers.controller('tabController', ['$scope','mapService','$rootScope',
     $scope.showUseCaseDescription = true;
     $scope.showInformation = false;
     $scope.showModalSplitSimulator = false;
+    $scope.showModalSplit = false;
     $rootScope.showLegend = false;
 
 
@@ -113,6 +110,7 @@ mainControllers.controller('tabController', ['$scope','mapService','$rootScope',
         $scope.showDetailView = false;
         $scope.showUseCaseDescription = true;
 
+
     });
 
     $scope.$on('closeInformationTabIfEmpty',function(event,optionID)
@@ -139,6 +137,14 @@ mainControllers.controller('tabController', ['$scope','mapService','$rootScope',
 
     });
 
+    $scope.$on('openModalSplitTab', function(event, args){
+        $scope.showModalSplit = false;
+        $scope.$apply();
+        $scope.showModalSplit = true; //quick workaround for always focus on modal split tab after clicking the button
+        $scope.$apply();
+
+    });
+
 
 
     $scope.$on('useCaseListChanged', function(event,activeUseCaseName) {
@@ -155,6 +161,7 @@ mainControllers.controller('tabController', ['$scope','mapService','$rootScope',
         else
         {
             $scope.showModalSplitSimulator = false;
+            $scope.showModalSplit = false;
         }
 
         $scope.tabs[0].content = $scope.useCaseDescription;

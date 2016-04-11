@@ -586,3 +586,18 @@ ul.off-canvas-list li a {
 #genderSelection .slider-selection{
     background: rgb(8, 21, 179);
 }
+
+.sliderTable
+{
+    margin-top: -70px;
+}
+
+
+#totalPercentSum
+{
+    width: 200px;
+    position: relative;
+    left: 173px;
+    top: 10px;
+}
+
