@@ -581,10 +581,10 @@ ul.off-canvas-list li a {
 
 #genderSelection .slider-track-high {
 
-    background: rgb(35, 212, 179);
+    background: rgb(246, 91, 255);
 }
 #genderSelection .slider-selection{
-    background: rgb(8, 21, 179);
+    background: rgb(21, 107, 48);
 }
 
 .sliderTable
@@ -600,4 +600,21 @@ ul.off-canvas-list li a {
     left: 173px;
     top: 10px;
 }
-
+#modalSplitSimulateButton
+{
+    position: relative;
+    top: -40px;
+    left: 0px;
+}
+#genderSelection
+{
+    position: relative;
+    left: 12px;
+    width: 400px;
+}
+#modalSplitSimulatorAgeHeadline
+{
+    position: relative;
+    top: 45px;
+    left: 10px;
+}

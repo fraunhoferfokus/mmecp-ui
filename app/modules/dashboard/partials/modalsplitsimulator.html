@@ -2,44 +2,41 @@
 <h3> Event Simulator</h3>
 
 
-    <b>Gender</b>
-   <div id="genderSelection"><input id="genderSlider" data-slider-id='genderSliderId' type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1"data-slider-value="0"/></div>
+    <h4 class="subheader">Gender</h4>
+   <div id="genderSelection"><input id="genderSlider" data-slider-id='genderSliderId' type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1"data-slider-value="50"/></div>
 
-    Male: <b>{{genderMale}} %</b> <b>Female: {{genderFemale}} %</b>
-
-<br>
-
-
+    Male: <b>{{genderMale}} %</b> Female: <b>{{genderFemale}} %</b>
+    
     <div id="ageSelection">
-
+        <h4 id="modalSplitSimulatorAgeHeadline" class="subheader">Age</h4>
 <div id="totalPercentSum">Percent Total:<b>{{totalPercentSum}} %</b></div>
-        <table class="sliderTable" style="border:0;margin-top: 0px;"><tr><td>     <b>age < 14 </b> <br>        <input id="age14" data-slider-id='age14Slider' type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1"data-slider-value="0"/></td>
+        <table class="sliderTable" style="border:0;margin-top: 0px;"><tr><td>     <b>age < 14 </b> <br>        <input id="age14" data-slider-id='age14Slider' type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1"data-slider-value="14.2"/></td>
         <td> <center>  <canvas id="age14Canvas" width="100" height="100"></canvas></center> </td></tr></table>
 
         
-        <table class="sliderTable" style="border:0"><tr><td>     <b>age 14 - 19 </b> <br>        <input id="age14-19" data-slider-id='age14Slider' type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1"data-slider-value="0"/></td>
+        <table class="sliderTable" style="border:0"><tr><td>     <b>age 14 - 19 </b> <br>        <input id="age14-19" data-slider-id='age14Slider' type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1"data-slider-value="14.2"/></td>
             <td> <center>  <canvas id="age14-19Canvas" width="100" height="100"></canvas></center> </td></tr></table>
 
 
 
-        <table class="sliderTable" style="border:0"><tr><td>     <b>age 20 - 29 </b> <br>        <input id="age20-29" data-slider-id='age14Slider' type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1"data-slider-value="0"/></td>
+        <table class="sliderTable" style="border:0"><tr><td>     <b>age 20 - 29 </b> <br>        <input id="age20-29" data-slider-id='age14Slider' type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1"data-slider-value="15"/></td>
             <td> <center>  <canvas id="age20-29Canvas" width="100" height="100"></canvas></center> </td></tr></table>
 
 
-        <table class="sliderTable" style="border:0"><tr><td>     <b>age 30 - 39 </b> <br>        <input id="age30-39" data-slider-id='age14Slider' type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1"data-slider-value="0"/></td>
+        <table class="sliderTable" style="border:0"><tr><td>     <b>age 30 - 39 </b> <br>        <input id="age30-39" data-slider-id='age14Slider' type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1"data-slider-value="15"/></td>
             <td> <center>  <canvas id="age30-39Canvas" width="100" height="100"></canvas></center> </td></tr></table>
 
 
 
 
-        <table class="sliderTable" style="border:0"><tr><td>     <b>age 40 - 49 </b> <br>        <input id="age40-49" data-slider-id='age14Slider' type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1"data-slider-value="0"/></td>
+        <table class="sliderTable" style="border:0"><tr><td>     <b>age 40 - 49 </b> <br>        <input id="age40-49" data-slider-id='age14Slider' type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1"data-slider-value="14.2"/></td>
             <td> <center>  <canvas id="age40-49Canvas" width="100" height="100"></canvas></center> </td></tr></table>
 
 
-        <table class="sliderTable" style="border:0"><tr><td>     <b>age 50 - 59 </b> <br>        <input id="age50-59" data-slider-id='age14Slider' type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1"data-slider-value="0"/></td>
+        <table class="sliderTable" style="border:0"><tr><td>     <b>age 50 - 59 </b> <br>        <input id="age50-59" data-slider-id='age14Slider' type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1"data-slider-value="14.2"/></td>
             <td> <center>  <canvas id="age50-59Canvas" width="100" height="100"></canvas></center> </td></tr></table>
 
-        <table class="sliderTable" style="border:0"><tr><td>     <b>age > 60 </b> <br>        <input id="age60" data-slider-id='age14Slider' type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1"data-slider-value="0"/></td>
+        <table class="sliderTable" style="border:0"><tr><td>     <b>age > 60 </b> <br>        <input id="age60" data-slider-id='age14Slider' type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1"data-slider-value="14.2"/></td>
             <td> <center>  <canvas id="age60Canvas" width="100" height="100"></canvas></center> </td></tr></table>
 
 

@@ -139,11 +139,33 @@ mainControllers.controller('tabController', ['$scope','mapService','$rootScope',
 
     $scope.$on('openModalSplitTab', function(event, args){
         $scope.showModalSplit = false;
-        $scope.$apply();
+
+        //workaround for firefox
+
+            $scope.$apply();
+
         $scope.showModalSplit = true; //quick workaround for always focus on modal split tab after clicking the button
+             $scope.$apply();
+
+
+    });
+
+    $scope.$on('openModalSplitSilmulator', function(event, args){
+        $scope.showModalSplitSimulator = true;
         $scope.$apply();
 
     });
+
+    $scope.$on('closeModalSplitSilmulator', function(event, args){
+        $scope.showModalSplitSimulator = false;
+        $scope.showModalSplit = false;
+        $scope.$apply();
+
+
+    });
+
+
+
 
 
 
@@ -154,15 +176,11 @@ mainControllers.controller('tabController', ['$scope','mapService','$rootScope',
         console.log($scope.useCaseDescription);
 
         console.log("activeUsecase:"+activeUseCaseName);
-        if(activeUseCaseName == "ModalSplit@Berlin")
-        {
-            $scope.showModalSplitSimulator = true;
-        }
-        else
-        {
-            $scope.showModalSplitSimulator = false;
-            $scope.showModalSplit = false;
-        }
+
+        //close special tabs
+        $scope.showModalSplitSimulator = false;
+        $scope.showModalSplit = false;
+
 
         $scope.tabs[0].content = $scope.useCaseDescription;
 

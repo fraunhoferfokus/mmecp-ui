@@ -187,20 +187,31 @@ angular.module('app.dashboard.map.controller', ['app.socket', 'app.config', 'app
                     console.log("send requestActivated: " + filterOption.requestActivated);
 
                 };
-               if(filterOption.requestChart !== undefined)
-               {
-                   console.log("send chart request Option level");
-                   socketService.send(filterOption.requestChart);
-                   $rootScope.$broadcast("optionActivated", filterOption);
-                   $rootScope.$broadcast('activateLoadingIcon');
-                   setTimeout(requestFilter,500);
-               }
+
+                console.log(filterOption.optionID);
+                if(filterOption.optionID == "ber_ms_sim") //special filter with own task saved in frontend
+                {
+                    $rootScope.$broadcast("openModalSplitSilmulator");
+                }
                 else
-               {
-                   $rootScope.$broadcast("optionActivated", filterOption);
-                   $rootScope.$broadcast('activateLoadingIcon');
-                   requestFilter();
-               }
+                {
+                    if(filterOption.requestChart !== undefined) //standard filter call backend for mapobjects for active filters
+                    {
+                        console.log("send chart request Option level");
+                        socketService.send(filterOption.requestChart);
+                        $rootScope.$broadcast("optionActivated", filterOption);
+                        $rootScope.$broadcast('activateLoadingIcon');
+                        setTimeout(requestFilter,500);
+                    }
+                    else
+                    {
+                        $rootScope.$broadcast("optionActivated", filterOption);
+                        $rootScope.$broadcast('activateLoadingIcon');
+                        requestFilter();
+                    }
+
+
+                }
 
 
 
@@ -210,6 +221,10 @@ angular.module('app.dashboard.map.controller', ['app.socket', 'app.config', 'app
                 filterOption.requested = !filterOption.requested;
                 console.log("----------------------------------- Filter deactive");
                 deactivateFilter(filterOption);
+                if(filterOption.optionID == "ber_ms_sim") //special filter with own task saved in frontend
+                {
+                    $rootScope.$broadcast("closeModalSplitSilmulator");
+                }
 
             }
 

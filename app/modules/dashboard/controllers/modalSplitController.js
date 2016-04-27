@@ -10,40 +10,51 @@
  * Created by mpo on 14.10.2015.
  */
 
-mainControllers.controller('modalSplitController', ['$scope','mapService','$rootScope', function($scope,mapService,$rootScope){
 
 
-    $scope.test = "hello";
+mainControllers.service('modalSplitService', function(){
+    var modalSplitParameter = {}
+
+    return {
+        setParameter: function(newParameter) {
+            modalSplitParameter = newParameter;
+        },
+        getParameter:function(){
+            return modalSplitParameter;
+        }
+    };
+});
+
+
+
+
+
+mainControllers.controller('modalSplitController', ['$scope','mapService','$rootScope','modalSplitService', function($scope,mapService,$rootScope,modalSplitService){
+
+
+   $scope.modalSplitService = modalSplitService;
+
 
 
     // Without JQuery
-   $scope.slider = new Slider('#genderSlider', {
+   $scope.genderSlider = new Slider('#genderSlider', {
         formatter: function(value) {
             return 'Current value: ' + value;
         },
 
     });
 
-    // AGE
-   /* $scope.sliderAge14 = new Slider('#age14', {
-        formatter: function(value) {
-            return 'Current value: ' + value;
-        },
-
-    }); */
 
     $scope.ageSlider = {"age14":null,"age14-19":null,"age20-29":null,"age30-39":null,"age40-49":null,"age50-59":null,"age60":null}
 
-   /* $scope.sliderAge14.on("change",function(){
-        drawPercentCircle("age14");
-    }); */
+
 
     $scope.totalPercentSum = 0;
 
     var drawPercentCircle = function(sliderId) {
 
         var percent = $scope.ageSlider[sliderId].getValue();
-        //var percent = $scope.sliderAge14.getValue();
+        //var percent = $scope.genderSliderAge14.getValue();
 
         var canvas = document.getElementById(sliderId + "Canvas");
         var context = canvas.getContext("2d");
@@ -66,7 +77,6 @@ mainControllers.controller('modalSplitController', ['$scope','mapService','$root
         context.arc(centerX, centerY, radius_of_percent, 0, Math.PI * 2, false);
         context.fillStyle = "#337ab7";
         context.fill();
-
 
         context.font = 'bold 12pt Calibri';
         context.textAlign = 'center';
@@ -104,18 +114,17 @@ mainControllers.controller('modalSplitController', ['$scope','mapService','$root
             }
 
         $scope.totalPercentSum = calculateTotalSum();
+
+        $scope.modalSplitService.setParameter({gender: $scope.genderSlider,age:$scope.ageSlider})
+
     };
 
-
-
     initAgeSlider();
-
-
-
 
     $scope.simulateModalSplit = function()
     {
         $rootScope.$broadcast('openModalSplitTab', null);
+
     };
 
 
@@ -155,8 +164,6 @@ mainControllers.controller('modalSplitController', ['$scope','mapService','$root
 
     $scope.ageSlider["age14"].on("change",function(e){
         var sliderName = "age14";
-     
-      
 
         $scope.regulateOthers(sliderName);
         drawPercentCircle(sliderName);
@@ -165,8 +172,7 @@ mainControllers.controller('modalSplitController', ['$scope','mapService','$root
 
     $scope.ageSlider["age14-19"].on("change",function(e){
         var sliderName = "age14-19";
-     
-      
+
         $scope.regulateOthers(sliderName);
         drawPercentCircle(sliderName);
     });
@@ -174,8 +180,7 @@ mainControllers.controller('modalSplitController', ['$scope','mapService','$root
 
     $scope.ageSlider["age20-29"].on("change",function(e){
         var sliderName = "age20-29";
-     
-      
+
         $scope.regulateOthers(sliderName);
         drawPercentCircle(sliderName);
     });
@@ -184,18 +189,15 @@ mainControllers.controller('modalSplitController', ['$scope','mapService','$root
 
     $scope.ageSlider["age30-39"].on("change",function(e){
         var sliderName = "age30-39";
-     
-      
+
         $scope.regulateOthers(sliderName);
         drawPercentCircle(sliderName);
     });
     drawPercentCircle("age30-39");
 
-
     $scope.ageSlider["age40-49"].on("change",function(e){
         var sliderName = "age40-49";
-     
-      
+
         $scope.regulateOthers(sliderName);
         drawPercentCircle(sliderName);
     });
@@ -204,8 +206,7 @@ mainControllers.controller('modalSplitController', ['$scope','mapService','$root
 
     $scope.ageSlider["age50-59"].on("change",function(e){
         var sliderName = "age50-59";
-     
-      
+
         $scope.regulateOthers(sliderName);
         drawPercentCircle(sliderName);
     });
@@ -221,29 +222,22 @@ mainControllers.controller('modalSplitController', ['$scope','mapService','$root
     });
     drawPercentCircle("age60");
 
-
-
     // Call a method on the slider
-    var value = $scope.slider.getValue();
+    var value = $scope.genderSlider.getValue();
     $scope.genderMale = value;
     $scope.genderFemale = 100 -value;
 
-    $scope.slider.on("change",function(){
+    $scope.genderSlider.on("change",function(){
 
-        $scope.genderMale = $scope.slider.getValue();
+        $scope.genderMale = $scope.genderSlider.getValue();
         $scope.genderFemale = 100 -$scope.genderMale;
         $scope.$apply();
         console.log($scope.genderMale);
     });
 
-
-
-
-
-
 }]);
 
-mainControllers.controller('modalSplitViewController', ['$scope','mapService','$rootScope', function($scope,mapService,$rootScope){
+mainControllers.controller('modalSplitViewController', ['$scope','mapService','$rootScope','$http','modalSplitService', function($scope,mapService,$rootScope,$http,modalSplitService){
 
     $scope.modalSplitPieChartOptions = {
         chart: {
@@ -268,24 +262,89 @@ mainControllers.controller('modalSplitViewController', ['$scope','mapService','$
 
 
 
+    $scope.headline = "Standard Modal Split Berlin (SrV2013)";
+
+    var simulateModalSplit = function()
+    {
+        // Simple GET request example:
+
+        var url = 'http://127.0.0.1:5000/messages';
+
+        var ageDist = []
+        var modalSplitParameter = modalSplitService.getParameter();
+        for (var ageKey in modalSplitParameter.age) {
+            ageDist.push(modalSplitParameter.age[ageKey].getValue()/100.00);
+        }
+
+        console.log(ageDist);
+
+        var gender = modalSplitParameter.gender.getValue();
+        var genderDist = [gender/100.00,1-gender/100.00];
+        console.log(genderDist);
+
+        var visitors = 2000;
+
+        var data ={
+            visitors:   visitors,
+            gender: genderDist,     //[0.5,0.5]
+            age: ageDist            //[0.142857,0.142857,0.142857,0.142857,0.142857,0.142857,0.142857]
+        };
 
 
+        var req = {
+            method: 'POST',
+            url: url,
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            data: data
+        }
+
+        $http(req).then(function(data){
+
+                var labels = data.data.labels;
+                var modalSplit = data.data.modalSplit;
+                $scope.modalSplitPieChartData = []
+                var entry = {}
+                for(var i = 0;i<labels.length;i++)
+                {
+                    entry = {key:labels[i],y:modalSplit[i]/visitors*100}
+                    $scope.modalSplitPieChartData.push(entry);
+                }
+                $scope.headline = "Simulated Modal Split";
+
+            }
+            , function(){
+               console.log("problem with modal split forecast backendserver")
+            }
+        );
+
+
+
+
+    }
+
+    simulateModalSplit();
+
+
+
+        //standard modal split berlin srv2013
     $scope.modalSplitPieChartData = [
         {
             key: "zu Fuss",
-            y: 33.5
+            y: 32
         },
         {
             key: "Fahrrad",
-            y: 4.3
+            y: 13
         },
         {
             key: "MIV",
-            y: 35.1
+            y: 28
         },
         {
             key: "OEPNV",
-            y: 26.9
+            y: 27
 
         }
 
