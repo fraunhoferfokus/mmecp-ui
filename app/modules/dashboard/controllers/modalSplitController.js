@@ -13,7 +13,7 @@
 
 
 mainControllers.service('modalSplitService', function(){
-    var modalSplitParameter = {}
+    var modalSplitParameter = {};
 
     return {
         setParameter: function(newParameter) {
@@ -45,7 +45,7 @@ mainControllers.controller('modalSplitController', ['$scope','mapService','$root
     });
 
 
-    $scope.ageSlider = {"age14":null,"age14-19":null,"age20-29":null,"age30-39":null,"age40-49":null,"age50-59":null,"age60":null}
+    $scope.ageSlider = {"age14":null,"age14-19":null,"age20-29":null,"age30-39":null,"age40-49":null,"age50-59":null,"age60":null};
 
 
 
@@ -115,7 +115,7 @@ mainControllers.controller('modalSplitController', ['$scope','mapService','$root
 
         $scope.totalPercentSum = calculateTotalSum();
 
-        $scope.modalSplitService.setParameter({gender: $scope.genderSlider,age:$scope.ageSlider})
+        $scope.modalSplitService.setParameter({gender: $scope.genderSlider,age:$scope.ageSlider});
 
     };
 
@@ -140,7 +140,7 @@ mainControllers.controller('modalSplitController', ['$scope','mapService','$root
 
                    if(actualSliderId != sliderName)
                    {
-                       var percentOfSlider = $scope.ageSlider[sliderName].getValue()
+                       var percentOfSlider = $scope.ageSlider[sliderName].getValue();
                        console.log(sliderName+":"+percentOfSlider);
                        if(percentOfSlider > 0)
                        {
@@ -159,10 +159,10 @@ mainControllers.controller('modalSplitController', ['$scope','mapService','$root
         $scope.totalPercentSum = totalSum;
         $scope.$apply();
 
-    }
+    };
 
 
-    $scope.ageSlider["age14"].on("change",function(e){
+    $scope.ageSlider.age14.on("change",function(e){
         var sliderName = "age14";
 
         $scope.regulateOthers(sliderName);
@@ -170,7 +170,7 @@ mainControllers.controller('modalSplitController', ['$scope','mapService','$root
     });
     drawPercentCircle("age14");
 
-    $scope.ageSlider["age14-19"].on("change",function(e){
+    $scope.ageSlider['age14-19'].on("change",function(e){
         var sliderName = "age14-19";
 
         $scope.regulateOthers(sliderName);
@@ -201,7 +201,7 @@ mainControllers.controller('modalSplitController', ['$scope','mapService','$root
         $scope.regulateOthers(sliderName);
         drawPercentCircle(sliderName);
     });
-    drawPercentCircle("age40-49")
+    drawPercentCircle("age40-49");
 
 
     $scope.ageSlider["age50-59"].on("change",function(e){
@@ -213,7 +213,7 @@ mainControllers.controller('modalSplitController', ['$scope','mapService','$root
     drawPercentCircle("age50-59");
 
 
-    $scope.ageSlider["age60"].on("change",function(e){
+    $scope.ageSlider.age60.on("change",function(e){
         var sliderName = "age60";
      
       
@@ -246,8 +246,7 @@ mainControllers.controller('modalSplitViewController', ['$scope','mapService','$
             width: 500,
             showLabels:true,
             x: function(d){return d.key;},
-            y: function(d){return d.y},
-            showLabels: true,
+            y: function(d){return d.y;},
             duration: 500,
             labelThreshold: 0.05,
             color: ['lightskyblue', 'deepskyblue', 'darkred', 'yellowgreen'],
@@ -273,7 +272,7 @@ mainControllers.controller('modalSplitViewController', ['$scope','mapService','$
         url = 'http://127.0.0.1:5000/messages';
 
 
-        var ageDist = []
+        var ageDist = [];
         var modalSplitParameter = modalSplitService.getParameter();
         for (var ageKey in modalSplitParameter.age) {
             ageDist.push(modalSplitParameter.age[ageKey].getValue()/100.00);
@@ -301,31 +300,33 @@ mainControllers.controller('modalSplitViewController', ['$scope','mapService','$
                 'Content-Type': 'application/json'
             },
             data: data
-        }
+        };
 
         $http(req).then(function(data){
 
                 var labels = data.data.labels;
                 var modalSplit = data.data.modalSplit;
-                $scope.modalSplitPieChartData = []
-                var entry = {}
+                $scope.modalSplitPieChartData = [];
+                var entry = {};
                 for(var i = 0;i<labels.length;i++)
                 {
-                    entry = {key:labels[i],y:modalSplit[i]/visitors*100}
+                    entry = {key:labels[i],y:modalSplit[i]/visitors*100};
                     $scope.modalSplitPieChartData.push(entry);
                 }
                 $scope.headline = "Simulated Modal Split";
 
-            }
-            , function(){
-               console.log("problem with modal split forecast backendserver")
+            },
+            function()
+            {
+
+               console.log("problem with modal split forecast backendserver");
             }
         );
 
 
 
 
-    }
+    };
 
     simulateModalSplit();
 
