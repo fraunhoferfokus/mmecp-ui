@@ -31,6 +31,12 @@ angular.module('app.dashboard.directives',[
 
         };
     })
+    .directive('filterDatePicker', function(){
+            return{
+                templateUrl: 'modules/dashboard/partials/filterDatePicker.html'
+
+            };
+    })
     .directive('modalsplit', function(){
         return{
             templateUrl: 'modules/dashboard/partials/modalsplit.html'

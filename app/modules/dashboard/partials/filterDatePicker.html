@@ -1,0 +1,14 @@
+<div id="mapLegend" ng-controller="mapLegendController">
+    <div id="datePickerFilter">
+       <h2>Trips Tracked By User</h2>
+
+        <div class="form-group" id="datePickerModul">
+            <label for="daterange" class="control-label">Please select a date range for the selected filter:</label>
+            <input date-range-picker id="daterange" name="daterange" class="form-control date-picker" type="text"
+                   ng-model="date" options="opts" required/>
+        </div>
+
+        <a href="#" class="button">Request</a>
+
+    </div>
+</div>

@@ -13,7 +13,10 @@ var streetlifeDependencies=[
     'app.socket',
     'app.config',
     'nvd3ChartDirectives',
-    'nvd3'
+    'nvd3',
+    'ngMessages',
+    'daterangepicker'
+
 ];
 
 var app = angular.module('app', streetlifeDependencies)

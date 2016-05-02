@@ -467,6 +467,26 @@ ul.off-canvas-list li {
     border-width: 1px;
     border-color: #008CBA !important;
 }
+#datePickerFilter
+{
+    bottom: 0;
+    padding: 15px;
+    display: block;
+    left: 0px;
+    position: absolute;
+    bottom: 0%;
+    z-index: 10000;
+    width: 922px;
+    height: 830px;
+    background: rgba(255, 255, 255, 0.95);
+    font-size: 75%;
+    border-style: solid;
+    border-width: 2px;
+    border-color: #008CBA !important;
+    display: none;
+
+}
+
 
 ul#legend {
     list-style-type: square;
@@ -507,7 +527,7 @@ ul#legend {
 
     background: white;
     position: fixed;
-    z-index: 10002;
+    z-index: 1;
     top: 0;
     left: 0;
     width: 100%;
@@ -528,6 +548,7 @@ ul#legend {
     height: 100%;
     position: absolute;
     right: 0px;
+    top: 60px;
 }
 
 ul.tabs-content {
@@ -617,4 +638,93 @@ ul.off-canvas-list li a {
     position: relative;
     top: 45px;
     left: 10px;
+}
+.daterangepicker.dropdown-menu
+{
+    z-index: 11000;
+    display: none;
+}
+.btn-success {
+    color: #fff;
+    background-color: #5cb85c;
+    border-color: #4cae4c;
+    padding: 5px 10px;
+    font-size: 12px;
+    line-height: 1.5;
+    border-radius: 3px;
+}
+
+.btn-default {
+    padding: 5px 10px;
+    font-size: 12px;
+    line-height: 1.5;
+    border-radius: 3px;
+    color: #333;
+    background-color: #fff;
+    border-color: #ccc;
+}
+#daterange{
+    width: 200px;
+}
+#streetlife-logo
+{
+    height: 42px;
+    padding: inherit;
+}
+
+.panel h2
+{
+    color: #8DD046;
+    text-transform: capitalize;
+
+}
+
+.top-bar-section li:not(.has-form) a:not(.button) {
+    font-family: 'Raleway', sans-serif;
+    font-size: 21px;
+    font-weight: 600;
+    line-height: 45px;
+    margin: 0 0 24px;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.top-bar-section ul li
+{
+    background: none;
+}
+#impressumLink
+{
+    height: 32px;
+    padding-left: 15px;
+    position: relative;
+    left: 12px;
+}
+.verticalLine {
+    border-left: thick solid #364EA5;
+    top: 100px;
+    height: 45px;
+    left: 10px;
+    padding-left: 100px;
+}
+#headline
+{
+    position: absolute;
+    width: 140px;
+    color: white;
+    top: 10px;
+    left: 42px;
+    font-weight: bold;
+}
+#lineImage
+{
+    overflow: hidden;
+    height: 15px;
+    width: 100%;
+    position: relative;
+    top: -24px;
+
+}
+#lineImage img {
+    min-width: 100%;
 }

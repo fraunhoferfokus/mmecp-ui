@@ -2,9 +2,10 @@
  * Created by mpo on 14.10.2015.
  */
 
-mainControllers.controller('mapLegendController', ['$scope','mapService','$rootScope', function($scope,mapService,$rootScope){
+mainControllers.controller('mapLegendController', ['$scope','mapService','$rootScope',function($scope,mapService,$rootScope){
 
     console.log("map LegendController");
+
 
 
     var replaceEmptyLabels = function(legendList)
@@ -38,6 +39,46 @@ mainControllers.controller('mapLegendController', ['$scope','mapService','$rootS
         }
 
     });
+
+
+
+
+    $scope.date = {
+        startDate: moment().subtract(1, "days"),
+        endDate: moment()
+    };
+
+    $scope.opts = {
+        ranges: {
+            'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+            'Last 30 Days': [moment().subtract(29, 'days'), moment()]
+        }
+    };
+
+    $scope.setStartDate = function () {
+        $scope.date.startDate = moment().subtract(4, "days");
+    };
+
+    $scope.setRange = function () {
+        $scope.date = {
+            startDate: moment().subtract(5, "days"),
+            endDate: moment()
+        };
+    };
+
+    //Watch for date changes
+    $scope.$watch('date', function(newDate) {
+        console.log('New date set: ', newDate);
+    }, false);
+
+
+
+
+
+
+
+
+
 
 
 
