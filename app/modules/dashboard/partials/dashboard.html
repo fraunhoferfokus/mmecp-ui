@@ -12,7 +12,7 @@
                                 <a class="left-off-canvas-toggle"><i class="fi-widget" style="font-size: 20px;color:black;"></i></a>
                             </section>
                             <section ng-switch on="showBigMap" class="middle tab-bar-section tab-bar-section-map">
-                                <h1 class="title left" style="color: black !important;">Map</h1>
+                                <h1 class="title left" id="mapHeadline" style="color: black !important;">Map</h1>
                                 <a ng-switch-when="true" class="right btn-showHideMap" ng-click="showHideMap()"><i
                                         class="fi-arrows-in large" style="color: black;"></i></a>
                                 <a ng-switch-when="false" class="right btn-showHideMap" ng-click="showHideMap()"><i
@@ -47,40 +47,13 @@
                 </div>
             </div>
             <!-- switch between Diagrams and Map Info-->
-            <div class="medium-5-customer columns" ng-class="diagramCSS" ng-switch on="showDiagrams">
+            <div class="medium-5-customer columns" id="tabControlPanel" ng-class="diagramCSS" ng-switch on="showDiagrams">
                 <!-- Right Sidebar & Diagrams-->
                 <div ng-switch-when="true">
                     <div class="off-canvas-wrap ">
                         <div class="inner-wrap">
-                            <nav class="tab-bar">
-                                <section class="middle tab-bar-section">
-                                    <h1 class="title right" style="color: black !important;">Diagrams</h1>
-                                </section>
 
-                                <section class="right-small">
-                                    <a class="right-off-canvas-toggle"><i class="fi-list large"
-                                                                          style="font-size: 26px;color: black"></i></a>
-                                </section>
-                            </nav>
-                            <aside class="right-off-canvas-menu">
-                                <div class="off-canvas-menu-title off-canvas-list">
-                                    <strong><h5 class="title right" style="color: black !important;">Diagrams</h5></strong>
-                                </div>
-                                <div class="off-canvas-menu-content">
-                                    <label>Datum</label>
-                                    <label class="apiControllEntry">Von:
-                                        <input type="text"/>
-                                    </label>
-                                    <label class="apiControllEntry">Bis:
-                                        <input type="text"/>
-                                    </label>
-                                    <label>Uhrzeit</label>
-                                    <input id="checkbox1" type="checkbox"><label for="checkbox1">6-10</label>
-                                    <input id="checkbox2" type="checkbox"><label for="checkbox2">10-16</label>
-                                    <input id="checkbox3" type="checkbox"><label for="checkbox3">16-22</label>
-                                    <a href="#" class="button">Request</a>
-                                </div>
-                            </aside>
+
                             <section class="main-section diagrams-section panel">
                                 <div class="medium-12 columns">
                                     <div class="row">

@@ -67,6 +67,9 @@ svg {
 
 .left-small {
     border: none !important;
+    position: relative;
+    top: 5px;
+    left: 5px;
 }
 
 .right-small {
@@ -728,4 +731,15 @@ ul.off-canvas-list li a {
 }
 #lineImage img {
     min-width: 100%;
+}
+#tabControlPanel
+{
+    position: relative;
+    top: 45px;
+
+}
+#mapHeadline
+{
+    top: 5px;
+    position: relative;
 }
