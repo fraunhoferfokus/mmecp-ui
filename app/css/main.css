@@ -548,7 +548,7 @@ ul#legend {
     height: 100%;
     position: absolute;
     right: 0px;
-    top: 60px;
+    top: 49px;
 }
 
 ul.tabs-content {
@@ -680,15 +680,14 @@ ul.off-canvas-list li a {
 }
 
 .top-bar-section li:not(.has-form) a:not(.button) {
-    font-family: 'Raleway', sans-serif;
-    font-size: 21px;
-    font-weight: 600;
-    line-height: 45px;
-    margin: 0 0 24px;
-    text-align: center;
-    text-transform: uppercase;
-}
 
+    font-weight: bold;
+    font-size: 16px;
+}
+.top-bar-section li:not(.has-form) a:not(.button):hover {
+
+    color: yellow;
+}
 .top-bar-section ul li
 {
     background: none;
@@ -699,6 +698,7 @@ ul.off-canvas-list li a {
     padding-left: 15px;
     position: relative;
     left: 12px;
+    opacity: 0.43;
 }
 .verticalLine {
     border-left: thick solid #364EA5;
@@ -719,10 +719,11 @@ ul.off-canvas-list li a {
 #lineImage
 {
     overflow: hidden;
-    height: 15px;
+    height: 4px;
     width: 100%;
     position: relative;
-    top: -24px;
+    top: 0px;
+    background: black;
 
 }
 #lineImage img {
