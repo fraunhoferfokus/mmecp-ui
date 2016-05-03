@@ -267,7 +267,7 @@ mainControllers.controller('modalSplitViewController', ['$scope','mapService','$
     {
         // Simple GET request example:
 
-        /var url = 'http://193.175.133.251:5000/messages';
+        //var url = 'http://193.175.133.251:5000/messages';
         var url = '/modalsplit-simulator';
 
 
