@@ -50,6 +50,9 @@ mainControllers.controller('mapLegendController', ['$scope','mapService','$rootS
 
     $scope.opts = {
         ranges: {
+            'Last 1 Day': [moment().subtract(1, 'days'), moment()],
+            'Last 3 Days': [moment().subtract(2, 'days'), moment()],
+            'Last 5 Days': [moment().subtract(4, 'days'), moment()],
             'Last 7 Days': [moment().subtract(6, 'days'), moment()],
             'Last 30 Days': [moment().subtract(29, 'days'), moment()]
         }

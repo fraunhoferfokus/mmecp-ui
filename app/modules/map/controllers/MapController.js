@@ -155,6 +155,10 @@ angular.module('app.dashboard.map.controller', ['app.socket', 'app.config', 'app
             $rootScope.$broadcast("closeInformationTabIfEmpty", filterOption.optionID);
 
 
+            //remove datepicker in case it is open
+            $rootScope.$broadcast("closeDatePicker");
+
+
 
 
         };
@@ -169,6 +173,39 @@ angular.module('app.dashboard.map.controller', ['app.socket', 'app.config', 'app
         });
 
 
+
+
+
+        var requestFilter = function(filterOption,event)
+        {
+            console.log("ajlkdsf");
+            console.log(filterOption);
+            if(filterOption.dialogs !== undefined)
+            {
+                if(filterOption.dialogs.datesQuery == true)
+                {
+                    // date range selection active: date has to be selected before request
+                    console.log("openDatePicker Event send");
+                    $rootScope.$broadcast("openDatePicker",filterOption);
+
+
+                }
+            }
+            else
+            {
+
+                $rootScope.$broadcast("optionActivated", filterOption);
+                $rootScope.$broadcast('activateLoadingIcon');
+
+                socketService.send(filterOption.requestActivated);
+                console.log("send requestActivated: " + filterOption.requestActivated);
+
+            }
+
+
+        };
+
+
         $scope.callFilter = function(filterOption, event){
 
             if (!filterOption.requested){
@@ -181,12 +218,7 @@ angular.module('app.dashboard.map.controller', ['app.socket', 'app.config', 'app
 
                 console.log("----------------------------------- Filter active");
 
-                var requestFilter = function()
-                {
-                    socketService.send(filterOption.requestActivated);
-                    console.log("send requestActivated: " + filterOption.requestActivated);
 
-                };
 
                 console.log(filterOption.optionID);
                 if(filterOption.optionID == "ber_ms_sim") //special filter with own task saved in frontend
@@ -197,24 +229,19 @@ angular.module('app.dashboard.map.controller', ['app.socket', 'app.config', 'app
                 {
                     if(filterOption.requestChart !== undefined) //standard filter call backend for mapobjects for active filters
                     {
+                        //filter +
                         console.log("send chart request Option level");
                         socketService.send(filterOption.requestChart);
-                        $rootScope.$broadcast("optionActivated", filterOption);
-                        $rootScope.$broadcast('activateLoadingIcon');
-                        setTimeout(requestFilter,500);
+
+                        setTimeout(requestFilter(filterOption,event),500);
                     }
                     else
                     {
-                        $rootScope.$broadcast("optionActivated", filterOption);
-                        $rootScope.$broadcast('activateLoadingIcon');
-                        requestFilter();
+                        requestFilter(filterOption,event);
                     }
 
 
                 }
-
-
-
 
             }else {
 

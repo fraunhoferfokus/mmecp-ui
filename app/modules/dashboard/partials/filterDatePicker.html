@@ -1,6 +1,6 @@
-<div id="mapLegend" ng-controller="mapLegendController">
+<div ng-show="showDatePicker" id="mapLegend" ng-controller="filterDatePickerController">
     <div id="datePickerFilter">
-       <h2>Trips Tracked By User</h2>
+       <h2>Select a Time Period</h2>
 
         <div class="form-group" id="datePickerModul">
             <label for="daterange" class="control-label">Please select a date range for the selected filter:</label>
@@ -8,7 +8,7 @@
                    ng-model="date" options="opts" required/>
         </div>
 
-        <a href="#" class="button">Request</a>
+        <a href="#" class="button" ng-click="loadData()">Load Data</a>
 
     </div>
 </div>
