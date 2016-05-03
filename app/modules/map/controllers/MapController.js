@@ -182,7 +182,7 @@ angular.module('app.dashboard.map.controller', ['app.socket', 'app.config', 'app
             console.log(filterOption);
             if(filterOption.dialogs !== undefined)
             {
-                if(filterOption.dialogs.datesQuery == true)
+                if(filterOption.dialogs.datesQuery === true)
                 {
                     // date range selection active: date has to be selected before request
                     console.log("openDatePicker Event send");

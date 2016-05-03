@@ -5,14 +5,12 @@
 mainControllers.controller('filterDatePickerController', ['$scope','mapService','$rootScope','socketService',function($scope,mapService,$rootScope,socketService){
 
 
-
-
     $scope.showDatePicker = false;
     $scope.acutalRequest = null;
     $scope.actualFilterOption = null;
 
     $scope.date = {
-        startDate: moment("01-05-2016", "MM-DD-YYYY"),
+        startDate: moment("01-05-2016", "DD-MM-YYYY"),
         endDate: moment()
     };
 
@@ -84,7 +82,7 @@ mainControllers.controller('filterDatePickerController', ['$scope','mapService',
 
 
 
-    }
+    };
 
 
 
