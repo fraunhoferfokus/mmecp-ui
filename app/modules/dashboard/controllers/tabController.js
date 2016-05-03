@@ -10,7 +10,6 @@
 mainControllers.controller('tabController', ['$scope','mapService','$rootScope', function($scope,mapService,$rootScope){
 
     console.log("TabController");
-    $scope.tabs = [];
 
 
     //VIEW FLAGS
@@ -182,7 +181,7 @@ mainControllers.controller('tabController', ['$scope','mapService','$rootScope',
         $scope.showModalSplit = false;
 
 
-        $scope.tabs[0].content = $scope.useCaseDescription;
+
 
         //workaround for firefox
         if ($scope.$root.$$phase != '$apply' && $scope.$root.$$phase != '$digest') {
