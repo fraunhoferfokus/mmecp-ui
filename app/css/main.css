@@ -743,3 +743,7 @@ ul.off-canvas-list li a {
     top: 5px;
     position: relative;
 }
+#bigMapIcon
+{
+    color: black;position: relative;left: -3px;
+}
