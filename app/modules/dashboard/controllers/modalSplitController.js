@@ -267,8 +267,8 @@ mainControllers.controller('modalSplitViewController', ['$scope','mapService','$
     {
         // Simple GET request example:
 
-        //var url = 'http://193.175.133.251:5000/messages';
-        var url = '/modalsplit-simulator';
+        var url = 'http://localhost:5000/messages';
+        //var url = '/modalsplit-simulator';
 
 
 
@@ -284,7 +284,7 @@ mainControllers.controller('modalSplitViewController', ['$scope','mapService','$
         var genderDist = [gender/100.00,1-gender/100.00];
         console.log(genderDist);
 
-        var visitors = 2000;
+        var visitors = 100;
 
         var data ={
             visitors:   visitors,
@@ -330,7 +330,7 @@ mainControllers.controller('modalSplitViewController', ['$scope','mapService','$
 
     simulateModalSplit();
 
-
+//
 
         //standard modal split berlin srv2013
     $scope.modalSplitPieChartData = [
