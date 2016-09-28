@@ -1,12 +1,22 @@
 <div ng-show="showDatePicker" id="mapLegend" ng-controller="filterDatePickerController">
     <div id="datePickerFilter">
-       <h2>Select a Time Period</h2>
+       <h2>{{headline}}</h2>
 
-        <div class="form-group" id="datePickerModul">
+        <div class="form-group" id="datePickerModul" ng-hide="showSingleDatePicker">
             <label for="daterange" class="control-label">Please select a date range for the selected filter:</label>
             <input date-range-picker id="daterange" name="daterange" class="form-control date-picker" type="text"
                    ng-model="date" options="opts" required/>
         </div>
+
+
+      <div class="form-group" id="datePickerModulSingle" ng-hide="showSingleDatePicker == false"> <!-- ng-if is not working problems with date-range-libary workarround with ng-hide !-->
+            <label for="daterangeSingle" class="control-label">Please select a date and time:</label>
+            <input date-range-picker id="daterangeSingle" name="daterange" class="form-control date-picker" type="text"
+                   ng-model="dateSingle" options="optsSingle" required/>
+        </div>
+
+
+
 
         <a href="#" class="button" ng-click="loadData()">Load Data</a>
 

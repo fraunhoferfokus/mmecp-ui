@@ -1,5 +1,5 @@
 <div>
-    <table>
+    <table id="detailViewTable">
         <thead>
         </thead>
 
@@ -9,7 +9,14 @@
                     <td>{{element.label}}</td>
                     <td>{{element.value}}</td>
                 </tr>
-        </tbody>
 
+
+
+        <b>{{diagramTitle}}</b>
+        <div class="chart" ng-if="showDiagram">
+        <nvd3 options="optionsDiagram" data="dataDiagram"
+              api="api"></nvd3>
+        </div>
+        </tbody>
     </table>
 </div>

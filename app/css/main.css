@@ -479,7 +479,7 @@ ul.off-canvas-list li {
     position: absolute;
     top: 0%;
     z-index: 10000;
-    width: auto;
+    width: 425px;
     height: auto;
     background: rgba(255, 255, 255, 0.95);
     font-size: 75%;
@@ -746,3 +746,15 @@ ul.off-canvas-list li a {
 {
     color: black;position: relative;left: -3px;
 }
+
+.daterangepicker .calendar-time
+{
+    line-height: 25px;
+}
+#detailViewTable
+{
+    width: 500px;
+}
+
+
+
