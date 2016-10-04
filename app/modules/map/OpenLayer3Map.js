@@ -48,7 +48,7 @@ function OpenLayer3Map(config, rootbroadcastEvent, mapService){
         }),
         layers: [
             new ol.layer.Tile({
-                source: new ol.source.MapQuest({layer: 'osm'})
+                source: new ol.source.OSM()
             })
         ],
         target: 'map'

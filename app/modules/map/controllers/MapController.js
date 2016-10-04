@@ -381,7 +381,7 @@ angular.module('app.dashboard.map.controller', ['app.socket', 'app.config', 'app
                 }
             }
 
-            if(mapObject.diagramType != "none")
+            if(mapObject.diagramType != "none" && mapObject.diagramType != undefined)
             {
                 //uh we have a diagram
                 $scope.showDiagram = true;
